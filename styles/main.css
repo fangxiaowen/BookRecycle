@@ -21,6 +21,17 @@ ul#navbar li a {
 }
 
 ul#navbar li a:hover {
-  background:#99bbff;
+  background:#337aff;
   color:#000
+}
+
+div#selected{
+  text-decoration:none;
+  padding:5px 0;
+  width:150px;
+  background:#99bbff;
+  color:#00091a;
+  float:left;
+  text-align:center;
+  border-left:1px solid #fff;
 }
