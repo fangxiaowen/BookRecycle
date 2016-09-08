@@ -1,0 +1,11 @@
+/* This file lists requuirements we still need to satisfy in HW1. If you
+ * finish anyone of them, please add strikeout to it. Add requirements what
+ * you think we need to satisfy. */
+  
+Use of HTML elements
+	1. At least 3 different semantic layout elements
+
+Use of CSS features
+	1.
+
+
