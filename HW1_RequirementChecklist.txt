@@ -1,11 +1,17 @@
-/* This file lists requuirements we still need to satisfy in HW1. If you
- * finish anyone of them, please add strikeout to it. Add requirements what
- * you think we need to satisfy. */
+/* This file lists requuirements we still need to satisfy in HW1. */
+
   
 Use of HTML elements
-	1. At least 3 different semantic layout elements
+	<table>, <form>, <link>, <input>
 
 Use of CSS features
-	1.
+	At least 4 selector types
+	At least 3 pseudo classes
+	Padding, border
+	Z-index & opacity
+	At least 3 different positioning schemes
+	Transform
+	Transition
 
+Support responsive layout on mobile
 
