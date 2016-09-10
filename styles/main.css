@@ -35,3 +35,10 @@ div#selected{
   text-align:center;
   border-left:1px solid #fff;
 }
+
+input[pattern]:invalid{
+  color:red;
+}
+div#invalidSelection{
+	color:red;
+}
