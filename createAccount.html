@@ -16,24 +16,46 @@
 		<br/>
 		<br/><p><strong><font size=5>Create Account</font></strong></p>
 		<br/>
-		<p>First Name: <input type="text" pattern="[A-Za-z]+"/></p>
-		<p>Last Name: <input type="text" pattern="[A-Za-z]+"/></p>
-		<p>School:
-			<select>
+		<form>
+			<div>
+				<label for="firstname">First Name:</label>
+				 <input type="text" id="firstname" pattern="[A-Za-z]+"/>
+			</div>
+			<div>
+				<label for="lastname">Last Name:</label>
+				 <input type="text" id="lastname" pattern="[A-Za-z]+"/>
+			</div>
+			<div>
+				<label>School:</label>
+				<select>
 				<option disabled selected style="color:red">-select-</option>
 				<option>George Mason University</option>
 				<option>James Madison University</option>
 				<option>University of Virginia</option>
-			</select>
-		</p>
-		<p>E-mail: <input type="text" placeholder="enter valid e-mail address" pattern="[A-Za-z]+@[A-Za-z]+\.(com|net|co)"/></p>
-		<p>Phone Number: <input type="text" style="width:200px;" placeholder="###-###-#### or (###)###-#####" pattern="([\d]{10})|(\(\d{3}\)\d{7})|(\(\d{3}\)\d{3}\-\d{4})|(\d{3}\-\d{3}\-\d{4})"/></p>
-		<br/>
-		<p>Username: <input type="text" placeholder="enter username" pattern="[A-Za-z]+"/></p>
-		<p>Password: <input type="password"/></p>
-
-
-		<button>Create Account</button>
+				</select>
+			</div>
+			<div>
+				<label for="Email">E-mail:</label>
+				 <input type="email" id="Email" placeholder="enter valid e-mail address" />
+			</div>
+			<div>
+				<label for="phonenumber">Phone Number:</label>
+				 <input type="text" id="phonenumber" style="width:200px;" placeholder="###-###-#### or (###)###-#####" pattern="([\d]{10})|(\(\d{3}\)\d{7})|(\(\d{3}\)\d{3}\-\d{4})|(\d{3}\-\d{3}\-\d{4})"/></p>
+			</div>
+			
+			<br/>
+			<div>
+				<label for="username">Username:</label>
+				 <input type="text" id="username" placeholder="enter username" pattern="[A-Za-z]+"/></p>
+			</div>
+			<div>
+				<label for="pass">Password:</label>
+				<input type="password" id="pass"/></p>
+			</div>
+			<div class="button">
+				<button type="submit">Create Account</button>
+			</div>
+		</form>
 		
 		<br/>
 		<br/>

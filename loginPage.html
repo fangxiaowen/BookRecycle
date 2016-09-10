@@ -17,13 +17,23 @@
 		<br/>
 		<p><strong><font size=5>Login</font></strong></p>
 		<br/>
-		<p>Username: <input type="text" placeholder="enter username" pattern="[A-Za-z]+"/></p>
-		<p>Password: <input type="password"/></p>
-		<br/>
-		<p>Don't have an account? <a href="createAccount.html">Create one!</a></p>
-
-		<button>Login</button>
-			
+		
+		<form>
+			<div>
+				<label for="username">Username:</label>
+	        		<input type="text" id="username" placeholder="enter username" pattern="[A-Za-z]+"/></p>
+			</div>
+			<div>
+				<label for="pass">Password:</label>
+				<input type="password" id="pass"/>
+			</div>
+			<div>
+				<p>Don't have an account? <a href="createAccount.html">Create one!</a></p>
+			</div>
+			<div class="button">
+				<button type="submit">Login</button>
+			</div>
+		</form>	
 		<br/>
 		<br/>
 		<br/>
