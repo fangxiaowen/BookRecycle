@@ -17,8 +17,11 @@
 		<br/>
 		<p><strong><font size=5>Create Posting</font></strong></p>
 		<br/>
-		<p>Select Course:
-			<select>
+		
+		<form>
+			<div>
+				<label>Select Course:</label>
+				<select>
 				<option disabled selected style="color:red">-select-</option>
 				<option>CS 100</option>
 				<option>CS 101</option>
@@ -51,16 +54,29 @@
 				<option>SWE 432</option>
 				<option>SWE 437</option>
 				<option>SWE 443</option>
-			</select>
-		</p>
-
-		<p>Textbook title: <input type="text"/></p>
-		<p>Author(s): <input type="text"/></p>
-		<p>ISBN (optional): <input type="text" pattern="[0-9]+"/></p>
-		<p>Additional note(s): <textArea placeholder="optional"></textArea></p>
-		
-		<a href="loginPage.html"><button>submit</button></a>
-		
+				</select>
+			</div>
+			
+			<div>
+				<label for="title">Textbook title:</label> 
+				<input type="text" id="title"/>
+			</div>	
+			<div>
+				<label for="author">Author(s):</label> 
+				<input type="text" id="author" />
+			</div>
+			<div>
+				<label for="isbn">ISBN (optional):</label>
+				 <input type="text" id="isbn " pattern="[0-9]+"/>
+			</div>
+			<div>
+				<label for="note">Additional note(s):</label>
+				 <textArea id="note " placeholder="optional"></textArea></p>
+			</div>
+			<div class="button">
+				<button type="submit">Create Your Post!</button>
+			</div>
+		</form>
 		<br/>
 		<br/>
 		<br/>
