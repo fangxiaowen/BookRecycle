@@ -2,7 +2,7 @@
 
   
 Use of HTML elements
-	<table>, <form>, <link>, <input>
+	<table>, <form>, <link>, <input> (Xiaowen Fang will do this)
 
 Use of CSS features
 	At least 4 selector types
