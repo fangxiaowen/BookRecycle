@@ -1,4 +1,4 @@
-/* This file lists requuirements we still need to satisfy in HW1. */
+/* This file lists requuirements we still need to satisfy in HW1. Please don't delete the requirements even if you implement it. Just add an underscore or strike out line on it or use some other way to mark it.*/
 
   
 Use of HTML elements
