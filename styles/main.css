@@ -19,7 +19,7 @@ label {
     text-align: left;
 }
 
-input, textarea {
+input, textarea, select {
     /* To make sure that all text fields have the same font settings
        By default, textareas have a monospace font */
     font: 1em sans-serif;
@@ -53,12 +53,15 @@ textarea {
 .button {
     /* To position the buttons to the same position of the text fields */
     padding-left: 90px; /* same size as the label elements */
+	
 }
 
 button {
     /* This extra margin represent roughly the same space as the space
        between the labels and their text fields */
     margin-left: .5em;
+	width: 200px;
+	height: 30px;
 }
 
 ul#navbar {
