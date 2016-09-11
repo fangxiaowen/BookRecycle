@@ -8,7 +8,7 @@ Use of HTML elements
 Use of CSS features
 	At least 4 selector types
 	At least 3 pseudo classes
-	Padding, border
+	Padding, border (finished already)
 	Z-index & opacity
 	At least 3 different positioning schemes
 	Transform
