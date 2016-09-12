@@ -11,7 +11,7 @@ Use of CSS features
 	Padding, border (finished already)
 	Z-index & opacity
 	At least 3 different positioning schemes
-	Transform
+	Transform (implemented already)
 	Transition
 
 Support responsive layout on mobile
