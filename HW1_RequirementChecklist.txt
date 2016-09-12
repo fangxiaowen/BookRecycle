@@ -2,12 +2,12 @@
 
   
 Use of HTML elements
-	<table>, <form>, <link>, <input> (Xiaowen Fang will take care of this)
+	<table>  (Xiaowen Fang will take care of this) (<form>, <link>, <input> are implemented already)
 	At least 3 different semantic layout elements (Xiaowen Fang will take care of this)
 
 Use of CSS features
-	At least 4 selector types
-	At least 3 pseudo classes
+	At least 4 selector types (implemented already)
+	At least 3 pseudo classes 
 	Padding, border (finished already)
 	Z-index & opacity
 	At least 3 different positioning schemes
