@@ -2,8 +2,8 @@
 
   
 Use of HTML elements
-	<table>  (Xiaowen Fang will take care of this) (<form>, <link>, <input> are implemented already)
-	At least 3 different semantic layout elements (Xiaowen Fang will take care of this)
+	<table>                         (<form>, <link>, <input> are implemented already)
+	At least 3 different semantic layout elements (Implemented already)
 
 Use of CSS features
 	At least 4 selector types (implemented already)
