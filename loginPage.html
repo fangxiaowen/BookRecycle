@@ -5,37 +5,41 @@
 	</head>
 	<body>
 		<link href="styles/main.css" rel="stylesheet" />
-
-		<ul id="navbar">
-			<li><a href="index.html">Home</a></li>
-			<li><a href="createPosting.html">Create Posting</a></li>
-			<li><a href="textbookPostings.html">Find Textbooks</a></li>
-			<li><div id="selected">Login</div></li>
-			<li><a href="createAccount.html">Create Account</a></li>
-		</ul>
-		<br/>
-		<br/>
-		<p><strong><font size=5>Login</font></strong></p>
-		<br/>
 		
-		<form>
-			<div>
-				<label for="username">Username:</label>
-	        		<input type="text" id="username" placeholder="enter username" pattern="[A-Za-z]+"/></p>
-			</div>
-			<div>
-				<label for="pass">Password:</label>
-				<input type="password" id="pass"/>
-			</div>
-			<div>
-				<p>Don't have an account? <a href="createAccount.html">Create one!</a></p>
-			</div>
-			<div class="button">
-				<button type="submit">Login</button>
-			</div>
-		</form>	
+		<div class="navBar">
+			<ul>
+				<li><a href="index.html">Home</a></li>
+				<li><a href="createPosting.html">Create Posting</a></li>
+				<li><a href="textbookPostings.html">Find Textbooks</a></li>
+				<li><div id="selected">Login</div></li>
+				<li><a href="createAccount.html">Create Account</a></li>
+			</ul>
+		</div>
+		<br/>
+		<br/>
+		<div class="bodyContainer">
+			<p><strong><font size=5>Login</font></strong></p>
+			<br/>
+			
+			<form>
+				<div>
+					<label for="username">Username:</label>
+						<input type="text" id="username" placeholder="enter username" pattern="[A-Za-z]+"/></p>
+				</div>
+				<div>
+					<label for="pass">Password:</label>
+					<input type="password" id="pass"/>
+				</div>
+				<div>
+					<p>Don't have an account? <a href="createAccount.html">Create one!</a></p>
+				</div>
+				<div class="button">
+					<button type="submit">Login</button>
+				</div>
+			</form>	
+		</div>
 		
-		<div id="bottomDescr">
+		<div class="bottomDescr">
                 <p> <strong>Book Recycle &copy;</strong> is a textbook transaction platform that is being developed by <a href="mailto:mbauzon@gmu.edu">Michael Josh Bauzon</a> and <a href="mailto:xfang5@gmu.edu">Xiaowen Fang</a> over the course of SWE 432. </p>
         </div>
 	</body>

@@ -6,58 +6,62 @@
 	<body>
 		<link href="styles/main.css" rel="stylesheet" />
 
-		<ul id="navbar">
-			<li><a href="index.html">Home</a></li>
-			<li><a href="createPosting.html">Create Posting</a></li>
-			<li><a href="textbookPostings.html">Find Textbooks</a></li>
-			<li><a href="loginPage.html">Login</a></li>
-			<li><div id="selected">Create Account</div></li>
-		</ul>
+		<div class="navBar">
+			<ul id="navbar">
+				<li><a href="index.html">Home</a></li>
+				<li><a href="createPosting.html">Create Posting</a></li>
+				<li><a href="textbookPostings.html">Find Textbooks</a></li>
+				<li><a href="loginPage.html">Login</a></li>
+				<li><div id="selected">Create Account</div></li>
+			</ul>
+		</div>
 		<br/>
-		<br/><p><strong><font size=5>Create Account</font></strong></p>
-		<br/>
-		<form>
-			<div>
-				<label for="firstname">First Name:</label>
-				 <input type="text" id="firstname" pattern="[A-Za-z]+"/>
-			</div>
-			<div>
-				<label for="lastname">Last Name:</label>
-				 <input type="text" id="lastname" pattern="[A-Za-z]+"/>
-			</div>
-			<div>
-				<label>School:</label>
-				<select>
-				<option disabled selected style="color:red">-select-</option>
-				<option>George Mason University</option>
-				<option>James Madison University</option>
-				<option>University of Virginia</option>
-				</select>
-			</div>
-			<div>
-				<label for="Email">E-mail:</label>
-				 <input type="email" id="Email" placeholder="enter valid e-mail address" pattern="[A-Za-z]+@[A-Za-z]+\.(com|net|co)"/>
-			</div>
-			<div>
-				<label for="phonenumber">Phone Number:</label>
-				 <input type="text" id="phonenumber" style="width:300px;" placeholder="###-###-#### or (###)###-#####" pattern="([\d]{10})|(\(\d{3}\)\d{7})|(\(\d{3}\)\d{3}\-\d{4})|(\d{3}\-\d{3}\-\d{4})"/></p>
-			</div>
-			
+		<div class="bodyContainer">
+			<br/><p><strong><font size=5>Create Account</font></strong></p>
 			<br/>
-			<div>
-				<label for="username">Username:</label>
-				 <input type="text" id="username" placeholder="enter username" pattern="[A-Za-z]+"/></p>
-			</div>
-			<div>
-				<label for="pass">Password:</label>
-				<input type="password" id="pass"/></p>
-			</div>
-			<div class="button">
-				<button type="submit">Create Account</button>
-			</div>
-		</form>
+			<form>
+				<div>
+					<label for="firstname">First Name:</label>
+					 <input type="text" id="firstname" pattern="[A-Za-z]+"/>
+				</div>
+				<div>
+					<label for="lastname">Last Name:</label>
+					 <input type="text" id="lastname" pattern="[A-Za-z]+"/>
+				</div>
+				<div>
+					<label>School:</label>
+					<select>
+					<option disabled selected style="color:red">-select-</option>
+					<option>George Mason University</option>
+					<option>James Madison University</option>
+					<option>University of Virginia</option>
+					</select>
+				</div>
+				<div>
+					<label for="Email">E-mail:</label>
+					 <input type="email" id="Email" placeholder="enter valid e-mail address" pattern="[A-Za-z]+@[A-Za-z]+\.(com|net|co)"/>
+				</div>
+				<div>
+					<label for="phonenumber">Phone Number:</label>
+					 <input type="text" id="phonenumber" style="width:300px;" placeholder="###-###-#### or (###)###-#####" pattern="([\d]{10})|(\(\d{3}\)\d{7})|(\(\d{3}\)\d{3}\-\d{4})|(\d{3}\-\d{3}\-\d{4})"/></p>
+				</div>
+				
+				<br/>
+				<div>
+					<label for="username">Username:</label>
+					 <input type="text" id="username" placeholder="enter username" pattern="[A-Za-z]+"/></p>
+				</div>
+				<div>
+					<label for="pass">Password:</label>
+					<input type="password" id="pass"/></p>
+				</div>
+				<div class="button">
+					<button type="submit">Create Account</button>
+				</div>
+			</form>
+		</div>
 		
-		<div id="bottomDescr">
+		<div class="bottomDescr">
                 <p> <strong>Book Recycle &copy;</strong> is a textbook transaction platform that is being developed by <a href="mailto:mbauzon@gmu.edu">Michael Josh Bauzon</a> and <a href="mailto:xfang5@gmu.edu">Xiaowen Fang</a> over the course of SWE 432. </p>
         </div>
 	</body>

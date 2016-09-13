@@ -2,10 +2,47 @@ body{
 	background: #e6ffe6;
 }
 
+.navBar ul{
+	list-style:none;
+	margin:20px;
+	padding:0;
+	width:100%;
+}
+
+.navBar li {
+	display:inline;
+}
+
+.navBar li a {
+	text-decoration:none;
+	padding:5px 0;
+	width:150px;
+	height: 25px;
+	background:#003399;
+	color:#eee;
+	float:left;
+	text-align:center;
+	border-left:1px solid #fff;
+	-webkit-transition: all 1s ease-in-out;
+	-moz-transition: all 1s ease-in-out;
+	-o-transition: all 1s ease-in-out;
+	transition: all 1s ease-in-out;
+}
+
+.navBar li a:hover {
+	background:#337aff;
+	color:#000;
+}
+
+.bodyContainer{
+	margin:20px;
+	width:100%;
+}
+
 form {
     /* Just to center the form on the page */
     /*margin: 0 auto;*/
-    width: 600px;
+	width:100%;
     /* To see the outline of the form */
     padding: 1em;
     /*border: 1px solid #CCC;*/
@@ -68,37 +105,16 @@ button {
 	height: 30px;
 }
 
-ul#navbar {
-	list-style:none;
-	margin:20px;
-	padding:0;
-	width:775px
-}
+table, th, td {
+    border: 2px solid black;
 
-ul#navbar li {
-	display:inline
-}
-
-ul#navbar li a {
-	text-decoration:none;
-	padding:5px 0;
-	width:150px;
-	background:#003399;
-	color:#eee;
-	float:left;
-	text-align:center;
-	border-left:1px solid #fff;
-}
-
-ul#navbar li a:hover {
-	background:#337aff;
-	color:#000
 }
 
 div#selected{
 	text-decoration:none;
 	padding:5px 0;
 	width:150px;
+	height: 25px;
 	background:#99bbff;
 	color:#00091a;
 	float:left;
@@ -120,20 +136,14 @@ img{
     z-index: -1;
 }
 
-div#bottomDescr{
+.bottomDescr{
 	position: relative;
 }
 
-div#bottomDescr p{
+.bottomDescr p{
 	position: fixed; 
 	bottom: 0; 
 	width:100%; 
 	text-align: left;
 }
 
-div#bottomDescr p img#bottomImg{
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    z-index: 5;
-}
