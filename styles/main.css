@@ -1,3 +1,7 @@
+body{
+	background: #e6ffe6;
+}
+
 form {
     /* Just to center the form on the page */
     /*margin: 0 auto;*/
@@ -72,7 +76,7 @@ textarea {
 .button {
     /* To position the buttons to the same position of the text fields */
     padding-left: 90px; /* same size as the label elements */
-	
+
 }
 
 button {
@@ -84,46 +88,71 @@ button {
 }
 
 ul#navbar {
-  list-style:none;
-  margin:20px;
-  padding:0;
-  width:775px
+	list-style:none;
+	margin:20px;
+	padding:0;
+	width:775px
 }
 
 ul#navbar li {
-  display:inline
+	display:inline
 }
 
 ul#navbar li a {
-  text-decoration:none;
-  padding:5px 0;
-  width:150px;
-  background:#003399;
-  color:#eee;
-  float:left;
-  text-align:center;
-  border-left:1px solid #fff;
+	text-decoration:none;
+	padding:5px 0;
+	width:150px;
+	background:#003399;
+	color:#eee;
+	float:left;
+	text-align:center;
+	border-left:1px solid #fff;
 }
 
 ul#navbar li a:hover {
-  background:#337aff;
-  color:#000
+	background:#337aff;
+	color:#000
 }
 
 div#selected{
-  text-decoration:none;
-  padding:5px 0;
-  width:150px;
-  background:#99bbff;
-  color:#00091a;
-  float:left;
-  text-align:center;
-  border-left:1px solid #fff;
+	text-decoration:none;
+	padding:5px 0;
+	width:150px;
+	background:#99bbff;
+	color:#00091a;
+	float:left;
+	text-align:center;
+	border-left:1px solid #fff;
 }
 
 input[pattern]:invalid{
-  color:red;
+	color:red;
 }
 div#invalidSelection{
 	color:red;
+}
+
+img{
+    position: absolute;
+    left: 50px;
+    top: 120px;
+    z-index: -1;
+}
+
+div#bottomDescr{
+	position: relative;
+}
+
+div#bottomDescr p{
+	position: fixed; 
+	bottom: 0; 
+	width:100%; 
+	text-align: left;
+}
+
+div#bottomDescr p img#bottomImg{
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    z-index: 5;
 }

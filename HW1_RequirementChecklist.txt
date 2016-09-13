@@ -9,9 +9,9 @@ Use of CSS features
 	At least 4 selector types (implemented already)
 	At least 3 pseudo classes 
 	Padding, border (finished already)
-	Z-index & opacity
+	Z-index                     (opacity is implemented already)
 	At least 3 different positioning schemes
-	Transform
+	Transform (implemented already)
 	Transition
 
 Support responsive layout on mobile
