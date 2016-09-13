@@ -60,6 +60,25 @@ label {
     text-align: left;
 }
 
+head {
+	position: absolute;
+	background-color: LightGray;
+	left: 350px;
+	width: 250px;
+}
+img.large {
+	width: 200px;
+	height: 200px;
+}
+
+.transform1 {
+	transform: rotate(0.3turn);
+}
+
+.transparent {
+	opacity: .50;
+	z-index: 10;
+}
 input, textarea, select {
     /* To make sure that all text fields have the same font settings
        By default, textareas have a monospace font */
@@ -146,4 +165,3 @@ img{
 	width:100%; 
 	text-align: left;
 }
-
