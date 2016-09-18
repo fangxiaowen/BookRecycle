@@ -2,7 +2,27 @@
 <!--This page is to show the result of your search -->
 <html>
 	<head>
-		<title>BookRecycle: Textbook Search Results</title>
+		<script>
+			//load window function. create head
+			window.onload = function(){
+				var heading = document.createElement("h1");
+				var heading_text = document.createTextNode("Textbook Search Results");
+				heading.appendChild(heading_text);
+				document.body.appendChild(heading);
+			}
+			
+			//create new rows of table. but seems not work. Don't know why
+			var table = document.getElementById('table0');
+			var row = table.insertRow(-1);
+			var cell, text;
+			
+			for (var i = 0; i < 5; i++){
+				cell = row.insertCell(-1);
+				text = 'Just another textbook' + 'Another author' + 'Another seller';
+				cell.appendChild(document.createTextNode(text));	
+			}
+		</script>
+		<title>BookRecycle: Textbook Search Results</title> 
 	</head>
 	<body>
 		<link href="styles/main.css" rel="stylesheet" />
@@ -19,7 +39,7 @@
 		<br/>
 		<br/>
 		<div class="bodyContainer">
-			<p><strong><font size=5>Textbook Search Results</font></strong></p>
+			<!-- <p><strong><font size=5>Textbook Search Results</font></strong></p> -->
 			<br/>
 			<form>
 				<div>
@@ -29,7 +49,7 @@
 				</div>
 			</form>
 			
-			<table>
+			<table id="table0">
 				<tr>
 					<th>Textbook Title</th>
 					<th>Author</th>
