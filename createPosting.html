@@ -3,6 +3,25 @@
 <html>
 	<head>
 		<title>BookRecycle: Create Posting</title>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+		<script>
+			//it seems not work. Don't know why.
+			/*$(document).ready(function(){
+				$("#createAccount").click(function(){
+					var labels = ['title', 'price'];
+					var unfilled = false;
+					//recolor unfilled inputs
+					for (var ind = 0; ind < lables.length; ind++){
+						if ($('#' + labels[ind] + '').val() === null || $('#' + labels[ind] + '').val() === ''){
+							unfilled = true;
+						}
+						else{
+							$('#succsessMsg').html('Succsess!' + $('#title').val() + 'is created!');
+						}
+					}
+				})
+			})*/	
+		</script>
 	</head>
 	<body>
 		<link href="styles/main.css" rel="stylesheet" />
@@ -82,11 +101,11 @@
 					 <textArea id="note" placeholder="optional"></textArea></p>
 				</div>
 				<div class="button">
-					<button type="submit">Post your textbook!</button>
+					<button id="createPosting" type="submit">Post your textbook!</button>
 				</div>
 			</form>
 		</div>
-		
+		<div id="succsessMsg"></div>
 		<div class="bottomDescr">
                 <p> <strong>Book Recycle &copy;</strong> is a textbook transaction platform that is being developed by <a href="mailto:mbauzon@gmu.edu">Michael Josh Bauzon</a> and <a href="mailto:xfang5@gmu.edu">Xiaowen Fang</a> over the course of SWE 432. </p>
         </div>
