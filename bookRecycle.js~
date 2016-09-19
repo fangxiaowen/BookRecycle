@@ -66,7 +66,7 @@ $( document ).ready(function() {
 			
 			//var userOfThis = usersMap.get("\""+usernameOfThis+"\"");
 			//$('#debugthis').html('debugwhat: '+ book.ID + '====' + usernameOfThis + '====' + (usersMap.get(usernameOfThis)).fullName());
-			ck()
+			
 			seller.innerHTML = (usersMap.get(usernameOfThis)).fullName();
 			email.innerHTML = (usersMap.get(usernameOfThis)).email;
 			phone.innerHTML = (usersMap.get(usernameOfThis)).phone;
