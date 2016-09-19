@@ -45,12 +45,10 @@ $( document ).ready(function() {
 	
 	var jmuTextbookSet = new Set();
 	jmuTextbookSet.add("CS211");
-	var textbooksSchoolMap = new Map();
 	textbooksSchoolMap.set("James Madison University", jmuTextbookSet);
 	var uvaTextbookSet = new Set();
 	uvaTextbookSet.add("CS211");
-	var textbooksSchoolMap = new Map();
-	textbooksSchoolMap.set("James Madison University", uvaTextbookSet);
+	textbooksSchoolMap.set("University of Virginia", uvaTextbookSet);
 	
 	var textbooksCourseMap = new Map();
 	textbooksCourseMap.set("CS332", [textbook1Josh, textbook2Josh, textbook1Xiaowen]);
@@ -66,6 +64,7 @@ $( document ).ready(function() {
 	
 	function printPostingToTable(courseID, school) {
 		//check if courseID and school are in our maps
+		console.log('School: ' + school + ' course ' + courseID );
 		if (textbooksSchoolMap.get(school)!=null && (textbooksSchoolMap.get(school)).has(courseID))//textbooksCourseMap.get(courseID) != null)
 			$('#postingsAppear').html('<b>Postings for ' + courseID + ' by ' + school + ' students:</b>');
 		else
