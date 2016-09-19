@@ -3,37 +3,7 @@
 <html>
 	<head>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-		<script>
-		/*function createAccount()
-		{
-			alert (“I told you not to click!”);
-		}*/
-			$( document ).ready(function() {
-					$("#createAccount").click(function() {
-						var labels = ['firstname', 'lastname', 'school', 'email', 'phone', 'username', 'pass'];
-						var unfilled = false;
-						//recolor unfilled inputs
-						for(var ind=0; ind<labels.length; ind++){
-							if ( ( $('#'+ labels[ind] + '').val() ) == null  || ( $('#'+ labels[ind] + '').val() ) == '' ){
-								$('#'+ labels[ind] +'Lbl').css("color", "red");
-								unfilled = true;
-							}
-							else
-								$('#'+ labels[ind] +'Lbl').css("color", "black");
-						}
-						if (unfilled)//$('#firstname').val()=='' || $('#lastname').val()=='' || $('#email').val()=='' || $('#phone').val()==''|| $('#username').val()==''|| $('#pass').val()=='')
-						{	
-							alert('Please enter required fields');
-						}
-						//else if ($('#school').val()== null)
-						//	alert('Please select a school');
-						else{
-							$('#welcomeMsg').html('Welcome ' + $('#firstname').val() + ' ' + $('#lastname').val());
-						}
-					});
-					
-			});
-		</script>
+		<script src="bookRecycle.js"></script>
 		<title>BookRecycle: Create Account</title>
 	</head>
 	<body>
@@ -87,6 +57,10 @@
 				<div>
 					<label id="passLbl">Password:</label>
 					<input type="password" id="pass"/></p>
+				</div>
+				<div>
+					<label id="passreenterLbl">Re-enter Password:</label>
+					<input type="password" id="passreenter"/></p>
 				</div>
 				
 				

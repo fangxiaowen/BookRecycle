@@ -3,22 +3,7 @@
 <html>
 	<head>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-		<script>
-			$( document ).ready(function() {
-					$("#login").click(function() {
-						// var output = $('#num1').val() * $('#num2').val();
-						//$('#out').html('<b>not exists</b>');
-						//alert("Value: hey");
-						if ($('#username').val()== '' && $('#pass').val()== '')
-							alert('Please enter Username and Password');
-						else if ($('#username').val()=='')
-							alert('Please enter Username');
-						else if ($('#pass').val()=='')
-							alert('Please enter Password');
-						
-					});
-			});
-		</script>
+		<script src="bookRecycle.js"></script>
 		<title>BookRecycle: Login</title>
 	</head>
 	<body>
@@ -57,9 +42,12 @@
 		<div>
 			<button id="login">Login</button>
 		</div>
-			
+		
 		</div>
-		<div id="out"></div>
+		
+		<br/><br/>
+		<div id="welcomeMsgInLogin"></div>
+		<br/><br/><br/><br/>
 		<div class="bottomDescr">
                 <p> <strong>Book Recycle &copy;</strong> is a textbook transaction platform that is being developed by <a href="mailto:mbauzon@gmu.edu">Michael Josh Bauzon</a> and <a href="mailto:xfang5@gmu.edu">Xiaowen Fang</a> over the course of SWE 432. </p>
         </div>
