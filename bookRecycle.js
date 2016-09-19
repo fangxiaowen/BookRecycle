@@ -27,24 +27,49 @@ $( document ).ready(function() {
 	var usersMap = new Map();
 	usersMap.set("mbauzon", new User("Josh", "Bauzon", "George Mason University", "mbauzon@gmu.edu", "123456789", "mbauzon", "joshpassword"));
 	usersMap.set("xfang5", new User("Xiaowen", "Fang", "George Mason University", "xfang5@gmu.edu", "111111111", "xfang5", "xiaowenpassword"));
+	usersMap.set("jmuStudent", new User("Michael", "Smith", "James Madison University", "jmuStudent@gmu.edu", "5555555555", "jmuStudent", "jmustudentpassword"));
+	usersMap.set("uvaStudent", new User("William", "Johnson", "University of Virginia", "uvaStudent@gmu.edu", "6666666666", "uvaStudent", "uvastudentpassword"));
+	
 	
 	var textbook1Josh = new Textbook("CS332", "PROGRAM DEVELOPMENT IN JAVA", "Liskov", "", 30, "new sealed");
 	var textbook2Josh = new Textbook("CS332", "EFFECTIVE JAVA:PROGRAMMING LANG.GDE.", "Bloch", "", 40, "used but good condition");
 	var textbook1Xiaowen = new Textbook("CS332", "PROGRAM DEVELOPMENT IN JAVA", "Liskov", "", 25, "partly used");
+	var textbook3Josh = new Textbook("CS211", "GMU texbook for CS211", "Thomas LaToza", "", 45, "semi-new");
+	var textbook1jmuStudent = new Textbook("CS211", "JMU texbook for CS211", "Thomas LaToza", "", 50, "brand new");
+	var textbook1uvaStudent = new Textbook("CS211", "UVA texbook for CS211", "Thomas LaToza", "", 35, "used");
+	
+	var gmuTextbookSet = new Set();
+	gmuTextbookSet.add("CS332");
+	gmuTextbookSet.add("CS211");
+	var textbooksSchoolMap = new Map();
+	textbooksSchoolMap.set("George Mason University", gmuTextbookSet);
+	
+	var jmuTextbookSet = new Set();
+	jmuTextbookSet.add("CS211");
+	var textbooksSchoolMap = new Map();
+	textbooksSchoolMap.set("James Madizon University", jmuTextbookSet);
+	var uvaTextbookSet = new Set();
+	uvaTextbookSet.add("CS211");
+	var textbooksSchoolMap = new Map();
+	textbooksSchoolMap.set("James Madizon University", uvaTextbookSet);
 	
 	var textbooksCourseMap = new Map();
 	textbooksCourseMap.set("CS332", [textbook1Josh, textbook2Josh, textbook1Xiaowen]);
+	textbooksCourseMap.set("CS211", [textbook3Josh, textbook1jmuStudent, textbook1uvaStudent]);
 	
 	var textbookUserMapping = new Map();
 	textbookUserMapping.set(textbook1Josh.ID, "mbauzon");
 	textbookUserMapping.set(textbook2Josh.ID, "mbauzon");
 	textbookUserMapping.set(textbook1Xiaowen.ID, "xfang5");
+	textbookUserMapping.set(textbook3Josh.ID, "mbauzon");
+	textbookUserMapping.set(textbook1jmuStudent.ID, "jmuStudent");
+	textbookUserMapping.set(textbook1uvaStudent.ID, "uvaStudent");
 	
-	function printPostingToTable(courseID) {
-		if (textbooksCourseMap.get(courseID) != null)
-			$('#postingsAppear').html('<b>Postings for ' + courseID + ':</b>');
+	function printPostingToTable(courseID, school) {
+		if (textbooksSchoolMap.get(school)!=null && (textbooksSchoolMap.get(school)).has(courseID))//textbooksCourseMap.get(courseID) != null)
+			$('#postingsAppear').html('<b>Postings for ' + courseID + ' by ' + school + ' students:</b>');
 		else
-			$('#postingsAppear').html('<b>Sorry, there are currently no postings for ' + courseID +'</b>');
+			$('#postingsAppear').html('<b>Sorry, there are currently no postings for ' + courseID + ' by ' + school + ' students.</b>');
 							
 		var table = document.getElementById("searchResultTable");
 		$('#searchResultTable td').remove(); 	//reset table
@@ -53,32 +78,34 @@ $( document ).ready(function() {
 		var booksArray = textbooksCourseMap.get(courseID);
 		if (booksArray!=null)
 			for (var book of booksArray){
-				var row = table.insertRow(table.rows.length);	//add row at the bottom
-				var course = row.insertCell(0);
-				var textbookTitle = row.insertCell(1);
-				var author = row.insertCell(2);
-				var seller = row.insertCell(3);
-				var email = row.insertCell(4);
-				var phone = row.insertCell(5);
-				var notes = row.insertCell(6);
-				var price = row.insertCell(7);
-			
-				course.innerHTML = courseID;
-				textbookTitle.innerHTML = book.title;
-				author.innerHTML = book.author;
-				
-				//$('#debugthis').html('debugwhat: '+ $('#courseOptions').val());
 				var usernameOfThis = textbookUserMapping.get(book.ID);
-				//$('#debugthis').html('debugwhat: '+ book.ID + '====' + usernameOfThis);
+				if ((usersMap.get(usernameOfThis)).school == school){
+					var row = table.insertRow(table.rows.length);	//add row at the bottom
+					var course = row.insertCell(0);
+					var textbookTitle = row.insertCell(1);
+					var author = row.insertCell(2);
+					var seller = row.insertCell(3);
+					var email = row.insertCell(4);
+					var phone = row.insertCell(5);
+					var notes = row.insertCell(6);
+					var price = row.insertCell(7);
 				
-				//var userOfThis = usersMap.get("\""+usernameOfThis+"\"");
-				//$('#debugthis').html('debugwhat: '+ book.ID + '====' + usernameOfThis + '====' + (usersMap.get(usernameOfThis)).fullName());
-				
-				seller.innerHTML = (usersMap.get(usernameOfThis)).fullName();
-				email.innerHTML = (usersMap.get(usernameOfThis)).email;
-				phone.innerHTML = (usersMap.get(usernameOfThis)).phone;
-				notes.innerHTML = book.notes;
-				price.innerHTML = book.price;
+					course.innerHTML = courseID;
+					textbookTitle.innerHTML = book.title;
+					author.innerHTML = book.author;
+					
+					//$('#debugthis').html('debugwhat: '+ $('#courseOptions').val());
+					//$('#debugthis').html('debugwhat: '+ book.ID + '====' + usernameOfThis);
+					
+					//var userOfThis = usersMap.get("\""+usernameOfThis+"\"");
+					//$('#debugthis').html('debugwhat: '+ book.ID + '====' + usernameOfThis + '====' + (usersMap.get(usernameOfThis)).fullName());
+					
+					seller.innerHTML = (usersMap.get(usernameOfThis)).fullName();
+					email.innerHTML = (usersMap.get(usernameOfThis)).email;
+					phone.innerHTML = (usersMap.get(usernameOfThis)).phone;
+					notes.innerHTML = book.notes;
+					price.innerHTML = book.price;
+				}
 			}
 		
 	}
@@ -141,9 +168,10 @@ $( document ).ready(function() {
 							alert('Please select a school.');
 						else{
 							var currentCourse = $('#courseOptions').val();
-							printPostingToTable(currentCourse);
-							history.pushState([$('#schoolOptions').val(), currentCourse], "Result", "results"+currentCourse+".html");
-							console.log("PUSHED This is course: "+ [$('#schoolOptions').val(), currentCourse]);
+							var currentSchool = $('#schoolOptions').val();
+							printPostingToTable(currentCourse, currentSchool);
+							history.pushState([currentSchool, currentCourse], "Result", "results.html");
+							console.log("PUSHED This is course: "+ [currentSchool, currentCourse]);
 							/*var table = document.getElementById("searchResultTable");
 							$('#debugthis').html('debug: ' + $('#courseOptions').val());
 							
@@ -165,7 +193,7 @@ $( document ).ready(function() {
 					window.addEventListener('popstate', function(e) {
 						document.getElementById("schoolOptions").value = (e.state)[0];
 						document.getElementById("courseOptions").value = (e.state)[1];
-					  printPostingToTable((e.state)[1]);
+					  printPostingToTable((e.state)[1], (e.state)[0]);
 					  console.log("In POP This is e: "+e.state);
 					});
 					
