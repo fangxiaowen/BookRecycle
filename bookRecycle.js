@@ -47,11 +47,11 @@ $( document ).ready(function() {
 	var jmuTextbookSet = new Set();
 	jmuTextbookSet.add("CS211");
 	var textbooksSchoolMap = new Map();
-	textbooksSchoolMap.set("James Madizon University", jmuTextbookSet);
+	textbooksSchoolMap.set("James Madison University", jmuTextbookSet);
 	var uvaTextbookSet = new Set();
 	uvaTextbookSet.add("CS211");
 	var textbooksSchoolMap = new Map();
-	textbooksSchoolMap.set("James Madizon University", uvaTextbookSet);
+	textbooksSchoolMap.set("James Madison University", uvaTextbookSet);
 	
 	var textbooksCourseMap = new Map();
 	textbooksCourseMap.set("CS332", [textbook1Josh, textbook2Josh, textbook1Xiaowen]);
@@ -66,6 +66,7 @@ $( document ).ready(function() {
 	textbookUserMapping.set(textbook1uvaStudent.ID, "uvaStudent");
 	
 	function printPostingToTable(courseID, school) {
+		//check if courseID and school are in our maps
 		if (textbooksSchoolMap.get(school)!=null && (textbooksSchoolMap.get(school)).has(courseID))//textbooksCourseMap.get(courseID) != null)
 			$('#postingsAppear').html('<b>Postings for ' + courseID + ' by ' + school + ' students:</b>');
 		else
@@ -73,8 +74,8 @@ $( document ).ready(function() {
 							
 		var table = document.getElementById("searchResultTable");
 		$('#searchResultTable td').remove(); 	//reset table
-		//$('#debugthis').html('1stdebugwhat: '+ $('#courseOptions').val());
-		console.log('in printPostingToTable with course '+courseID);
+		
+		console.log('in printPostingToTable with course ' + courseID + ' and school ' + school);
 		var booksArray = textbooksCourseMap.get(courseID);
 		if (booksArray!=null)
 			for (var book of booksArray){
@@ -107,95 +108,79 @@ $( document ).ready(function() {
 					price.innerHTML = book.price;
 				}
 			}
-		
 	}
-	
-					$("#createAccount").click(function() {
-						var labels = ['firstname', 'lastname', 'school', 'email', 'phone', 'username', 'pass', 'passreenter'];
-						var unfilled = false;
-						//recolor unfilled inputs
-						for(var ind=0; ind<labels.length; ind++){
-							if ( ( $('#'+ labels[ind] + '').val() ) == null  || ( $('#'+ labels[ind] + '').val() ) == '' ){
-								$('#'+ labels[ind] +'Lbl').css("color", "red");
-								unfilled = true;
-							}
-							else
-								$('#'+ labels[ind] +'Lbl').css("color", "black");
-						}
-						if (unfilled)//$('#firstname').val()=='' || $('#lastname').val()=='' || $('#email').val()=='' || $('#phone').val()==''|| $('#username').val()==''|| $('#pass').val()=='')	
-							alert('Please enter required fields');
-						else if ($('#pass').val() != $('#passreenter').val() ){
-							alert('Passwords do not match!');
-							document.getElementById("pass").value = "";
-							document.getElementById("passreenter").value = "";
-						}
-						else{
-							$('#welcomeMsg').html('Welcome ' + $('#firstname').val() + ' ' + $('#lastname').val());
-							var newUser = new User($('#firstname').val(), $('#lastname').val(), $('#school').val(), $('#email').val(), $('#phone').val(), $('#username').val(), $('#pass').val() );
-							$('#welcomeMsg').html('Welcome ' + newUser.fullName() + ' succeed 123');
-							//$('#welcomeMsg').html('Welcome ' + newUser.fullName() + ' succeed 123::: ' + (usersMap.get("mbauzon")).fullName());
-							usersMap.set($('#username').val(), new User($('#firstname').val(), $('#lastname').val(), $('#school').val(), $('#email').val(), $('#phone').val(), $('#username').val(), $('#pass').val()));
-							//line above currently does not work
-							$('#welcomeMsg').html('Welcome ' + newUser.fullName() + ' succeed');
-							
-						}
-					});
-					$("#login").click(function() {
-						if ($('#username').val()== '' && $('#pass').val()== '')
-							alert('Please enter Username and Password');
-						else if ($('#username').val()=='')
-							alert('Please enter Username');
-						else if ($('#pass').val()=='')
-							alert('Please enter Password');
-						else if (usersMap.get($('#username').val()) != null){
-							if ((usersMap.get($('#username').val())).pass === $('#pass').val())		//SUCCEESS login
-								$('#welcomeMsgInLogin').html('<b>Welcome ' + (usersMap.get($('#username').val())).fullName() + '!</b>');
-							else
-								alert('Username/Password did not match!');	//wrong password
-						}
-						else{
-							alert('Username is not found! Try again or Create an Account!');	//username not in our database
-							document.getElementById("username").value = "";
-							document.getElementById("pass").value = "";
-						}
-					});
-					$("#searchPostings").click(function() {
-						if ($('#courseOptions').val() == null && $('#schoolOptions').val() == null)
-							alert('Please select a school and a course.');
-						else if ($('#courseOptions').val() == null)
-							alert('Please select a course.');
-						else if ($('#schoolOptions').val() == null)
-							alert('Please select a school.');
-						else{
-							var currentCourse = $('#courseOptions').val();
-							var currentSchool = $('#schoolOptions').val();
-							printPostingToTable(currentCourse, currentSchool);
-							history.pushState([currentSchool, currentCourse], "Result", "results.html");
-							console.log("PUSHED This is course: "+ [currentSchool, currentCourse]);
-							/*var table = document.getElementById("searchResultTable");
-							$('#debugthis').html('debug: ' + $('#courseOptions').val());
-							
-							var row = table.insertRow(1);
-							var textbookTitle = row.insertCell(0);
-							var author = row.insertCell(1);
-							var seller = row.insertCell(2);
-							var email = row.insertCell(3);
-							var phone = row.insertCell(4);
-							var notes = row.insertCell(5);
-							textbookTitle.innerHTML = "ti";
-							author.innerHTML = "myauthor";
-							seller.innerHTML = "myfirst";
-							email.innerHTML = "email ko";
-							phone.innerHTML = "1234567";
-							notes.innerHTML = "wasak wasak";*/
-						}
-					});
-					window.addEventListener('popstate', function(e) {
-						document.getElementById("schoolOptions").value = (e.state)[0];
-						document.getElementById("courseOptions").value = (e.state)[1];
-					  printPostingToTable((e.state)[1], (e.state)[0]);
-					  console.log("In POP This is e: "+e.state);
-					});
-					
-					
+	/**Create Account page create account button*/
+	$("#createAccount").click(function() {
+		var labels = ['firstname', 'lastname', 'school', 'email', 'phone', 'username', 'pass', 'passreenter'];
+		var unfilled = false;
+		//recolor unfilled inputs
+		for(var ind=0; ind<labels.length; ind++){
+		if ( ( $('#'+ labels[ind] + '').val() ) == null  || ( $('#'+ labels[ind] + '').val() ) == '' ){
+			$('#'+ labels[ind] +'Lbl').css("color", "red");
+			unfilled = true;
+		}
+		else
+			$('#'+ labels[ind] +'Lbl').css("color", "black");
+		}
+		if (unfilled)//$('#firstname').val()=='' || $('#lastname').val()=='' || $('#email').val()=='' || $('#phone').val()==''|| $('#username').val()==''|| $('#pass').val()=='')	
+			alert('Please enter required fields');
+		else if ($('#pass').val() != $('#passreenter').val() ){
+			alert('Passwords do not match!');
+			document.getElementById("pass").value = "";
+			document.getElementById("passreenter").value = "";
+		}
+		else{
+			$('#welcomeMsg').html('Welcome ' + $('#firstname').val() + ' ' + $('#lastname').val());
+			var newUser = new User($('#firstname').val(), $('#lastname').val(), $('#school').val(), $('#email').val(), $('#phone').val(), $('#username').val(), $('#pass').val() );
+			$('#welcomeMsg').html('Welcome ' + newUser.fullName() + ' succeed 123');
+			//$('#welcomeMsg').html('Welcome ' + newUser.fullName() + ' succeed 123::: ' + (usersMap.get("mbauzon")).fullName());
+			usersMap.set($('#username').val(), new User($('#firstname').val(), $('#lastname').val(), $('#school').val(), $('#email').val(), $('#phone').val(), $('#username').val(), $('#pass').val()));
+			//line above currently does not work
+			$('#welcomeMsg').html('Welcome ' + newUser.fullName() + ' succeed');
+		}
+	});
+	/**Login page login button*/
+	$("#login").click(function() {
+		if ($('#username').val()== '' && $('#pass').val()== '')
+			alert('Please enter Username and Password');
+		else if ($('#username').val()=='')
+			alert('Please enter Username');
+		else if ($('#pass').val()=='')
+			alert('Please enter Password');
+		else if (usersMap.get($('#username').val()) != null){
+			if ((usersMap.get($('#username').val())).pass === $('#pass').val())		//SUCCEESS login
+				$('#welcomeMsgInLogin').html('<b>Welcome ' + (usersMap.get($('#username').val())).fullName() + '!</b>');
+			else
+				alert('Username/Password did not match!');	//wrong password
+		}
+		else{
+			alert('Username is not found! Try again or Create an Account!');	//username not in our database
+			//reset data input fields
+			document.getElementById("username").value = "";
+			document.getElementById("pass").value = "";
+		}
+	});
+	/**Textbook Postings search button*/
+	$("#searchPostings").click(function() {
+		if ($('#courseOptions').val() == null && $('#schoolOptions').val() == null)
+			alert('Please select a school and a course.');
+		else if ($('#courseOptions').val() == null)
+			alert('Please select a course.');
+		else if ($('#schoolOptions').val() == null)
+			alert('Please select a school.');
+		else{
+			var currentCourse = $('#courseOptions').val();
+			var currentSchool = $('#schoolOptions').val();
+			printPostingToTable(currentCourse, currentSchool);
+			history.pushState([currentSchool, currentCourse], "Result", "results.html");	//add to history stack
+			console.log("PUSHED This is course: "+ [currentSchool, currentCourse]);
+		}
+	});
+	window.addEventListener('popstate', function(e) {
+		//use history stack states
+		document.getElementById("schoolOptions").value = (e.state)[0];
+		document.getElementById("courseOptions").value = (e.state)[1];
+		printPostingToTable((e.state)[1], (e.state)[0]);
+		console.log("In POP This is e: "+e.state);
+	});
 });
