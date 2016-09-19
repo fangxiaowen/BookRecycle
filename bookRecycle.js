@@ -30,7 +30,6 @@ $( document ).ready(function() {
 	usersMap.set("jmuStudent", new User("Michael", "Smith", "James Madison University", "jmuStudent@gmu.edu", "5555555555", "jmuStudent", "jmustudentpassword"));
 	usersMap.set("uvaStudent", new User("William", "Johnson", "University of Virginia", "uvaStudent@gmu.edu", "6666666666", "uvaStudent", "uvastudentpassword"));
 	
-	
 	var textbook1Josh = new Textbook("CS332", "PROGRAM DEVELOPMENT IN JAVA", "Liskov", "", 30, "new sealed");
 	var textbook2Josh = new Textbook("CS332", "EFFECTIVE JAVA:PROGRAMMING LANG.GDE.", "Bloch", "", 40, "used but good condition");
 	var textbook1Xiaowen = new Textbook("CS332", "PROGRAM DEVELOPMENT IN JAVA", "Liskov", "", 25, "partly used");
