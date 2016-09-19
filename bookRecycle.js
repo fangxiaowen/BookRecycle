@@ -41,11 +41,12 @@ $( document ).ready(function() {
 	
 	function printPostingToTable(courseID) {
 		var table = document.getElementById("searchResultTable");
-		$('#debugthis').html('1stdebugwhat: '+ $('#courseOptions').val());
+		$('#searchResultTable td').remove(); 	//reset table
+		//$('#debugthis').html('1stdebugwhat: '+ $('#courseOptions').val());
 			
 		var booksArray = textbooksCourseMap.get(courseID);
 		for (var book of booksArray){
-			var row = table.insertRow(1);
+			var row = table.insertRow(table.rows.length);	//add row at the bottom
 			var course = row.insertCell(0);
 			var textbookTitle = row.insertCell(1);
 			var author = row.insertCell(2);
@@ -53,12 +54,13 @@ $( document ).ready(function() {
 			var email = row.insertCell(4);
 			var phone = row.insertCell(5);
 			var notes = row.insertCell(6);
+			var price = row.insertCell(7);
 		
 			course.innerHTML = courseID;
 			textbookTitle.innerHTML = book.title;
 			author.innerHTML = book.author;
 			
-			$('#debugthis').html('debugwhat: '+ $('#courseOptions').val());
+			//$('#debugthis').html('debugwhat: '+ $('#courseOptions').val());
 			var usernameOfThis = textbookUserMapping.get(book.ID);
 			//$('#debugthis').html('debugwhat: '+ book.ID + '====' + usernameOfThis);
 			
@@ -68,7 +70,8 @@ $( document ).ready(function() {
 			seller.innerHTML = (usersMap.get(usernameOfThis)).fullName();
 			email.innerHTML = (usersMap.get(usernameOfThis)).email;
 			phone.innerHTML = (usersMap.get(usernameOfThis)).phone;
-			notes.innerHTML = (usersMap.get(usernameOfThis)).notes;
+			notes.innerHTML = book.notes;
+			price.innerHTML = book.price;
 		}
 		
 	}
@@ -98,26 +101,35 @@ $( document ).ready(function() {
 							$('#welcomeMsg').html('Welcome ' + newUser.fullName() + ' succeed 123');
 							//$('#welcomeMsg').html('Welcome ' + newUser.fullName() + ' succeed 123::: ' + (usersMap.get("mbauzon")).fullName());
 							usersMap.set($('#username').val(), new User($('#firstname').val(), $('#lastname').val(), $('#school').val(), $('#email').val(), $('#phone').val(), $('#username').val(), $('#pass').val()));
-							//addUser(newUser);
+							//line above currently does not work
 							$('#welcomeMsg').html('Welcome ' + newUser.fullName() + ' succeed');
 							
 						}
 					});
 					$("#login").click(function() {
-						/*if ($('#username').val()== '' && $('#pass').val()== '')
+						if ($('#username').val()== '' && $('#pass').val()== '')
 							alert('Please enter Username and Password');
 						else if ($('#username').val()=='')
 							alert('Please enter Username');
 						else if ($('#pass').val()=='')
 							alert('Please enter Password');
 						else if (usersMap.get($('#username').val()) != null){
-							$('#welcomeMsgInLogin').html('Welcome ' + (usersMap.get($('#username').val())).fullName());
-							
-						}*/
-						$('#welcomeMsgInLogin').html('counter: ' + textbookIDctr);
-
+							if ((usersMap.get($('#username').val())).pass === $('#pass').val())		//SUCCEESS login
+								$('#welcomeMsgInLogin').html('<b>Welcome ' + (usersMap.get($('#username').val())).fullName() + '!</b>');
+							else
+								alert('Username/Password did not match!');	//wrong password
+						}
+						else{
+							alert('Username is not found! Try again or Create an Account!');	//username not in our database
+							document.getElementById("username").value = "";
+							document.getElementById("pass").value = "";
+						}
 					});
 					$("#searchPostings").click(function() {
+						if (textbooksCourseMap.get($('#courseOptions').val()) != null)
+							$('#postingsAppear').html('<b>Postings for ' +$('#courseOptions').val() + ':</b>');
+						else
+							$('#postingsAppear').html('<b>Sorry, there are currently no postings for ' + $('#courseOptions').val() +'</b>');
 						printPostingToTable($('#courseOptions').val());
 						/*var table = document.getElementById("searchResultTable");
 						$('#debugthis').html('debug: ' + $('#courseOptions').val());
