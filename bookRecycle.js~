@@ -1,7 +1,6 @@
 $( document ).ready(function() {
 	window.history;
 	var textbookIDctr = 0;
-	//User constructor
 	function User(first, last, school, email, phone, user, pass){
 		this.firstName = first;
 		this.lastName = last;
@@ -14,7 +13,6 @@ $( document ).ready(function() {
 			return this.firstName + " " + this.lastName;
 		}
 	}
-	//Textbook constructor
 	function Textbook(course, title, author, isbn, price, notes){
 		this.courseID = course;
 		this.title = title;
@@ -29,25 +27,24 @@ $( document ).ready(function() {
 	var gmuCourses = ["CS100", "CS101", "CS105", "CS112", "CS211", "CS222", "CS262", "CS306", "CS310", "CS321", "CS330", "CS332", "CS367", "CS390", "CS425", "CS450", "CS451", "CS465", "CS469", "CS471", "CS477", "CS480", "CS482", "CS483", "CS484", "CS485", "CS490", "SWE205", "SWE432", "SWE437", "SWE443"];
 	var jmuCourses = ["CS112", "CS211", "CS222", "CS262", "SWE432"];
 	var uvaCourses = ["CS1010", "CS1110", "CS1111", "CS1112", "CS1113", "CS2102", "CS2110", "CS2150", "CS2910", "CS3102", "CS3205", "CS3240", "CS3330", "CS4102", "CS4414", "CS4457", "CS4457", "CS4501", "CS4630", "CS4710", "CS4720", "CS4740", "CS4750", "CS4753", "CS4810", "CS4970", "CS4980", "CS4993", "CS4998"];
-	//map school name to courses provided by the school
 	var schoolCourseMap = new Map();
 	schoolCourseMap.set("GMU", gmuCourses);
 	schoolCourseMap.set("JMU", jmuCourses);
 	schoolCourseMap.set("UVA", uvaCourses);
-	//map username to user info
+	
 	var usersMap = new Map();
 	usersMap.set("mbauzon", new User("Josh", "Bauzon", "GMU", "mbauzon@gmu.edu", "123456789", "mbauzon", "joshpassword"));
 	usersMap.set("xfang5", new User("Xiaowen", "Fang", "GMU", "xfang5@gmu.edu", "111111111", "xfang5", "xiaowenpassword"));
 	usersMap.set("jmuStudent", new User("Michael", "Smith", "JMU", "jmuStudent@jmu.edu", "5555555555", "jmuStudent", "jmustudentpassword"));
 	usersMap.set("uvaStudent", new User("William", "Johnson", "UVA", "uvaStudent@uva.edu", "6666666666", "uvaStudent", "uvastudentpassword"));
-	//info of the textbook owned by the user
+	
 	var textbook1Josh = new Textbook("CS332", "PROGRAM DEVELOPMENT IN JAVA", "Liskov", "", 30, "new sealed");
 	var textbook2Josh = new Textbook("CS332", "EFFECTIVE JAVA:PROGRAMMING LANG.GDE.", "Bloch", "", 40, "used but good condition");
 	var textbook1Xiaowen = new Textbook("CS332", "PROGRAM DEVELOPMENT IN JAVA", "Liskov", "", 25, "partly used");
 	var textbook3Josh = new Textbook("CS211", "GMU texbook for CS211", "Thomas LaToza", "", 45, "semi-new");
 	var textbook1jmuStudent = new Textbook("CS211", "JMU texbook for CS211", "Thomas LaToza", "", 50, "brand new");
 	var textbook1uvaStudent = new Textbook("CS211", "UVA texbook for CS211", "Thomas LaToza", "", 35, "used");
-	//map school name to textbooks avaliable in that school
+	
 	var gmuTextbookSet = new Set();
 	gmuTextbookSet.add("CS332");
 	gmuTextbookSet.add("CS211");
@@ -60,12 +57,12 @@ $( document ).ready(function() {
 	var uvaTextbookSet = new Set();
 	uvaTextbookSet.add("CS2110");
 	textbooksSchoolMap.set("UVA", uvaTextbookSet);
-	//map course id to textbooks required by the course
+	
 	var textbooksCourseMap = new Map();
 	textbooksCourseMap.set("CS332", [textbook1Josh, textbook2Josh, textbook1Xiaowen]);
 	textbooksCourseMap.set("CS211", [textbook3Josh, textbook1jmuStudent]);//, textbook1uvaStudent]);
 	textbooksCourseMap.set("CS2110", [textbook1uvaStudent]);
-	//map textbook id to user name
+	
 	var textbookUserMapping = new Map();
 	textbookUserMapping.set(textbook1Josh.ID, "mbauzon");
 	textbookUserMapping.set(textbook2Josh.ID, "mbauzon");
