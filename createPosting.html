@@ -2,26 +2,9 @@
 <!--This page is for creating a posting for the book you want to sell -->
 <html>
 	<head>
-		<title>BookRecycle: Create Posting</title>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-		<script>
-			//it seems not work. Don't know why.
-			/*$(document).ready(function(){
-				$("#createAccount").click(function(){
-					var labels = ['title', 'price'];
-					var unfilled = false;
-					//recolor unfilled inputs
-					for (var ind = 0; ind < lables.length; ind++){
-						if ($('#' + labels[ind] + '').val() === null || $('#' + labels[ind] + '').val() === ''){
-							unfilled = true;
-						}
-						else{
-							$('#succsessMsg').html('Succsess!' + $('#title').val() + 'is created!');
-						}
-					}
-				})
-			})*/	
-		</script>
+		<script src="bookRecycle.js"></script>
+		<title>BookRecycle: Create Posting</title>
 	</head>
 	<body>
 		<link href="styles/main.css" rel="stylesheet" />
@@ -43,8 +26,8 @@
 			
 			<form>
 				<div>
-					<label>Select Course:</label>
-					<select>
+					<label id="courseLbl">Select Course:</label>
+					<select id="course">
 					<option disabled selected style="color:red">-select-</option>
 					<option>CS 100</option>
 					<option>CS 101</option>
@@ -81,31 +64,33 @@
 				</div>
 				
 				<div>
-					<label for="title">Textbook title:</label> 
+					<label id="titleLbl">Textbook title:</label> 
 					<input type="text" id="title"/>
 				</div>	
 				<div>
-					<label for="author">Author(s):</label> 
+					<label id="authorLbl">Author(s):</label> 
 					<input type="text" id="author" />
 				</div>
 				<div>
-					<label for="isbn">ISBN (optional):</label>
+					<label id="isbnLbl">ISBN (optional):</label>
 					 <input type="text" id="isbn" pattern="[0-9]+"/>
 				</div>
 				<div>
-					<label for="price">Price: $</label>
+					<label id="priceLbl">Price: $</label>
 					 <input type="text" id="price" pattern="[0-9]+(\.[0-9][0-9]?)?"/>
 				</div>
 				<div>
-					<label for="note">Additional note(s):</label>
+					<label id="noteLbl">Additional note(s):</label>
 					 <textArea id="note" placeholder="optional"></textArea></p>
 				</div>
-				<div class="button">
-					<button id="createPosting" type="submit">Post your textbook!</button>
-				</div>
 			</form>
+			<div class="button">
+				<button id="createPosting">Post your textbook!</button>
+			</div>
+			
 		</div>
-		<div id="succsessMsg"></div>
+		<br/><br/>
+		<div id="postSuccessMsg"></div>
 		<div class="bottomDescr">
                 <p> <strong>Book Recycle &copy;</strong> is a textbook transaction platform that is being developed by <a href="mailto:mbauzon@gmu.edu">Michael Josh Bauzon</a> and <a href="mailto:xfang5@gmu.edu">Xiaowen Fang</a> over the course of SWE 432. </p>
         </div>

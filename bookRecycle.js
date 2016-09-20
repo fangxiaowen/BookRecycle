@@ -158,6 +158,28 @@ $( document ).ready(function() {
 			document.getElementById("pass").value = "";
 		}
 	});
+	
+	/**Create Postings page create posting button*/
+	$("#createPosting").click(function() {
+		console.log("clicked createposting");
+		var labels = ['course', 'title', 'author', 'price']; //'isbn' and 'notes' are optional
+		var unfilled = false;
+		//recolor unfilled inputs
+		for(var ind=0; ind<labels.length; ind++){
+		if ( ( $('#'+ labels[ind] + '').val() ) == null  || ( $('#'+ labels[ind] + '').val() ) == '' ){
+			$('#'+ labels[ind] +'Lbl').css("color", "red");
+			unfilled = true;
+		}
+		else
+			$('#'+ labels[ind] +'Lbl').css("color", "black");
+		}
+		if (unfilled)
+			alert('Please enter required fields');
+		else{
+			$('#postSuccessMsg').html('<b>Post successfully created! </b>');
+		}
+	});
+	
 	/**Textbook Postings search button*/
 	$("#searchPostings").click(function() {
 		if ($('#courseOptions').val() == null && $('#schoolOptions').val() == null)
@@ -170,7 +192,7 @@ $( document ).ready(function() {
 			var currentCourse = $('#courseOptions').val();
 			var currentSchool = $('#schoolOptions').val();
 			printPostingToTable(currentCourse, currentSchool);
-			history.pushState([currentSchool, currentCourse], "Result", "results.html");	//add to history stack
+			history.pushState([currentSchool, currentCourse], "Result", "");	//add to history stack
 			console.log("PUSHED This is course: "+ [currentSchool, currentCourse]);
 		}
 	});
