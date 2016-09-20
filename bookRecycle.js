@@ -71,22 +71,24 @@ $( document ).ready(function() {
 	textbookUserMapping.set(textbook1jmuStudent.ID, "jmuStudent");
 	textbookUserMapping.set(textbook1uvaStudent.ID, "uvaStudent");
 	
+	/**prints table of postings based on courseID and school */
 	function printPostingToTable(courseID, school) {
 		//check if courseID and school are in our maps
 		console.log('in printPostingToTable School: ' + school + ' course ' + courseID );
+		var table = document.getElementById("searchResultTable");
+		$('#searchResultTable td').remove(); 	//reset table
+		
 		if (textbooksSchoolMap.get(school)!=null && (textbooksSchoolMap.get(school)).has(courseID))//textbooksCourseMap.get(courseID) != null)
 			$('#postingsAppear').html('<b>Postings for ' + courseID + ' by ' + school + ' students:</b>');
 		else
 			$('#postingsAppear').html('<b>Sorry, there are currently no postings for ' + courseID + ' by ' + school + ' students.</b>');
 							
-		var table = document.getElementById("searchResultTable");
-		$('#searchResultTable td').remove(); 	//reset table
-		
 		var booksArray = textbooksCourseMap.get(courseID);
 		if (booksArray!=null)
 			for (var book of booksArray){
 				var usernameOfThis = textbookUserMapping.get(book.ID);
 				if ((usersMap.get(usernameOfThis)).school == school){
+					console.log('in if');
 					var row = table.insertRow(table.rows.length);	//add row at the bottom
 					var course = row.insertCell(0);
 					var textbookTitle = row.insertCell(1);
@@ -96,7 +98,8 @@ $( document ).ready(function() {
 					var phone = row.insertCell(5);
 					var notes = row.insertCell(6);
 					var price = row.insertCell(7);
-				
+					
+					//set the values in the cells
 					course.innerHTML = courseID;
 					textbookTitle.innerHTML = book.title;
 					author.innerHTML = book.author;
@@ -108,6 +111,7 @@ $( document ).ready(function() {
 				}
 			}
 	}
+	/**Updates course options list based on schoolID passed in*/
 	function updateCourseOptions(schoolID){
 		console.log("modified courseOptions for school " + schoolID);
 		var coursesArray = schoolCourseMap.get(schoolID);
@@ -121,10 +125,7 @@ $( document ).ready(function() {
 	$("#schoolOptions").change(function() {
 		var selectedSchoolVal = $('#schoolOptions option:selected').val();
 		console.log("clicked " + selectedSchoolVal);
-		updateCourseOptions(selectedSchoolVal);
-		
-//setCourseOptions();
-		
+		updateCourseOptions(selectedSchoolVal);		
 	});
 	/**Create Account page create account button*/
 	$("#createAccount").click(function() {
@@ -147,13 +148,10 @@ $( document ).ready(function() {
 			document.getElementById("passreenter").value = "";
 		}
 		else{
-			$('#welcomeMsg').html('Welcome ' + $('#firstname').val() + ' ' + $('#lastname').val());
 			var newUser = new User($('#firstname').val(), $('#lastname').val(), $('#school').val(), $('#email').val(), $('#phone').val(), $('#username').val(), $('#pass').val() );
-			$('#welcomeMsg').html('Welcome ' + newUser.fullName() + ' succeed 123');
-			//$('#welcomeMsg').html('Welcome ' + newUser.fullName() + ' succeed 123::: ' + (usersMap.get("mbauzon")).fullName());
 			usersMap.set($('#username').val(), new User($('#firstname').val(), $('#lastname').val(), $('#school').val(), $('#email').val(), $('#phone').val(), $('#username').val(), $('#pass').val()));
 			//line above currently does not work
-			$('#welcomeMsg').html('Welcome ' + newUser.fullName() + ' succeed');
+			$('#welcomeMsg').html('<b>Account successfully created. Welcome to BookRecycle ' + newUser.fullName() + '!</b>');
 		}
 	});
 	/**Login page login button*/
@@ -181,7 +179,7 @@ $( document ).ready(function() {
 	/**Create Postings page create posting button*/
 	$("#createPosting").click(function() {
 		console.log("clicked createposting");
-		var labels = ['course', 'title', 'author', 'price']; //'isbn' and 'notes' are optional
+		var labels = ['schoolOptions', 'courseOptions', 'title', 'author', 'price']; //'isbn' and 'notes' are optional
 		var unfilled = false;
 		//recolor unfilled inputs
 		for(var ind=0; ind<labels.length; ind++){
@@ -215,6 +213,8 @@ $( document ).ready(function() {
 			console.log("PUSHED This is course: "+ [currentSchool, currentCourse]);
 		}
 	});
+	
+	/**handle back and forward activities*/
 	window.addEventListener('popstate', function(e) {
 		//use history stack states
 		document.getElementById("schoolOptions").value = (e.state)[0];

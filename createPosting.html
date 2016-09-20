@@ -26,40 +26,18 @@
 			
 			<form>
 				<div>
-					<label id="courseLbl">Select Course:</label>
-					<select id="course">
-					<option disabled selected style="color:red">-select-</option>
-					<option>CS 100</option>
-					<option>CS 101</option>
-					<option>CS 105</option>
-					<option>CS 112</option>
-					<option>CS 211</option>
-					<option>CS 222</option>
-					<option>CS 262</option>
-					<option>CS 306</option>
-					<option>CS 310</option>
-					<option>CS 321</option>
-					<option>CS 330</option>
-					<option>CS 332</option>
-					<option>CS 367</option>
-					<option>CS 390</option>
-					<option>CS 425</option>
-					<option>CS 450</option>
-					<option>CS 451</option>
-					<option>CS 465</option>
-					<option>CS 469</option>
-					<option>CS 471</option>
-					<option>CS 477</option>
-					<option>CS 480</option>
-					<option>CS 482</option>
-					<option>CS 483</option>
-					<option>CS 484</option>
-					<option>CS 485</option>
-					<option>CS 490</option>
-					<option>SWE 205</option>
-					<option>SWE 432</option>
-					<option>SWE 437</option>
-					<option>SWE 443</option>
+					<label id="schoolOptionsLbl">Select School:</label>
+					<select id="schoolOptions">
+						<option disabled selected style="color:red">-select-</option>
+						<option value="GMU">George Mason University</option>
+						<option value="JMU">James Madison University</option>
+						<option value="UVA">University of Virginia</option>
+					</select>
+				</div>
+				<div>
+					<label id="courseOptionsLbl">Select Course:</label>
+					<select id="courseOptions">
+						<option disabled selected style="color:red">-select school first-</option>
 					</select>
 				</div>
 				
@@ -72,8 +50,8 @@
 					<input type="text" id="author" />
 				</div>
 				<div>
-					<label id="isbnLbl">ISBN (optional):</label>
-					 <input type="text" id="isbn" pattern="[0-9]+"/>
+					<label id="isbnLbl">ISBN:</label>
+					 <input type="text" id="isbn" placeholder="optional" pattern="[0-9]+"/>
 				</div>
 				<div>
 					<label id="priceLbl">Price: $</label>
