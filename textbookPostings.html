@@ -29,53 +29,22 @@
 					<label>School:</label>
 					<select id="schoolOptions">
 						<option disabled selected style="color:red">-select-</option>
-						<option>George Mason University</option>
-						<option>James Madison University</option>
-						<option>University of Virginia</option>
+						<option value="GMU">George Mason University</option>
+						<option value="JMU">James Madison University</option>
+						<option value="UVA">University of Virginia</option>
 					</select>
 				</div>
 				<div>
 					<label>Select Course:</label>
 					<select id="courseOptions">
-						<option disabled selected style="color:red">-select-</option>
-						<option>CS100</option>
-						<option>CS101</option>
-						<option>CS105</option>
-						<option>CS112</option>
-						<option>CS211</option>
-						<option>CS222</option>
-						<option>CS262</option>
-						<option>CS306</option>
-						<option>CS310</option>
-						<option>CS321</option>
-						<option>CS330</option>
-						<option>CS332</option>
-						<option>CS367</option>
-						<option>CS390</option>
-						<option>CS425</option>
-						<option>CS450</option>
-						<option>CS451</option>
-						<option>CS465</option>
-						<option>CS469</option>
-						<option>CS471</option>
-						<option>CS477</option>
-						<option>CS480</option>
-						<option>CS482</option>
-						<option>CS483</option>
-						<option>CS484</option>
-						<option>CS485</option>
-						<option>CS490</option>
-						<option>SWE205</option>
-						<option>SWE432</option>
-						<option>SWE437</option>
-						<option>SWE443</option>
+						<option disabled selected style="color:red">-select school first-</option>
 					</select>
 				</div>
 			</form>
 			<div>
 				<button id="searchPostings">Search for Postings</button>
 			</div>
-			<p>NOTE: The following is what we only currently have in our hashmap: { (GMU, CS211), (GMU, CS332), (JMU, CS211), (UVA, CS211) }</p>
+			<p>NOTE: The courses options change based on the selected school. <br/>The following is what we only currently have in our hashmap: { (GMU, CS211), (GMU, CS332), (JMU, CS211), (UVA, CS2110) }</p>
 			<br/><br/>
 			<div id="postingsAppear">Your textbook search postings will appear below.</div>
 			<br/>
