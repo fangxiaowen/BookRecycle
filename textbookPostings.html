@@ -2,6 +2,8 @@
 <!--This page is for searching the textbook you want -->
 <html>
 	<head>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+		<script src="bookRecycle.js"></script>
 		<title>BookRecycle: Textbook Postings</title>
 	</head>
 	<body>
@@ -25,57 +27,44 @@
 			<form>
 				<div>
 					<label>School:</label>
-					<select>
+					<select id="schoolOptions">
 						<option disabled selected style="color:red">-select-</option>
-						<option>George Mason University</option>
-						<option>James Madison University</option>
-						<option>University of Virginia</option>
+						<option value="GMU">George Mason University</option>
+						<option value="JMU">James Madison University</option>
+						<option value="UVA">University of Virginia</option>
 					</select>
 				</div>
 				<div>
 					<label>Select Course:</label>
-					<select>
-						<option disabled selected style="color:red">-select-</option>
-						<option>CS 100</option>
-						<option>CS 101</option>
-						<option>CS 105</option>
-						<option>CS 112</option>
-						<option>CS 211</option>
-						<option>CS 222</option>
-						<option>CS 262</option>
-						<option>CS 306</option>
-						<option>CS 310</option>
-						<option>CS 321</option>
-						<option>CS 330</option>
-						<option>CS 332</option>
-						<option>CS 367</option>
-						<option>CS 390</option>
-						<option>CS 425</option>
-						<option>CS 450</option>
-						<option>CS 451</option>
-						<option>CS 465</option>
-						<option>CS 469</option>
-						<option>CS 471</option>
-						<option>CS 477</option>
-						<option>CS 480</option>
-						<option>CS 482</option>
-						<option>CS 483</option>
-						<option>CS 484</option>
-						<option>CS 485</option>
-						<option>CS 490</option>
-						<option>SWE 205</option>
-						<option>SWE 432</option>
-						<option>SWE 437</option>
-						<option>SWE 443</option>
+					<select id="courseOptions">
+						<option disabled selected style="color:red">-select school first-</option>
 					</select>
 				</div>
 			</form>
-			<form method="GET" action="textbookPostingsResults.html">
-				<button>Search for Postings</button>
-			</form>
-			<p>NOTE: Our &lt;table&gt; is in the Textbook Search Results page (click on Search for Postings)</p>
+			<div>
+				<button id="searchPostings">Search for Postings</button>
+			</div>
+			<p>NOTE: The courses options change based on the selected school. <br/>The following is what we only currently have in our hashmap: { (GMU, CS211), (GMU, CS332), (JMU, CS211), (UVA, CS2110) }</p>
+			<br/><br/>
+			<div id="postingsAppear">Your textbook search postings will appear below.</div>
+			<br/>
+			<div>
+				<table id='searchResultTable'>
+					<tr>
+						<th>Course</th>
+						<th>Textbook Title</th>
+						<th>Author</th>
+						<th>Seller</th>
+						<th>Email</th>
+						<th>Phone Number</th>
+						<th>Seller's Notes</th>
+						<th>Price ($)</th>
+					</tr>
+				</table>
+			</div>
 		</div>
-	
+		<br/><br/><br/>
+		<!--<div id="debugthis"></div>-->
 		<div class="bottomDescr">
                 <p> <strong>Book Recycle &copy;</strong> is a textbook transaction platform that is being developed by <a href="mailto:mbauzon@gmu.edu">Michael Josh Bauzon</a> and <a href="mailto:xfang5@gmu.edu">Xiaowen Fang</a> over the course of SWE 432. </p>
         </div>

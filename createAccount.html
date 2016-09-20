@@ -2,6 +2,8 @@
 <!--This page is for creating a new account -->
 <html>
 	<head>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+		<script src="bookRecycle.js"></script>
 		<title>BookRecycle: Create Account</title>
 	</head>
 	<body>
@@ -22,46 +24,56 @@
 			<br/>
 			<form>
 				<div>
-					<label for="firstname">First Name:</label>
+					<label id="firstnameLbl">First Name:</label>
 					 <input type="text" id="firstname" pattern="[A-Za-z]+"/>
 				</div>
 				<div>
-					<label for="lastname">Last Name:</label>
+					<label id="lastnameLbl">Last Name:</label>
 					 <input type="text" id="lastname" pattern="[A-Za-z]+"/>
 				</div>
 				<div>
-					<label>School:</label>
-					<select>
-					<option disabled selected style="color:red">-select-</option>
-					<option>George Mason University</option>
-					<option>James Madison University</option>
-					<option>University of Virginia</option>
+					<label id="schoolLbl">School:</label>
+					<select id="school">
+						<option disabled selected style="color:red">-select-</option>
+						<option value="GMU">George Mason University</option>
+						<option value="JMU">James Madison University</option>
+						<option value="UVA">University of Virginia</option>
 					</select>
 				</div>
 				<div>
-					<label for="Email">E-mail:</label>
-					 <input type="email" id="Email" placeholder="enter valid e-mail address" pattern="[A-Za-z]+@[A-Za-z]+\.(com|net|co)"/>
+					<label id="emailLbl">E-mail:</label>
+					 <input type="email" id="email" placeholder="enter valid e-mail address" pattern="[A-Za-z]+@[A-Za-z]+\.(com|net|co|edu|gov)"/>
 				</div>
 				<div>
-					<label for="phonenumber">Phone Number:</label>
-					 <input type="text" id="phonenumber" style="width:300px;" placeholder="###-###-#### or (###)###-#####" pattern="([\d]{10})|(\(\d{3}\)\d{7})|(\(\d{3}\)\d{3}\-\d{4})|(\d{3}\-\d{3}\-\d{4})"/></p>
+					<label id="phoneLbl">Phone Number:</label>
+					 <input type="text" id="phone" style="width:300px;" placeholder="###-###-#### or (###)###-#####" pattern="([\d]{10})|(\(\d{3}\)\d{7})|(\(\d{3}\)\d{3}\-\d{4})|(\d{3}\-\d{3}\-\d{4})"/></p>
 				</div>
 				
 				<br/>
 				<div>
-					<label for="username">Username:</label>
+					<label id="usernameLbl">Username:</label>
 					 <input type="text" id="username" placeholder="enter username" pattern="[A-Za-z]+"/></p>
 				</div>
 				<div>
-					<label for="pass">Password:</label>
+					<label id="passLbl">Password:</label>
 					<input type="password" id="pass"/></p>
 				</div>
-				<div class="button">
-					<button type="submit">Create Account</button>
+				<div>
+					<label id="passreenterLbl">Re-enter Password:</label>
+					<input type="password" id="passreenter"/></p>
 				</div>
+				
 			</form>
+			<div class="button">
+					<button id="createAccount">Create Account</button>
+			</div>
+			
+			
 		</div>
 		
+		<br/><br/>
+		<div id="welcomeMsg"></div>
+		<br/><br/><br/><br/>
 		<div class="bottomDescr">
                 <p> <strong>Book Recycle &copy;</strong> is a textbook transaction platform that is being developed by <a href="mailto:mbauzon@gmu.edu">Michael Josh Bauzon</a> and <a href="mailto:xfang5@gmu.edu">Xiaowen Fang</a> over the course of SWE 432. </p>
         </div>

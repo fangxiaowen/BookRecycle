@@ -2,6 +2,8 @@
 <!--This page is for creating a posting for the book you want to sell -->
 <html>
 	<head>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+		<script src="bookRecycle.js"></script>
 		<title>BookRecycle: Create Posting</title>
 	</head>
 	<body>
@@ -24,69 +26,49 @@
 			
 			<form>
 				<div>
-					<label>Select Course:</label>
-					<select>
-					<option disabled selected style="color:red">-select-</option>
-					<option>CS 100</option>
-					<option>CS 101</option>
-					<option>CS 105</option>
-					<option>CS 112</option>
-					<option>CS 211</option>
-					<option>CS 222</option>
-					<option>CS 262</option>
-					<option>CS 306</option>
-					<option>CS 310</option>
-					<option>CS 321</option>
-					<option>CS 330</option>
-					<option>CS 332</option>
-					<option>CS 367</option>
-					<option>CS 390</option>
-					<option>CS 425</option>
-					<option>CS 450</option>
-					<option>CS 451</option>
-					<option>CS 465</option>
-					<option>CS 469</option>
-					<option>CS 471</option>
-					<option>CS 477</option>
-					<option>CS 480</option>
-					<option>CS 482</option>
-					<option>CS 483</option>
-					<option>CS 484</option>
-					<option>CS 485</option>
-					<option>CS 490</option>
-					<option>SWE 205</option>
-					<option>SWE 432</option>
-					<option>SWE 437</option>
-					<option>SWE 443</option>
+					<label id="schoolOptionsLbl">Select School:</label>
+					<select id="schoolOptions">
+						<option disabled selected style="color:red">-select-</option>
+						<option value="GMU">George Mason University</option>
+						<option value="JMU">James Madison University</option>
+						<option value="UVA">University of Virginia</option>
+					</select>
+				</div>
+				<div>
+					<label id="courseOptionsLbl">Select Course:</label>
+					<select id="courseOptions">
+						<option disabled selected style="color:red">-select school first-</option>
 					</select>
 				</div>
 				
 				<div>
-					<label for="title">Textbook title:</label> 
+					<label id="titleLbl">Textbook title:</label> 
 					<input type="text" id="title"/>
 				</div>	
 				<div>
-					<label for="author">Author(s):</label> 
+					<label id="authorLbl">Author(s):</label> 
 					<input type="text" id="author" />
 				</div>
 				<div>
-					<label for="isbn">ISBN (optional):</label>
-					 <input type="text" id="isbn" pattern="[0-9]+"/>
+					<label id="isbnLbl">ISBN:</label>
+					 <input type="text" id="isbn" placeholder="optional" pattern="[0-9]+"/>
 				</div>
 				<div>
-					<label for="price">Price: $</label>
+					<label id="priceLbl">Price: $</label>
 					 <input type="text" id="price" pattern="[0-9]+(\.[0-9][0-9]?)?"/>
 				</div>
 				<div>
-					<label for="note">Additional note(s):</label>
+					<label id="noteLbl">Additional note(s):</label>
 					 <textArea id="note" placeholder="optional"></textArea></p>
 				</div>
-				<div class="button">
-					<button type="submit">Post your textbook!</button>
-				</div>
 			</form>
+			<div class="button">
+				<button id="createPosting">Post your textbook!</button>
+			</div>
+			
 		</div>
-		
+		<br/><br/>
+		<div id="postSuccessMsg"></div>
 		<div class="bottomDescr">
                 <p> <strong>Book Recycle &copy;</strong> is a textbook transaction platform that is being developed by <a href="mailto:mbauzon@gmu.edu">Michael Josh Bauzon</a> and <a href="mailto:xfang5@gmu.edu">Xiaowen Fang</a> over the course of SWE 432. </p>
         </div>
