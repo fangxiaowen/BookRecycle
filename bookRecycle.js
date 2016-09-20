@@ -24,11 +24,19 @@ $( document ).ready(function() {
 		this.ID = textbookIDctr;
 	}
 	
+	var gmuCourses = ["CS100", "CS101", "CS105", "CS112", "CS211", "CS222", "CS262", "CS306", "CS310", "CS321", "CS330", "CS332", "CS367", "CS390", "CS425", "CS450", "CS451", "CS465", "CS469", "CS471", "CS477", "CS480", "CS482", "CS483", "CS484", "CS485", "CS490", "SWE205", "SWE432", "SWE437", "SWE443"];
+	var jmuCourses = ["CS112", "CS211", "CS222", "CS262", "SWE432"];
+	var uvaCourses = ["CS1010", "CS1110", "CS1111", "CS1112", "CS1113", "CS2102", "CS2110", "CS2150", "CS2910", "CS3102", "CS3205", "CS3240", "CS3330", "CS4102", "CS4414", "CS4457", "CS4457", "CS4501", "CS4630", "CS4710", "CS4720", "CS4740", "CS4750", "CS4753", "CS4810", "CS4970", "CS4980", "CS4993", "CS4998"];
+	var schoolCourseMap = new Map();
+	schoolCourseMap.set("GMU", gmuCourses);
+	schoolCourseMap.set("JMU", jmuCourses);
+	schoolCourseMap.set("UVA", uvaCourses);
+	
 	var usersMap = new Map();
-	usersMap.set("mbauzon", new User("Josh", "Bauzon", "George Mason University", "mbauzon@gmu.edu", "123456789", "mbauzon", "joshpassword"));
-	usersMap.set("xfang5", new User("Xiaowen", "Fang", "George Mason University", "xfang5@gmu.edu", "111111111", "xfang5", "xiaowenpassword"));
-	usersMap.set("jmuStudent", new User("Michael", "Smith", "James Madison University", "jmuStudent@gmu.edu", "5555555555", "jmuStudent", "jmustudentpassword"));
-	usersMap.set("uvaStudent", new User("William", "Johnson", "University of Virginia", "uvaStudent@gmu.edu", "6666666666", "uvaStudent", "uvastudentpassword"));
+	usersMap.set("mbauzon", new User("Josh", "Bauzon", "GMU", "mbauzon@gmu.edu", "123456789", "mbauzon", "joshpassword"));
+	usersMap.set("xfang5", new User("Xiaowen", "Fang", "GMU", "xfang5@gmu.edu", "111111111", "xfang5", "xiaowenpassword"));
+	usersMap.set("jmuStudent", new User("Michael", "Smith", "JMU", "jmuStudent@jmu.edu", "5555555555", "jmuStudent", "jmustudentpassword"));
+	usersMap.set("uvaStudent", new User("William", "Johnson", "UVA", "uvaStudent@uva.edu", "6666666666", "uvaStudent", "uvastudentpassword"));
 	
 	var textbook1Josh = new Textbook("CS332", "PROGRAM DEVELOPMENT IN JAVA", "Liskov", "", 30, "new sealed");
 	var textbook2Josh = new Textbook("CS332", "EFFECTIVE JAVA:PROGRAMMING LANG.GDE.", "Bloch", "", 40, "used but good condition");
@@ -41,18 +49,19 @@ $( document ).ready(function() {
 	gmuTextbookSet.add("CS332");
 	gmuTextbookSet.add("CS211");
 	var textbooksSchoolMap = new Map();
-	textbooksSchoolMap.set("George Mason University", gmuTextbookSet);
+	textbooksSchoolMap.set("GMU", gmuTextbookSet);
 	
 	var jmuTextbookSet = new Set();
 	jmuTextbookSet.add("CS211");
-	textbooksSchoolMap.set("James Madison University", jmuTextbookSet);
+	textbooksSchoolMap.set("JMU", jmuTextbookSet);
 	var uvaTextbookSet = new Set();
-	uvaTextbookSet.add("CS211");
-	textbooksSchoolMap.set("University of Virginia", uvaTextbookSet);
+	uvaTextbookSet.add("CS2110");
+	textbooksSchoolMap.set("UVA", uvaTextbookSet);
 	
 	var textbooksCourseMap = new Map();
 	textbooksCourseMap.set("CS332", [textbook1Josh, textbook2Josh, textbook1Xiaowen]);
-	textbooksCourseMap.set("CS211", [textbook3Josh, textbook1jmuStudent, textbook1uvaStudent]);
+	textbooksCourseMap.set("CS211", [textbook3Josh, textbook1jmuStudent]);//, textbook1uvaStudent]);
+	textbooksCourseMap.set("CS2110", [textbook1uvaStudent]);
 	
 	var textbookUserMapping = new Map();
 	textbookUserMapping.set(textbook1Josh.ID, "mbauzon");
@@ -64,7 +73,7 @@ $( document ).ready(function() {
 	
 	function printPostingToTable(courseID, school) {
 		//check if courseID and school are in our maps
-		console.log('School: ' + school + ' course ' + courseID );
+		console.log('in printPostingToTable School: ' + school + ' course ' + courseID );
 		if (textbooksSchoolMap.get(school)!=null && (textbooksSchoolMap.get(school)).has(courseID))//textbooksCourseMap.get(courseID) != null)
 			$('#postingsAppear').html('<b>Postings for ' + courseID + ' by ' + school + ' students:</b>');
 		else
@@ -73,7 +82,6 @@ $( document ).ready(function() {
 		var table = document.getElementById("searchResultTable");
 		$('#searchResultTable td').remove(); 	//reset table
 		
-		console.log('in printPostingToTable with course ' + courseID + ' and school ' + school);
 		var booksArray = textbooksCourseMap.get(courseID);
 		if (booksArray!=null)
 			for (var book of booksArray){
@@ -92,13 +100,6 @@ $( document ).ready(function() {
 					course.innerHTML = courseID;
 					textbookTitle.innerHTML = book.title;
 					author.innerHTML = book.author;
-					
-					//$('#debugthis').html('debugwhat: '+ $('#courseOptions').val());
-					//$('#debugthis').html('debugwhat: '+ book.ID + '====' + usernameOfThis);
-					
-					//var userOfThis = usersMap.get("\""+usernameOfThis+"\"");
-					//$('#debugthis').html('debugwhat: '+ book.ID + '====' + usernameOfThis + '====' + (usersMap.get(usernameOfThis)).fullName());
-					
 					seller.innerHTML = (usersMap.get(usernameOfThis)).fullName();
 					email.innerHTML = (usersMap.get(usernameOfThis)).email;
 					phone.innerHTML = (usersMap.get(usernameOfThis)).phone;
@@ -107,6 +108,24 @@ $( document ).ready(function() {
 				}
 			}
 	}
+	function updateCourseOptions(schoolID){
+		console.log("modified courseOptions for school " + schoolID);
+		var coursesArray = schoolCourseMap.get(schoolID);
+		$('#courseOptions').find('option').remove().end().append('<option disabled selected style="color:red">-select-</option>');//.val('whatever');
+		for (var course of coursesArray){
+			var option = document.createElement("option");
+			option.text = course;
+			document.getElementById("courseOptions").add(option);
+		}
+	}
+	$("#schoolOptions").change(function() {
+		var selectedSchoolVal = $('#schoolOptions option:selected').val();
+		console.log("clicked " + selectedSchoolVal);
+		updateCourseOptions(selectedSchoolVal);
+		
+//setCourseOptions();
+		
+	});
 	/**Create Account page create account button*/
 	$("#createAccount").click(function() {
 		var labels = ['firstname', 'lastname', 'school', 'email', 'phone', 'username', 'pass', 'passreenter'];
@@ -199,6 +218,7 @@ $( document ).ready(function() {
 	window.addEventListener('popstate', function(e) {
 		//use history stack states
 		document.getElementById("schoolOptions").value = (e.state)[0];
+		updateCourseOptions((e.state)[0]);
 		document.getElementById("courseOptions").value = (e.state)[1];
 		printPostingToTable((e.state)[1], (e.state)[0]);
 		console.log("In POP This is e: "+e.state);
