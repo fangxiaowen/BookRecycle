@@ -1,4 +1,20 @@
 $( document ).ready(function() {
+	
+	//<script src="https://www.gstatic.com/firebasejs/3.4.0/firebase.js"></script>
+	// Initialize Firebase
+	var config = {
+		apiKey: "AIzaSyBYNz3IGt8PS6kZBvN7gbkXMfLC2JekAMI",
+		authDomain: "bookrecycle-5b8d1.firebaseapp.com",
+		databaseURL: "https://bookrecycle-5b8d1.firebaseio.com",
+		storageBucket: "bookrecycle-5b8d1.appspot.com",
+		messagingSenderId: "12019208667"
+	};
+	firebase.initializeApp(config);
+
+	//var bigOne = document.getElementById('testFirebase');
+	//var dbRef = firebase.database().ref().child('school').child('George Mason University');
+	//dbRef.on('value', snap => bigOne.innerText = snap.val());
+	
 	window.history;
 	var textbookIDctr = 0;
 	//User constructor
@@ -130,6 +146,61 @@ $( document ).ready(function() {
 		console.log("clicked " + selectedSchoolVal);
 		updateCourseOptions(selectedSchoolVal);		
 	});
+	function userIDExists(userID) {
+		//var ref = new Firebase("https://bookrecycle-5b8d1.firebaseio.com/users");
+		//return ref.once("value", function(snapshot) {
+		//  return snapshot.hasChild(userID);
+		//});
+
+		return (firebase.database().ref().child('users/'+ userID).on('value', function(snapshot) {
+																var a = snapshot.exists();} ));
+		
+		
+		//firebase.database().ref('users/').once('value', function(snapshot) {
+		 // return (snapshot.hasChild(userID));
+		//});
+		//return false;
+		
+		//return firebase.database().ref('users/' + userID) !== null;
+	}
+	
+	function userExistsCallback(userId, exists) {
+        if (exists) {
+          alert('Username ' + userId + ' already exists. Please pick another one.');
+        } else {
+			firebase.auth().createUserWithEmailAndPassword($('#email').val(), $('#pass').val()).then(function(user){
+				$('#welcomeMsg').html('<b>Account successfully created. Welcome to BookRecycle ' + $('#firstname').val() + ' ' + $('#lastname').val() + '! '+ user +'</b>');
+				//set up profile
+				createUserProfile($('#username').val(), $('#firstname').val(), $('#lastname').val(), $('#school').val(), $('#email').val(), $('#phone').val());
+			}).catch(function(error) {
+				// Handle Errors here.
+				var errorCode = error.code;
+				var errorMessage = error.message;
+				console.log(errorCode);
+				console.log(errorMessage);
+				$('#welcomeMsg').html('<b>'+errorMessage+'</b>');
+			});
+        }
+    }
+       
+      // Tests to see if /users/<userId> has any data. 
+    function checkIfUserExists(userId) {
+        var usersRef = new Firebase("https://bookrecycle-5b8d1.firebaseio.com/users");
+        usersRef.child(userId).once('value', function(snapshot) {
+          var exists = (snapshot.val() !== null);
+          userExistsCallback(userId, exists);
+        });
+      }
+	
+	function createUserProfile(userID, firstname, lastname, school, email, phone) {
+		firebase.database().ref('users/' + userID).set({
+		firstName: firstname,
+		lastName: lastname,
+		school: school,
+		email: email,
+		phone: phone
+		});
+	}
 	/**Create Account page create account button*/
 	$("#createAccount").click(function() {
 		var labels = ['firstname', 'lastname', 'school', 'email', 'phone', 'username', 'pass', 'passreenter'];
@@ -151,10 +222,11 @@ $( document ).ready(function() {
 			document.getElementById("passreenter").value = "";
 		}
 		else{
-			var newUser = new User($('#firstname').val(), $('#lastname').val(), $('#school').val(), $('#email').val(), $('#phone').val(), $('#username').val(), $('#pass').val() );
-			usersMap.set($('#username').val(), new User($('#firstname').val(), $('#lastname').val(), $('#school').val(), $('#email').val(), $('#phone').val(), $('#username').val(), $('#pass').val()));
+			//var newUser = new User($('#firstname').val(), $('#lastname').val(), $('#school').val(), $('#email').val(), $('#phone').val(), $('#username').val(), $('#pass').val() );
+			//usersMap.set($('#username').val(), new User($('#firstname').val(), $('#lastname').val(), $('#school').val(), $('#email').val(), $('#phone').val(), $('#username').val(), $('#pass').val()));
 			//line above currently does not work
-			$('#welcomeMsg').html('<b>Account successfully created. Welcome to BookRecycle ' + newUser.fullName() + '!</b>');
+
+			checkIfUserExists($('#username').val());
 		}
 	});
 	/**Login page login button*/
@@ -165,7 +237,29 @@ $( document ).ready(function() {
 			alert('Please enter Username');
 		else if ($('#pass').val()=='')
 			alert('Please enter Password');
-		else if (usersMap.get($('#username').val()) != null){
+		else{
+			var email = '';
+			var emailGetter = firebase.database().ref('users/' + ($('#username').val()) +'/email');
+			emailGetter.on('value', function(snapshot) {
+				console.log('hey here');
+				email = snapshot.val();
+				firebase.auth().signInWithEmailAndPassword(email, $('#pass').val()).then(function(user){
+				//var user = firebase.auth().currentUser;
+				var name = firebase.database().ref().child('users').child($('#username').val()).child('firstName');
+				$('#welcomeMsgInLogin').html('<b>Welcome back to BookRecycle ' + name + '! '+ user.displayName  +'</b>');
+				
+				}).catch(function(error) {
+				  // Handle Errors here.
+				  console.log('fail');
+				  var errorCode = error.code;
+				  var errorMessage = error.message;
+				  $('#welcomeMsgInLogin').html('<b>'+errorMessage+'</b>');
+				});
+			});
+			console.log(email);
+			
+		}
+		/*else if (usersMap.get($('#username').val()) != null){
 			if ((usersMap.get($('#username').val())).pass === $('#pass').val())		//SUCCEESS login
 				$('#welcomeMsgInLogin').html('<b>Welcome ' + (usersMap.get($('#username').val())).fullName() + '!</b>');
 			else
@@ -176,7 +270,7 @@ $( document ).ready(function() {
 			//reset data input fields
 			document.getElementById("username").value = "";
 			document.getElementById("pass").value = "";
-		}
+		}*/
 	});
 	
 	/**Create Postings page create posting button*/
