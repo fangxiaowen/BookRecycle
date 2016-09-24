@@ -17,15 +17,16 @@
 				<li><a href="textbookPostings.html">Find Textbooks</a></li>
 				<li><a href="loginPage.html">Login</a></li>
 				<li><a href="createAccount.html">Create Account</a></li>
+				<li><div id="navBarUser"></div></li>
 			</ul>
 		</div>
 		<br/>
 		<br/>
-		<div class="bodyContainer">
+		<div class="bodyContainer" >
 			<p><strong><font size=5>Create Posting</font></strong></p>
 			<br/>
-			
-			<form>
+			<div id="createPostingNotSignedInMsg" style="display: none"><b>You are currently not signed in. Please sign in before posting.</b> </div>
+			<form id="createPostingForm" style="display: none">
 				<div>
 					<label id="schoolOptionsLbl">Select School:</label>
 					<select id="schoolOptions">
@@ -62,10 +63,17 @@
 					<label id="noteLbl">Additional note(s):</label>
 					 <textArea id="note" placeholder="optional"></textArea></p>
 				</div>
+				
 			</form>
 			<div class="button">
-				<button id="createPosting">Post your textbook!</button>
+					<button id="createPosting">Post your textbook!</button>
 			</div>
+			
+			<br/><br/><br/>
+			<!--<div id="loading" style="position: absolute; height: 100px; width: 100px; top: 50%; left: 50%; margin-left: -50px; margin-top: -50px; display: none; ">
+				<img src="spinner.gif" width="80" />
+			</div>-->
+			<div id="createPostingMsg"></div>
 			
 		</div>
 		<br/><br/>

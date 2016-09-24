@@ -167,11 +167,30 @@ $( document ).ready(function() {
 	function userExistsCallback(userId, exists) {
         if (exists) {
           alert('Username ' + userId + ' already exists. Please pick another one.');
+		  document.getElementById("username").value = ""; //reset field
         } else {
 			firebase.auth().createUserWithEmailAndPassword($('#email').val(), $('#pass').val()).then(function(user){
-				$('#welcomeMsg').html('<b>Account successfully created. Welcome to BookRecycle ' + $('#firstname').val() + ' ' + $('#lastname').val() + '! '+ user +'</b>');
 				//set up profile
 				createUserProfile($('#username').val(), $('#firstname').val(), $('#lastname').val(), $('#school').val(), $('#email').val(), $('#phone').val());
+				var user = firebase.auth().currentUser;
+				
+				user.updateProfile({
+				  displayName: userId
+				}).then(function() {
+				  // Update successful.
+				  console('displayname updated to: ' + userId);
+				}, function(error) {
+				  // An error happened.
+				  console('displayname not updated');
+				});
+				firebase.auth().onAuthStateChanged(function(user) {
+				  if (user) {
+					// User is signed in.
+					$('#welcomeMsg').html('<b>Account successfully created. Welcome to BookRecycle ' + $('#firstname').val() + ' ' + $('#lastname').val() + '! '+ user.displayName +'</b>');
+				  } else {
+					// No user is signed in.
+				  }
+				});
 			}).catch(function(error) {
 				// Handle Errors here.
 				var errorCode = error.code;
@@ -245,9 +264,12 @@ $( document ).ready(function() {
 				email = snapshot.val();
 				firebase.auth().signInWithEmailAndPassword(email, $('#pass').val()).then(function(user){
 				//var user = firebase.auth().currentUser;
+				//login success
 				var name = firebase.database().ref().child('users').child($('#username').val()).child('firstName');
 				$('#welcomeMsgInLogin').html('<b>Welcome back to BookRecycle ' + name + '! '+ user.displayName  +'</b>');
-				
+				var username = $('#username').val();
+				window.location.href='index.html';
+				console.log(username);
 				}).catch(function(error) {
 				  // Handle Errors here.
 				  console.log('fail');
@@ -273,24 +295,99 @@ $( document ).ready(function() {
 		}*/
 	});
 	
+	window.onload = function(){
+		firebase.auth().onAuthStateChanged(function(user) {
+			if (user) {
+			// User is signed in.
+				$('#welcomeMsg').html('<b>Account successfully created. Welcome to BookRecycle ' + $('#firstname').val() + ' ' + $('#lastname').val() + '! '+ user.displayName +'</b>');
+				console.log('user logged in: ' + user.displayName);
+				console.log('in load in if');
+				$('#navBarUser').html('<b>You are signed in as: <u>' + user.displayName + '</u></b>');
+				//display createPosting form
+				$("#createPostingForm").show();
+				$("#createPostingNotSignedInMsg").hide();
+			 } else {
+			// No user is signed in.
+				$('#navBarUser').html('You are not logged in please sign in!');
+				$("#createPostingForm").hide();
+				$("#createPostingNotSignedInMsg").show();
+				
+			}
+		});
+		/*var user = firebase.auth().currentUser;
+		console.log(user.email);
+		console.log('in load');
+		if (firebase.auth().currentUser != null){
+			console.log('inside if');
+			$("#createPostingForm").show();
+			$("#createPostingNotSignedInMsg").hide();
+		}*/
+	};
+	function createTextbookPosting(school, course, userID, title, author, price, isbn, note) {
+		//alert if user already has a post on school and course
+		console.log('in createTextbookPosting function ' + school + ' ' + course + ' ' + userID + ' ' + title + ' ' + author + ' ' + price + ' ' + isbn + ' ' + note)
+		firebase.database().ref('school/' + school + '/' + course + '/' + userID).set({
+		title: title,
+		author: author,
+		price: price,
+		isbn: isbn,
+		note: note
+		});
+		
+	}
+	
 	/**Create Postings page create posting button*/
 	$("#createPosting").click(function() {
 		console.log("clicked createposting");
-		var labels = ['schoolOptions', 'courseOptions', 'title', 'author', 'price']; //'isbn' and 'notes' are optional
-		var unfilled = false;
-		//recolor unfilled inputs
-		for(var ind=0; ind<labels.length; ind++){
-		if ( ( $('#'+ labels[ind] + '').val() ) == null  || ( $('#'+ labels[ind] + '').val() ) == '' ){
-			$('#'+ labels[ind] +'Lbl').css("color", "red");
-			unfilled = true;
+		if (firebase.auth().currentUser == null){
+			alert('You are not signed in. Please sign in first.');
 		}
-		else
-			$('#'+ labels[ind] +'Lbl').css("color", "black");
-		}
-		if (unfilled)
-			alert('Please enter required fields');
 		else{
-			$('#postSuccessMsg').html('<b>Post successfully created! </b>');
+		// $('#loading').show();
+			
+			console.log(firebase.auth().currentUser);
+			var labels = ['schoolOptions', 'courseOptions', 'title', 'author', 'price']; //'isbn' and 'notes' are optional
+			var unfilled = false;
+			//recolor unfilled inputs
+			for(var ind=0; ind<labels.length; ind++){
+			if ( ( $('#'+ labels[ind] + '').val() ) == null  || ( $('#'+ labels[ind] + '').val() ) == '' ){
+				$('#'+ labels[ind] +'Lbl').css("color", "red");
+				unfilled = true;
+			}
+			else
+				$('#'+ labels[ind] +'Lbl').css("color", "black");
+			}
+			if (unfilled)
+				alert('Please enter required fields');
+			else{
+				console.log('post success');
+				var isbn = $('#isbn').val();
+				var note = $('#note').val();
+				if ($('#isbn').val() == "")
+					isbn = "none";
+				if ($('#note').val() == "")
+					note = "none";
+				firebase.auth().onAuthStateChanged(function(user) {
+				if (user) {
+					// User is signed in.
+					createTextbookPosting($('#schoolOptions').val(), $('#courseOptions').val(), user.displayName, $('#title').val(), $('#author').val(), $('#price').val(), isbn, note);
+					$('#postSuccessMsg').html('<b>Post successfully created! </b>');
+					//reset fields
+					document.getElementById("schoolOptions").value = "-select-";
+					document.getElementById("courseOptions").value = "-select-";
+					document.getElementById("title").value = "";
+					document.getElementById("author").value = "";
+					document.getElementById("isbn").value = "";
+					document.getElementById("price").value = "";
+					document.getElementById("isbn").value = "";
+				 } else {
+					// No user is signed in.
+					('#postSuccessMsg').html('<b>Post unssuccessful</b>');
+					console.log('else');
+				}
+				});
+				$('#postSuccessMsg').html('<b>Post successfully created! </b>');
+			}
 		}
 	});
 	
