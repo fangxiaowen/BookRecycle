@@ -2,6 +2,7 @@
 <!--This page is for searching the textbook you want -->
 <html>
 	<head>
+		<script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
 		<script src="https://www.gstatic.com/firebasejs/3.4.0/firebase.js"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 		<script src="bookRecycle.js"></script>
@@ -18,6 +19,7 @@
 				<li><a href="loginPage.html">Login</a></li>
 				<li><a href="createAccount.html">Create Account</a></li>
 				<li><div id="navBarUser"></div></li>
+				<li id="logoutLink" style="display: none" onclick="logoutFunc()"><a>Logout</a></li>
 			</ul>
 		</div>
 		<br/>
@@ -55,6 +57,7 @@
 					<tr>
 						<th>Course</th>
 						<th>Textbook Title</th>
+						<th>ISBN</th>
 						<th>Author</th>
 						<th>Seller</th>
 						<th>Email</th>

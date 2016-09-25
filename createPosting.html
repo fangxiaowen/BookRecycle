@@ -2,6 +2,7 @@
 <!--This page is for creating a posting for the book you want to sell -->
 <html>
 	<head>
+		<script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
 		<script src="https://www.gstatic.com/firebasejs/3.4.0/firebase.js"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 		<script src="bookRecycle.js"></script>
@@ -18,12 +19,13 @@
 				<li><a href="loginPage.html">Login</a></li>
 				<li><a href="createAccount.html">Create Account</a></li>
 				<li><div id="navBarUser"></div></li>
+				<li id="logoutLink" style="display: none" onclick="logoutFunc()"><a>Logout</a></li>
 			</ul>
 		</div>
 		<br/>
 		<br/>
 		<div class="bodyContainer" >
-			<p><strong><font size=5>Create Posting</font></strong></p>
+			<p><strong><font size=5>Post a Textbook</font></strong></p>
 			<br/>
 			<div id="createPostingNotSignedInMsg" style="display: none"><b>You are currently not signed in. Please sign in before posting.</b> </div>
 			<form id="createPostingForm" style="display: none">
@@ -66,7 +68,7 @@
 				
 			</form>
 			<div class="button">
-					<button id="createPosting">Post your textbook!</button>
+					<button id="createPostingButton">Post your textbook!</button>
 			</div>
 			
 			<br/><br/><br/>

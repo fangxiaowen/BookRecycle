@@ -19,13 +19,15 @@
 				<li><a href="loginPage.html">Login</a></li>
 				<li><div id="selected">Create Account</div></li>
 				<li><div id="navBarUser"></div></li>
+				<li id="logoutLink" style="display: none" onclick="logoutFunc()"><a>Logout</a></li>
 			</ul>
 		</div>
 		<br/>
 		<div class="bodyContainer">
 			<br/><p><strong><font size=5>Create Account</font></strong></p>
 			<br/>
-			<form>
+			<div id="createAccountSignedInMsg" style="display: none"><b>You are already signed in. You cannot create an account while signed in. </div>
+			<form id="createAccountForm" style="display: none">
 				<div>
 					<label id="firstnameLbl">First Name:</label>
 					 <input type="text" id="firstname" pattern="[A-Za-z]+"/>
@@ -68,7 +70,7 @@
 				
 			</form>
 			<div class="button">
-					<button id="createAccount">Create Account</button>
+					<button id="createAccountButton">Create Account</button>
 			</div>
 			
 			
