@@ -30,17 +30,6 @@ $( document ).ready(function() {
 			return this.firstName + " " + this.lastName;
 		}
 	}
-	//Textbook constructor
-	function Textbook(course, title, author, isbn, price, notes){
-		this.courseID = course;
-		this.title = title;
-		this.author = author;
-		this.isbn = isbn;
-		this.price = price;
-		this.notes = notes;
-		textbookIDctr++;
-		this.ID = textbookIDctr;
-	}
 	
 	var gmuCourses = ["CS100", "CS101", "CS105", "CS112", "CS211", "CS222", "CS262", "CS306", "CS310", "CS321", "CS330", "CS332", "CS367", "CS390", "CS425", "CS450", "CS451", "CS465", "CS469", "CS471", "CS477", "CS480", "CS482", "CS483", "CS484", "CS485", "CS490", "SWE205", "SWE432", "SWE437", "SWE443"];
 	var jmuCourses = ["CS112", "CS211", "CS222", "CS262", "SWE432"];
@@ -50,46 +39,7 @@ $( document ).ready(function() {
 	schoolCourseMap.set("GMU", gmuCourses);
 	schoolCourseMap.set("JMU", jmuCourses);
 	schoolCourseMap.set("UVA", uvaCourses);
-	//map username to user info
-	var usersMap = new Map();
-	usersMap.set("mbauzon", new User("Josh", "Bauzon", "GMU", "mbauzon@gmu.edu", "123456789", "mbauzon", "joshpassword"));
-	usersMap.set("xfang5", new User("Xiaowen", "Fang", "GMU", "xfang5@gmu.edu", "111111111", "xfang5", "xiaowenpassword"));
-	usersMap.set("jmuStudent", new User("Michael", "Smith", "JMU", "jmuStudent@jmu.edu", "5555555555", "jmuStudent", "jmustudentpassword"));
-	usersMap.set("uvaStudent", new User("William", "Johnson", "UVA", "uvaStudent@uva.edu", "6666666666", "uvaStudent", "uvastudentpassword"));
-	//info of the textbook owned by the user
-	var textbook1Josh = new Textbook("CS332", "PROGRAM DEVELOPMENT IN JAVA", "Liskov", "", 30, "new sealed");
-	var textbook2Josh = new Textbook("CS332", "EFFECTIVE JAVA:PROGRAMMING LANG.GDE.", "Bloch", "", 40, "used but good condition");
-	var textbook1Xiaowen = new Textbook("CS332", "PROGRAM DEVELOPMENT IN JAVA", "Liskov", "", 25, "partly used");
-	var textbook3Josh = new Textbook("CS211", "GMU texbook for CS211", "Thomas LaToza", "", 45, "semi-new");
-	var textbook1jmuStudent = new Textbook("CS211", "JMU texbook for CS211", "Thomas LaToza", "", 50, "brand new");
-	var textbook1uvaStudent = new Textbook("CS211", "UVA texbook for CS211", "Thomas LaToza", "", 35, "used");
-	//map school name to textbooks avaliable in that school
-	var gmuTextbookSet = new Set();
-	gmuTextbookSet.add("CS332");
-	gmuTextbookSet.add("CS211");
-	var textbooksSchoolMap = new Map();
-	textbooksSchoolMap.set("GMU", gmuTextbookSet);
-	
-	var jmuTextbookSet = new Set();
-	jmuTextbookSet.add("CS211");
-	textbooksSchoolMap.set("JMU", jmuTextbookSet);
-	var uvaTextbookSet = new Set();
-	uvaTextbookSet.add("CS2110");
-	textbooksSchoolMap.set("UVA", uvaTextbookSet);
-	//map course id to textbooks required by the course
-	var textbooksCourseMap = new Map();
-	textbooksCourseMap.set("CS332", [textbook1Josh, textbook2Josh, textbook1Xiaowen]);
-	textbooksCourseMap.set("CS211", [textbook3Josh, textbook1jmuStudent]);//, textbook1uvaStudent]);
-	textbooksCourseMap.set("CS2110", [textbook1uvaStudent]);
-	//map textbook id to user name
-	var textbookUserMapping = new Map();
-	textbookUserMapping.set(textbook1Josh.ID, "mbauzon");
-	textbookUserMapping.set(textbook2Josh.ID, "mbauzon");
-	textbookUserMapping.set(textbook1Xiaowen.ID, "xfang5");
-	textbookUserMapping.set(textbook3Josh.ID, "mbauzon");
-	textbookUserMapping.set(textbook1jmuStudent.ID, "jmuStudent");
-	textbookUserMapping.set(textbook1uvaStudent.ID, "uvaStudent");
-	
+
 	/**prints table of postings based on courseID and school */
 	function printPostingToTable(courseID, school) {
 		var table = document.getElementById("searchResultTable");
@@ -100,12 +50,12 @@ $( document ).ready(function() {
 		console.log('in print posting');
 		var ref = new Firebase("https://bookrecycle-5b8d1.firebaseio.com/school/" + school + "/" + courseID);
 		ref.once("value", function(snapshot) {			//firebase.database().ref("school/" + school + "/" + courseID).once("value").then(function(snapshot) {
-		  	//go through each seller of this school, course search combination
+		  	//go through each postingID of this school, course search combination
 			snapshot.forEach(function(childSnapshot) {
 				$('#postingsAppear').html('<b>Textbook postings for ' + courseID + ' at ' + school + ' are the following: ');
 				
-				console.log('current seller: '+ childSnapshot.key());
-				var seller = childSnapshot.key();
+				console.log('current postingID: '+ childSnapshot.key());
+				var postingID = childSnapshot.key();
 				
 				var row = table.insertRow(table.rows.length);	//add row at the bottom
 				var course = row.insertCell(0);
@@ -122,73 +72,42 @@ $( document ).ready(function() {
 				var textbookValsMap = new Map();
 				
 				course.innerHTML = courseID;
-				firebase.database().ref("school/" + school + "/" + courseID + "/" + seller + "/title").once('value').then(function(snapshot) {
+				firebase.database().ref("school/" + school + "/" + courseID + "/" + postingID + "/title").once('value').then(function(snapshot) {
 					textbookTitle.innerHTML = snapshot.val();
 				});
-				firebase.database().ref("school/" + school + "/" + courseID + "/" + seller + "/isbn").once('value').then(function(snapshot) {
+				firebase.database().ref("school/" + school + "/" + courseID + "/" + postingID + "/isbn").once('value').then(function(snapshot) {
 					isbn.innerHTML = snapshot.val();
 				});
-				firebase.database().ref("school/" + school + "/" + courseID + "/" + seller + "/author").once('value').then(function(snapshot) {
+				firebase.database().ref("school/" + school + "/" + courseID + "/" + postingID + "/author").once('value').then(function(snapshot) {
 					author.innerHTML = snapshot.val();
 				});
-				//firebase.database().ref("users/" + seller +"/email").once('value').then(function(snapshot) {
-				//	email.innerHTML = snapshot.val();
-				//})
-				sellerCell.innerHTML = seller;
-				firebase.database().ref("users/" + seller +"/email").once('value').then(function(snapshot) {
-					email.innerHTML = snapshot.val();
+				//get seller info
+				firebase.database().ref("school/" + school + "/" + courseID + "/" + postingID + "/sellerID").once('value').then(function(snapshot) {
+					var sellerID = snapshot.val();
+					firebase.database().ref("users/" + sellerID +"/firstName").once('value').then(function(snapshot) {
+						var firstname = snapshot.val();
+						firebase.database().ref("users/" + sellerID +"/lastName").once('value').then(function(snapshot) {
+							sellerCell.innerHTML = firstname + " " + snapshot.val();
+						});
+					});
+					firebase.database().ref("users/" + sellerID +"/email").once('value').then(function(snapshot) {
+						email.innerHTML = snapshot.val();
+					});
+					firebase.database().ref("users/" + sellerID +"/phone").once('value').then(function(snapshot) {
+						phone.innerHTML = snapshot.val();
+					});
+					
 				});
-				firebase.database().ref("users/" + seller +"/phone").once('value').then(function(snapshot) {
-					phone.innerHTML = snapshot.val();
-				});
-				firebase.database().ref("school/" + school + "/" + courseID + "/" + seller + "/note").once('value').then(function(snapshot) {
+				
+				firebase.database().ref("school/" + school + "/" + courseID + "/" + postingID + "/note").once('value').then(function(snapshot) {
 					notes.innerHTML = snapshot.val();
 				});
-				firebase.database().ref("school/" + school + "/" + courseID + "/" + seller + "/price").once('value').then(function(snapshot) {
+				firebase.database().ref("school/" + school + "/" + courseID + "/" + postingID + "/price").once('value').then(function(snapshot) {
 					price.innerHTML = snapshot.val();
 				});
 			});
 		  
 		});
-		
-		/*
-		//check if courseID and school are in our maps
-		console.log('in printPostingToTable School: ' + school + ' course ' + courseID );
-		var table = document.getElementById("searchResultTable");
-		$('#searchResultTable td').remove(); 	//reset table
-		
-		if (textbooksSchoolMap.get(school)!=null && (textbooksSchoolMap.get(school)).has(courseID))//textbooksCourseMap.get(courseID) != null)
-			$('#postingsAppear').html('<b>Postings for ' + courseID + ' by ' + school + ' students:</b>');
-		else
-			$('#postingsAppear').html('<b>Sorry, there are currently no postings for ' + courseID + ' by ' + school + ' students.</b>');
-							
-		var booksArray = textbooksCourseMap.get(courseID);
-		if (booksArray!=null)
-			for (var book of booksArray){
-				var usernameOfThis = textbookUserMapping.get(book.ID);
-				if ((usersMap.get(usernameOfThis)).school == school){
-					console.log('in if');
-					var row = table.insertRow(table.rows.length);	//add row at the bottom
-					var course = row.insertCell(0);
-					var textbookTitle = row.insertCell(1);
-					var author = row.insertCell(2);
-					var seller = row.insertCell(3);
-					var email = row.insertCell(4);
-					var phone = row.insertCell(5);
-					var notes = row.insertCell(6);
-					var price = row.insertCell(7);
-					
-					//set the values in the cells
-					course.innerHTML = courseID;
-					textbookTitle.innerHTML = book.title;
-					author.innerHTML = book.author;
-					seller.innerHTML = (usersMap.get(usernameOfThis)).fullName();
-					email.innerHTML = (usersMap.get(usernameOfThis)).email;
-					phone.innerHTML = (usersMap.get(usernameOfThis)).phone;
-					notes.innerHTML = book.notes;
-					price.innerHTML = book.price;
-				}
-			}*/
 	}
 	/**Updates course options list based on schoolID passed in*/
 	function updateCourseOptions(schoolID){
@@ -288,10 +207,6 @@ $( document ).ready(function() {
 			document.getElementById("passreenter").value = "";
 		}
 		else{
-			//var newUser = new User($('#firstname').val(), $('#lastname').val(), $('#school').val(), $('#email').val(), $('#phone').val(), $('#username').val(), $('#pass').val() );
-			//usersMap.set($('#username').val(), new User($('#firstname').val(), $('#lastname').val(), $('#school').val(), $('#email').val(), $('#phone').val(), $('#username').val(), $('#pass').val()));
-			//line above currently does not work
-
 			checkIfUserExists($('#username').val());
 		}
 	});
@@ -342,18 +257,6 @@ $( document ).ready(function() {
 			console.log(email);
 			
 		}
-		/*else if (usersMap.get($('#username').val()) != null){
-			if ((usersMap.get($('#username').val())).pass === $('#pass').val())		//SUCCEESS login
-				$('#welcomeMsgInLogin').html('<b>Welcome ' + (usersMap.get($('#username').val())).fullName() + '!</b>');
-			else
-				alert('Username/Password did not match!');	//wrong password
-		}
-		else{
-			alert('Username is not found! Try again or Create an Account!');	//username not in our database
-			//reset data input fields
-			document.getElementById("username").value = "";
-			document.getElementById("pass").value = "";
-		}*/
 	});
 	$("#logoutLink").click(function() {
 		firebase.auth().signOut().then(function() {
@@ -414,14 +317,21 @@ $( document ).ready(function() {
 	function createTextbookPosting(school, course, userID, title, author, price, isbn, note) {
 		//alert if user already has a post on school and course
 		console.log('in createTextbookPosting function ' + school + ' ' + course + ' ' + userID + ' ' + title + ' ' + author + ' ' + price + ' ' + isbn + ' ' + note)
-		firebase.database().ref('school/' + school + '/' + course + '/' + userID).set({
+		/*firebase.database().ref('school/' + school + '/' + course + '/' + userID).set({
+		title: title,
+		author: author,
+		price: price,
+		isbn: isbn,
+		note: note
+		});*/
+		var key = firebase.database().ref('school/' + school + '/' + course).push({
+		sellerID: userID,
 		title: title,
 		author: author,
 		price: price,
 		isbn: isbn,
 		note: note
 		});
-		
 	}
 	
 	/**Create Postings page create posting button*/
