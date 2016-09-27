@@ -2,6 +2,8 @@
 <!--This page is for creating a posting for the book you want to sell -->
 <html>
 	<head>
+		<script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
+		<script src="https://www.gstatic.com/firebasejs/3.4.0/firebase.js"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 		<script src="bookRecycle.js"></script>
 		<title>BookRecycle: Create Posting</title>
@@ -16,15 +18,17 @@
 				<li><a href="textbookPostings.html">Find Textbooks</a></li>
 				<li><a href="loginPage.html">Login</a></li>
 				<li><a href="createAccount.html">Create Account</a></li>
+				<li><div id="navBarUser"></div></li>
+				<li id="logoutLink" style="display: none"><a>Logout</a></li>
 			</ul>
 		</div>
 		<br/>
 		<br/>
-		<div class="bodyContainer">
-			<p><strong><font size=5>Create Posting</font></strong></p>
+		<div class="bodyContainer" >
+			<p><strong><font size=5>Post a Textbook</font></strong></p>
 			<br/>
-			
-			<form>
+			<div id="createPostingNotSignedInMsg" style="display: none"><b>You are currently not signed in. Please sign in before posting.</b> </div>
+			<form id="createPostingForm" style="display: none">
 				<div>
 					<label id="schoolOptionsLbl">Select School:</label>
 					<select id="schoolOptions">
@@ -61,14 +65,22 @@
 					<label id="noteLbl">Additional note(s):</label>
 					 <textArea id="note" placeholder="optional"></textArea></p>
 				</div>
+				
 			</form>
 			<div class="button">
-				<button id="createPosting">Post your textbook!</button>
+					<button id="createPostingButton">Post your textbook!</button>
 			</div>
+			
+			<br/><br/><br/>
+			<div id="spinner" style="position: absolute; height: 100px; width: 100px; top: 68%; left: 13%; margin-left: -50px; margin-top: -50px; z-index:0; display:none">
+				<img src="spinner.gif" width="80" />
+			</div>
+			<div id="createPostingMsg"></div>
 			
 		</div>
 		<br/><br/>
 		<div id="postSuccessMsg"></div>
+		<br/><br/><br/><br/><br/><br/><br/>
 		<div class="bottomDescr">
                 <p> <strong>Book Recycle &copy;</strong> is a textbook transaction platform that is being developed by <a href="mailto:mbauzon@gmu.edu">Michael Josh Bauzon</a> and <a href="mailto:xfang5@gmu.edu">Xiaowen Fang</a> over the course of SWE 432. </p>
         </div>

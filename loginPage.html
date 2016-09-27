@@ -2,6 +2,8 @@
 <!--This page is for user to login in -->
 <html>
 	<head>
+		<script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
+		<script src="https://www.gstatic.com/firebasejs/3.4.0/firebase.js"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 		<script src="bookRecycle.js"></script>
 		<title>BookRecycle: Login</title>
@@ -17,6 +19,8 @@
 				<li><a href="textbookPostings.html">Find Textbooks</a></li>
 				<li><div id="selected">Login</div></li>
 				<li><a href="createAccount.html">Create Account</a></li>
+				<li><div id="navBarUser"></div></li>
+				<li id="logoutLink" style="display: none"><a>Logout</a></li>
 			</ul>
 		</div>
 		<br/>
@@ -24,8 +28,8 @@
 		<div class="bodyContainer">
 			<p><strong><font size=5>Login</font></strong></p>
 			<br/>
-			
-			<form>
+			<div id="logInSignedInMsg" style="display: none"><b>You are already signed in. <a href="createPosting.html">Create Posting</a> now!</b> </div>
+			<form id="loginForm" style="display: none">
 				<div>
 					<label for="username">Username:</label>
 					<input type="text" id="username" placeholder="enter username" pattern="^[A-Za-z0-9]+$"/></p>
@@ -40,7 +44,7 @@
 				<br/>			
 		</form>		
 		<div>
-			<button id="login">Login</button>
+			<button id="loginButton">Login</button>
 		</div>
 		
 		</div>

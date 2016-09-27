@@ -3,6 +3,7 @@
 <html>
 	<head>
 		<title>Book Recycle</title>
+		<script src="https://www.gstatic.com/firebasejs/3.4.0/firebase.js"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 		<script src="bookRecycle.js"></script>
 		<script>
@@ -21,16 +22,23 @@
 				<li><a href="textbookPostings.html">Find Textbooks</a></li>
 				<li><a href="loginPage.html">Login</a></li>
 				<li><a href="createAccount.html">Create Account</a></li>
+				<li><div id="navBarUser"></div></li>
+				<li id="logoutLink" style="display: none"><a>Logout</a></li>
 			</ul>
 		</div>
 		<br/>
 		<br/>
 		<div class="bodyContainer">
 			<p>
-				<div  onclick="welcomeIndex(this)" data-message="BookRecycle"><strong><font size=5>BookRecycle</font></strong><br/></div>
+				<div onclick="welcomeIndex(this)" data-message="BookRecycle"><strong><font size=5>BookRecycle</font></strong><br/></div>
+				<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+				<div id="welcomeIndex" style="display: none"></div>
+				<br/><br/>
 				<!-- Image below is our own produced logo -->
 				<img src= "BookRecycleLogo.png" height="220" width="240">
 			</p>
+			<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+			<div id="testFirebase"></div>
 		</div>
 		
 		<div class="bottomDescr">

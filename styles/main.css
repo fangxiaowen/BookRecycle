@@ -29,6 +29,19 @@ body{
 	transition: all 1s ease-in-out;
 }
 
+.navBar li div {
+	text-decoration:none;
+	padding:5px 0;
+	padding-right: 15px;
+	width:400px;
+	height: 25px;
+	background:#003399;
+	color:#eee;
+	float:left;
+	text-align:right;
+	border-left:1px solid #fff;
+}
+
 .navBar li a:hover {
 	background:#337aff;
 	color:#000;

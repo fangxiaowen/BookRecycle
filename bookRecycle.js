@@ -1,6 +1,18 @@
 $( document ).ready(function() {
+	
+	//<script src="https://www.gstatic.com/firebasejs/3.4.0/firebase.js"></script>
+	// Initialize Firebase
+	var config = {
+		apiKey: "AIzaSyBYNz3IGt8PS6kZBvN7gbkXMfLC2JekAMI",
+		authDomain: "bookrecycle-5b8d1.firebaseapp.com",
+		databaseURL: "https://bookrecycle-5b8d1.firebaseio.com",
+		storageBucket: "bookrecycle-5b8d1.appspot.com",
+		messagingSenderId: "12019208667"
+	};
+	firebase.initializeApp(config);
+
 	window.history;
-	var textbookIDctr = 0;
+	
 	//User constructor
 	function User(first, last, school, email, phone, user, pass){
 		this.firstName = first;
@@ -14,17 +26,6 @@ $( document ).ready(function() {
 			return this.firstName + " " + this.lastName;
 		}
 	}
-	//Textbook constructor
-	function Textbook(course, title, author, isbn, price, notes){
-		this.courseID = course;
-		this.title = title;
-		this.author = author;
-		this.isbn = isbn;
-		this.price = price;
-		this.notes = notes;
-		textbookIDctr++;
-		this.ID = textbookIDctr;
-	}
 	
 	var gmuCourses = ["CS100", "CS101", "CS105", "CS112", "CS211", "CS222", "CS262", "CS306", "CS310", "CS321", "CS330", "CS332", "CS367", "CS390", "CS425", "CS450", "CS451", "CS465", "CS469", "CS471", "CS477", "CS480", "CS482", "CS483", "CS484", "CS485", "CS490", "SWE205", "SWE432", "SWE437", "SWE443"];
 	var jmuCourses = ["CS112", "CS211", "CS222", "CS262", "SWE432"];
@@ -34,86 +35,126 @@ $( document ).ready(function() {
 	schoolCourseMap.set("GMU", gmuCourses);
 	schoolCourseMap.set("JMU", jmuCourses);
 	schoolCourseMap.set("UVA", uvaCourses);
-	//map username to user info
-	var usersMap = new Map();
-	usersMap.set("mbauzon", new User("Josh", "Bauzon", "GMU", "mbauzon@gmu.edu", "123456789", "mbauzon", "joshpassword"));
-	usersMap.set("xfang5", new User("Xiaowen", "Fang", "GMU", "xfang5@gmu.edu", "111111111", "xfang5", "xiaowenpassword"));
-	usersMap.set("jmuStudent", new User("Michael", "Smith", "JMU", "jmuStudent@jmu.edu", "5555555555", "jmuStudent", "jmustudentpassword"));
-	usersMap.set("uvaStudent", new User("William", "Johnson", "UVA", "uvaStudent@uva.edu", "6666666666", "uvaStudent", "uvastudentpassword"));
-	//info of the textbook owned by the user
-	var textbook1Josh = new Textbook("CS332", "PROGRAM DEVELOPMENT IN JAVA", "Liskov", "", 30, "new sealed");
-	var textbook2Josh = new Textbook("CS332", "EFFECTIVE JAVA:PROGRAMMING LANG.GDE.", "Bloch", "", 40, "used but good condition");
-	var textbook1Xiaowen = new Textbook("CS332", "PROGRAM DEVELOPMENT IN JAVA", "Liskov", "", 25, "partly used");
-	var textbook3Josh = new Textbook("CS211", "GMU texbook for CS211", "Thomas LaToza", "", 45, "semi-new");
-	var textbook1jmuStudent = new Textbook("CS211", "JMU texbook for CS211", "Thomas LaToza", "", 50, "brand new");
-	var textbook1uvaStudent = new Textbook("CS211", "UVA texbook for CS211", "Thomas LaToza", "", 35, "used");
-	//map school name to textbooks avaliable in that school
-	var gmuTextbookSet = new Set();
-	gmuTextbookSet.add("CS332");
-	gmuTextbookSet.add("CS211");
-	var textbooksSchoolMap = new Map();
-	textbooksSchoolMap.set("GMU", gmuTextbookSet);
+
+	/**On load of page*/
+		window.onload = function(){
+		firebase.auth().onAuthStateChanged(function(user) {
+			if (user) {
+				// User is signed in here
+				console.log('user logged in: ' + user.displayName);
+				$('#navBarUser').html('<b>You are signed in as: <u>' + user.displayName + '</u></b>');
+				
+				//greet user in homepage
+				firebase.database().ref("users/" + user.displayName +"/firstName").once('value').then(function(snapshot) {
+						var firstname = snapshot.val();
+						firebase.database().ref("users/" + user.displayName +"/lastName").once('value').then(function(snapshot) {
+							$('#welcomeIndex').html('<b>Welcome '+ firstname + " " + snapshot.val() + '!</b>');
+						});
+					});
+				$('#welcomeIndex').show();
+				//display logout tab
+				$("#logoutLink").show();
+				//display createPosting form
+				$("#createPostingForm").show();
+				$("#createPostingButton").show();
+				$("#createPostingNotSignedInMsg").hide();
+				//hide login form
+				$("#loginForm").hide();
+				$("#loginButton").hide();
+				$("#logInSignedInMsg").show();
+				//hide create account form
+				$("#createAccountForm").hide();
+				$("#createAccountButton").hide();
+				$("#createAccountSignedInMsg").show();
+			 } else {
+				// No user is signed in here
+				$('#navBarUser').html('You are not logged in. Please sign in!');
+				//hide greeting in homepage
+				$('#welcomeIndex').hide();
+				//hide create posting form
+				$("#createPostingForm").hide();
+				$("#createPostingButton").hide();
+				$("#createPostingNotSignedInMsg").show();
+				//dosplay login form
+				$("#loginForm").show();
+				$("#loginButton").show();
+				$("#logInSignedInMsg").hide();
+				//display create account form
+				$("#createAccountForm").show();
+				$("#createAccountButton").show();
+				$("#createAccountSignedInMsg").hide();
+			}
+		});
+	};
 	
-	var jmuTextbookSet = new Set();
-	jmuTextbookSet.add("CS211");
-	textbooksSchoolMap.set("JMU", jmuTextbookSet);
-	var uvaTextbookSet = new Set();
-	uvaTextbookSet.add("CS2110");
-	textbooksSchoolMap.set("UVA", uvaTextbookSet);
-	//map course id to textbooks required by the course
-	var textbooksCourseMap = new Map();
-	textbooksCourseMap.set("CS332", [textbook1Josh, textbook2Josh, textbook1Xiaowen]);
-	textbooksCourseMap.set("CS211", [textbook3Josh, textbook1jmuStudent]);//, textbook1uvaStudent]);
-	textbooksCourseMap.set("CS2110", [textbook1uvaStudent]);
-	//map textbook id to user name
-	var textbookUserMapping = new Map();
-	textbookUserMapping.set(textbook1Josh.ID, "mbauzon");
-	textbookUserMapping.set(textbook2Josh.ID, "mbauzon");
-	textbookUserMapping.set(textbook1Xiaowen.ID, "xfang5");
-	textbookUserMapping.set(textbook3Josh.ID, "mbauzon");
-	textbookUserMapping.set(textbook1jmuStudent.ID, "jmuStudent");
-	textbookUserMapping.set(textbook1uvaStudent.ID, "uvaStudent");
-	
-	/**prints table of postings based on courseID and school */
+	/**Prints table of postings based on courseID and school */
 	function printPostingToTable(courseID, school) {
-		//check if courseID and school are in our maps
-		console.log('in printPostingToTable School: ' + school + ' course ' + courseID );
 		var table = document.getElementById("searchResultTable");
 		$('#searchResultTable td').remove(); 	//reset table
+		$('#postingsAppear').html('<b>Sorry, there are currently no postings for ' + courseID + ' by ' + school + ' students.</b>');  //default message; will be changed below, if there is something in teh database
 		
-		if (textbooksSchoolMap.get(school)!=null && (textbooksSchoolMap.get(school)).has(courseID))//textbooksCourseMap.get(courseID) != null)
-			$('#postingsAppear').html('<b>Postings for ' + courseID + ' by ' + school + ' students:</b>');
-		else
-			$('#postingsAppear').html('<b>Sorry, there are currently no postings for ' + courseID + ' by ' + school + ' students.</b>');
-							
-		var booksArray = textbooksCourseMap.get(courseID);
-		if (booksArray!=null)
-			for (var book of booksArray){
-				var usernameOfThis = textbookUserMapping.get(book.ID);
-				if ((usersMap.get(usernameOfThis)).school == school){
-					console.log('in if');
-					var row = table.insertRow(table.rows.length);	//add row at the bottom
-					var course = row.insertCell(0);
-					var textbookTitle = row.insertCell(1);
-					var author = row.insertCell(2);
-					var seller = row.insertCell(3);
-					var email = row.insertCell(4);
-					var phone = row.insertCell(5);
-					var notes = row.insertCell(6);
-					var price = row.insertCell(7);
+		console.log('in print posting');
+		var ref = new Firebase("https://bookrecycle-5b8d1.firebaseio.com/school/" + school + "/" + courseID);
+		ref.once("value", function(snapshot) {			
+		  	//go through each postingID of this school and course search combination
+			snapshot.forEach(function(childSnapshot) {
+				$('#postingsAppear').html('<b>Textbook postings for ' + courseID + ' at ' + school + ' are the following: ');
+				
+				console.log('current postingID: '+ childSnapshot.key());
+				var postingID = childSnapshot.key();
+				
+				//add row at the bottom and insert cells
+				var row = table.insertRow(table.rows.length);	
+				var course = row.insertCell(0);
+				var textbookTitle = row.insertCell(1);
+				var isbn = row.insertCell(2);
+				var author = row.insertCell(3);
+				var sellerCell = row.insertCell(4);
+				var email = row.insertCell(5);
+				var phone = row.insertCell(6);
+				var notes = row.insertCell(7);
+				var price = row.insertCell(8);
+				
+				//get textbook info
+				course.innerHTML = courseID;
+				firebase.database().ref("school/" + school + "/" + courseID + "/" + postingID + "/title").once('value').then(function(snapshot) {
+					textbookTitle.innerHTML = snapshot.val();
+				});
+				firebase.database().ref("school/" + school + "/" + courseID + "/" + postingID + "/isbn").once('value').then(function(snapshot) {
+					isbn.innerHTML = snapshot.val();
+				});
+				firebase.database().ref("school/" + school + "/" + courseID + "/" + postingID + "/author").once('value').then(function(snapshot) {
+					author.innerHTML = snapshot.val();
+				});
+				//get seller info (full name, email, phone)
+				firebase.database().ref("school/" + school + "/" + courseID + "/" + postingID + "/sellerID").once('value').then(function(snapshot) {
+					var sellerID = snapshot.val();
+					firebase.database().ref("users/" + sellerID +"/firstName").once('value').then(function(snapshot) {
+						var firstname = snapshot.val();
+						firebase.database().ref("users/" + sellerID +"/lastName").once('value').then(function(snapshot) {
+							sellerCell.innerHTML = firstname + " " + snapshot.val();
+						});
+					});
+					firebase.database().ref("users/" + sellerID +"/email").once('value').then(function(snapshot) {
+						email.innerHTML = snapshot.val();
+					});
+					firebase.database().ref("users/" + sellerID +"/phone").once('value').then(function(snapshot) {
+						phone.innerHTML = snapshot.val();
+					});
 					
-					//set the values in the cells
-					course.innerHTML = courseID;
-					textbookTitle.innerHTML = book.title;
-					author.innerHTML = book.author;
-					seller.innerHTML = (usersMap.get(usernameOfThis)).fullName();
-					email.innerHTML = (usersMap.get(usernameOfThis)).email;
-					phone.innerHTML = (usersMap.get(usernameOfThis)).phone;
-					notes.innerHTML = book.notes;
-					price.innerHTML = book.price;
-				}
-			}
+				});
+				
+				firebase.database().ref("school/" + school + "/" + courseID + "/" + postingID + "/note").once('value').then(function(snapshot) {
+					notes.innerHTML = snapshot.val();
+				});
+				firebase.database().ref("school/" + school + "/" + courseID + "/" + postingID + "/price").once('value').then(function(snapshot) {
+					price.innerHTML = snapshot.val();
+				});
+			});
+		  $('#spinner').hide();	
+		});
 	}
+	
 	/**Updates course options list based on schoolID passed in*/
 	function updateCourseOptions(schoolID){
 		console.log("modified courseOptions for school " + schoolID);
@@ -125,78 +166,235 @@ $( document ).ready(function() {
 			document.getElementById("courseOptions").add(option);
 		}
 	}
+	
+	/**When school options dropdown selection is changed, update course options*/
 	$("#schoolOptions").change(function() {
 		var selectedSchoolVal = $('#schoolOptions option:selected').val();
 		console.log("clicked " + selectedSchoolVal);
 		updateCourseOptions(selectedSchoolVal);		
 	});
+	
+	/**Verifies if username is not in the database. If it's available, create account*/
+	function userExistsCallback(userId, exists) {
+        if (exists) {	//userId exists
+          alert('Username ' + userId + ' already exists. Please pick another one.');
+		  document.getElementById("username").value = ""; //reset field
+        } else {	//userId is unique
+			firebase.auth().createUserWithEmailAndPassword($('#email').val(), $('#pass').val()).then(function(user){
+				//set up profile
+				createUserProfile($('#username').val(), $('#firstname').val(), $('#lastname').val(), $('#school').val(), $('#email').val(), $('#phone').val());
+				
+				//update displayName to the username
+				var user = firebase.auth().currentUser;
+				user.updateProfile({
+					displayName: userId
+				}).then(function() {
+					console('displayname updated to: ' + userId);
+				}, function(error) {
+				   console('displayname not updated');
+				});
+				firebase.auth().onAuthStateChanged(function(user) {
+					if (user) {
+						// User is signed in.
+						alert('Account successfully created. Welcome to BookRecycle ' + $('#firstname').val() + ' ' + $('#lastname').val() + '! ');
+						window.location.href = "index.html";	//now logged in, go to homepage
+					} else {
+						// No user is signed in.
+					}
+				});
+			}).catch(function(error) {
+				// Handle Errors here like duplicate email
+				var errorCode = error.code;
+				var errorMessage = error.message;
+				console.log(errorCode);
+				console.log(errorMessage);
+				$('#welcomeMsg').html('<b>'+errorMessage+'</b>');
+			});
+        }
+    }
+       
+    /**Tests to see if /users/<userId> has any data.*/
+    function checkIfUserExists(userId) {
+        //var usersRef = new Firebase("https://bookrecycle-5b8d1.firebaseio.com/users");
+        //usersRef.child(userId).once('value').then(function(snapshot) {
+        firebase.database().ref("users/" + userId).once('value').then(function(snapshot) {
+			var exists = (snapshot.val() !== null);
+			userExistsCallback(userId, exists);
+			$('#spinner').hide();
+        });
+    }
+	
+	/**Sets user information to database*/
+	function createUserProfile(userID, firstname, lastname, school, email, phone) {
+		console.log('in create user profile ' + userID +' '+ firstname +' '+ lastname +' '+ school +' '+ email +' '+ phone);
+		firebase.database().ref('users/' + userID).set({
+		firstName: firstname,
+		lastName: lastname,
+		school: school,
+		email: email,
+		phone: phone
+		});
+	}
+	
 	/**Create Account page create account button*/
-	$("#createAccount").click(function() {
+	$("#createAccountButton").click(function() {
 		var labels = ['firstname', 'lastname', 'school', 'email', 'phone', 'username', 'pass', 'passreenter'];
 		var unfilled = false;
 		//recolor unfilled inputs
 		for(var ind=0; ind<labels.length; ind++){
-		if ( ( $('#'+ labels[ind] + '').val() ) == null  || ( $('#'+ labels[ind] + '').val() ) == '' ){
-			$('#'+ labels[ind] +'Lbl').css("color", "red");
-			unfilled = true;
-		}
-		else
-			$('#'+ labels[ind] +'Lbl').css("color", "black");
+			if ( ( $('#'+ labels[ind] + '').val() ) == null  || ( $('#'+ labels[ind] + '').val() ) == '' ){
+				$('#'+ labels[ind] +'Lbl').css("color", "red");
+				unfilled = true;
+			}
+			else
+				$('#'+ labels[ind] +'Lbl').css("color", "black");
 		}
 		if (unfilled)//$('#firstname').val()=='' || $('#lastname').val()=='' || $('#email').val()=='' || $('#phone').val()==''|| $('#username').val()==''|| $('#pass').val()=='')	
 			alert('Please enter required fields');
+		//check if passwords match
 		else if ($('#pass').val() != $('#passreenter').val() ){
 			alert('Passwords do not match!');
 			document.getElementById("pass").value = "";
 			document.getElementById("passreenter").value = "";
 		}
 		else{
-			var newUser = new User($('#firstname').val(), $('#lastname').val(), $('#school').val(), $('#email').val(), $('#phone').val(), $('#username').val(), $('#pass').val() );
-			usersMap.set($('#username').val(), new User($('#firstname').val(), $('#lastname').val(), $('#school').val(), $('#email').val(), $('#phone').val(), $('#username').val(), $('#pass').val()));
-			//line above currently does not work
-			$('#welcomeMsg').html('<b>Account successfully created. Welcome to BookRecycle ' + newUser.fullName() + '!</b>');
+			//all fields are populated here, check if username is not used by other users
+			$('#spinner').show();
+			checkIfUserExists($('#username').val());
 		}
 	});
-	/**Login page login button*/
-	$("#login").click(function() {
+	
+	/**Login button*/
+	$("#loginButton").click(function() {
 		if ($('#username').val()== '' && $('#pass').val()== '')
 			alert('Please enter Username and Password');
 		else if ($('#username').val()=='')
 			alert('Please enter Username');
 		else if ($('#pass').val()=='')
 			alert('Please enter Password');
-		else if (usersMap.get($('#username').val()) != null){
-			if ((usersMap.get($('#username').val())).pass === $('#pass').val())		//SUCCEESS login
-				$('#welcomeMsgInLogin').html('<b>Welcome ' + (usersMap.get($('#username').val())).fullName() + '!</b>');
-			else
-				alert('Username/Password did not match!');	//wrong password
-		}
 		else{
-			alert('Username is not found! Try again or Create an Account!');	//username not in our database
-			//reset data input fields
-			document.getElementById("username").value = "";
-			document.getElementById("pass").value = "";
+			var email = '';
+			var username = $('#username').val();
+			firebase.database().ref("users/" + username).once('value').then(function(snapshot) {
+				var exists = (snapshot.val() !== null);
+				if (exists){
+					var emailGetter = firebase.database().ref('users/' + ($('#username').val()) +'/email');
+					emailGetter.on('value', function(snapshot) {
+						console.log('hey here');
+						email = snapshot.val();
+						firebase.auth().signInWithEmailAndPassword(email, $('#pass').val()).then(function(user){
+							//var user = firebase.auth().currentUser;
+							//login success
+							var name = firebase.database().ref().child('users').child($('#username').val()).child('firstName');
+							$('#welcomeMsgInLogin').html('<b>Welcome back to BookRecycle ' + name + '! '+ user.displayName  +'</b>');
+							var username = $('#username').val();
+							//now logged in, go to homepage
+							window.location.href='index.html';  
+							console.log(username);
+						}).catch(function(error) {
+							// Handle Errors here.
+							console.log('fail');
+							var errorCode = error.code;
+							var errorMessage = error.message;
+							console.log(errorMessage);
+							$('#welcomeMsgInLogin').html('<b><div style="color:red">'+errorMessage+'</div></b>');
+						});
+					});
+				}
+				else{
+					console.log('Username ' + username + ' is not in system');
+					$('#welcomeMsgInLogin').html('<b><div style="color:red">Username "'+ username +'" is not in our system. Please create an account.</div></b>');
+				}
+				  
+				userExistsCallback(userId, exists);
+			});
+			
+			console.log(email);
+			
 		}
 	});
 	
+	/**Logout user currently signed in*/
+	$("#logoutLink").click(function() {
+		firebase.auth().signOut().then(function() {
+		  // Sign-out successful.
+		  console.log('sign-out successful');
+		}, function(error) {
+		  // An error happened.
+		  console.log('error in signing out');
+		});
+		location.reload();	//reload current page
+	});
+
+	/**Creates textbook posting using the parameters - allows a single user to post multiple books on the same course*/
+	function createTextbookPosting(school, course, userID, title, author, price, isbn, note) {
+		console.log('in createTextbookPosting function ' + school + ' ' + course + ' ' + userID + ' ' + title + ' ' + author + ' ' + price + ' ' + isbn + ' ' + note)
+		//push data to database
+		var key = firebase.database().ref('school/' + school + '/' + course).push({
+		sellerID: userID,
+		title: title,
+		author: author,
+		price: price,
+		isbn: isbn,
+		note: note
+		});
+	}
+	
 	/**Create Postings page create posting button*/
-	$("#createPosting").click(function() {
-		console.log("clicked createposting");
-		var labels = ['schoolOptions', 'courseOptions', 'title', 'author', 'price']; //'isbn' and 'notes' are optional
-		var unfilled = false;
-		//recolor unfilled inputs
-		for(var ind=0; ind<labels.length; ind++){
-		if ( ( $('#'+ labels[ind] + '').val() ) == null  || ( $('#'+ labels[ind] + '').val() ) == '' ){
-			$('#'+ labels[ind] +'Lbl').css("color", "red");
-			unfilled = true;
+	$("#createPostingButton").click(function() {
+		console.log("clicked createposting button");
+		if (firebase.auth().currentUser == null){
+			alert('You are not signed in. Please sign in first.');
 		}
-		else
-			$('#'+ labels[ind] +'Lbl').css("color", "black");
-		}
-		if (unfilled)
-			alert('Please enter required fields');
 		else{
-			$('#postSuccessMsg').html('<b>Post successfully created! </b>');
+			$('#spinner').show();
+			console.log(firebase.auth().currentUser);
+			var labels = ['schoolOptions', 'courseOptions', 'title', 'author', 'price']; //'isbn' and 'notes' are optional
+			var unfilled = false;
+			//recolor unfilled inputs
+			for(var ind=0; ind<labels.length; ind++){
+				if ( ( $('#'+ labels[ind] + '').val() ) == null  || ( $('#'+ labels[ind] + '').val() ) == '' ){
+					$('#'+ labels[ind] +'Lbl').css("color", "red");
+					unfilled = true;
+				}
+				else
+					$('#'+ labels[ind] +'Lbl').css("color", "black");
+			}
+			if (unfilled)
+				alert('Please enter required fields');
+			else{
+				// modify optional fields if blank to "none"
+				var isbn = $('#isbn').val();
+				var note = $('#note').val();
+				if ($('#isbn').val() == "")
+					isbn = "none";
+				if ($('#note').val() == "")
+					note = "none";
+				firebase.auth().onAuthStateChanged(function(user) {
+					if (user) {
+						// User is signed in.
+						//call function that creates the posting
+						createTextbookPosting($('#schoolOptions').val(), $('#courseOptions').val(), user.displayName, $('#title').val(), $('#author').val(), $('#price').val(), isbn, note);
+						alert("Post successfully created!");
+						//$('#postSuccessMsg').html('<b>Post successfully created! </b>');
+						//reset Create Posting form fields
+						document.getElementById("schoolOptions").value = "-select-";
+						document.getElementById("courseOptions").value = "-select-";
+						document.getElementById("title").value = "";
+						document.getElementById("author").value = "";
+						document.getElementById("isbn").value = "";
+						document.getElementById("price").value = "";
+						document.getElementById("isbn").value = "";
+						document.getElementById("note").value = "";
+					 } else {
+						// No user is signed in.
+						('#postSuccessMsg').html('<b>Post unssuccessful</b>');
+						console.log('else');
+					}
+				});
+				$('#postSuccessMsg').html('<b>Post successfully created! </b>');
+				$('#spinner').hide();
+			}
 		}
 	});
 	
@@ -209,10 +407,13 @@ $( document ).ready(function() {
 		else if ($('#schoolOptions').val() == null)
 			alert('Please select a school.');
 		else{
+			$('#spinner').show();
 			var currentCourse = $('#courseOptions').val();
 			var currentSchool = $('#schoolOptions').val();
+			//call printpostings function
 			printPostingToTable(currentCourse, currentSchool);
-			history.pushState([currentSchool, currentCourse], "Result", "");	//add to history stack
+			//add to history stack
+			history.pushState([currentSchool, currentCourse], "Result", "");	
 			console.log("PUSHED This is course: "+ [currentSchool, currentCourse]);
 		}
 	});
