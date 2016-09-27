@@ -8,6 +8,7 @@ Textbook transaction platform. SWE-432 Project.
 4. Compare price. Users will be able to compare the price of textbooks provided by different sellers. 
 5. Visualize avaliable textbooks. Users will be able to visualize avaliable textbooks under each subject using bubble chart.
 
-2 Scenarios to be implemented:
+
+2 Scenarios implemented on HW3:
 1. Registration
-2. Search Postings
+2. Search Postings (by school name and course)
