@@ -87,15 +87,6 @@ $( document ).ready(function() {
 		});
 	};
 		
-	var BookTable = React.createClass({
-		render: function() {
-			return (
-					<BookRow data={this.prop.data} />
-		
-			);
-		
-		}
-	});
 	//React component for the info of every textbook
 	var BookRow = React.createClass({
 		render: function(){
@@ -115,6 +106,17 @@ $( document ).ready(function() {
 			);
 		}
 	});
+	
+	var BookTable = React.createClass({
+		render: function() {
+			return (
+					<BookRow data={this.prop.data} />
+		
+			);
+		
+		}
+	});
+
 	/**Prints table of postings based on courseID and school */
 	function printPostingToTable(courseID, school) {
 		
