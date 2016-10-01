@@ -122,7 +122,7 @@ $( document ).ready(function() {
 			snapshot.forEach(function(childSnapshot){
 				console.log("course info " + childSnapshot.val().author); //test if get the data
 				//render the data
-				ReactDOM.render(<BookTable data={childSnapshot.val()} />,
+				ReactDOM.render(<BookRow data={childSnapshot.val()} />,
 					document.getElementById('searchResult'));
 			})
 			$('#spinner').hide();	
