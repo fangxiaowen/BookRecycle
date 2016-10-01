@@ -101,7 +101,7 @@ $( document ).ready(function() {
 			); 
 		}
 	});
-	
+	//React component for the info of every textbook
 	var BookRow = React.createClass({
 		render: function(){
 			return (
@@ -126,7 +126,7 @@ $( document ).ready(function() {
 		var ref = new Firebase("https://bookrecycle-5b8d1.firebaseio.com/school/" + school + "/" + courseID);
 		console.log("find data!");
 		ref.once("value", function(snapshot) {
-			console.log("course info" + snapshot.val());			
+			//console.log("course info" + snapshot.val());			
 			ReactDOM.render(
 				<BookTable data={snapshot.val()} />,
 				$('#searchResult')	
