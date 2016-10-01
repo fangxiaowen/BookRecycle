@@ -128,7 +128,7 @@ $( document ).ready(function() {
 		ref.once("value", function(snapshot) {
 			snapshot.forEach(function(childSnapshot){
 				console.log("course info" + childSnapshot.val().author);
-				React.render(
+				ReactDOM.render(
 					<BookRow data={childSnapshot.val()} />,
 					$('#searchResult')
 				);
