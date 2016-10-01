@@ -118,10 +118,10 @@ $( document ).ready(function() {
 		console.log("find data!");
 		ref.once("value", function(snapshot) {
 				console.log("this is not json " + snapshot.val());
-				console.log("I'm JSON " + JSON.parse(snapshot.val()));
-				//console.log("course info " + snapshot.val().author); //test if get the data
+				
+				console.log("course info " + snapshot.val().author); //test if get the data
 				//render the data
-				ReactDOM.render(<BookTable data={JSON.parse(snapshot.val())} />,
+				ReactDOM.render(<BookTable data=snapshot.val() />,
 				document.getElementById('searchResultTable'));
 			
 			
