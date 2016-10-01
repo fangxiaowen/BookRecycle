@@ -1,44 +1,3 @@
-var BookTable = React.createClass({
-		render: function() {
-			var bookRows = this.props.data.map(function(bookRow){
-				return (
-					<BookRow data={bookRow} key={bookRow.id} />
-				)
-			});
-			return (
-				<div className="bookTable">
-					{bookRows}
-				</div>
-			); 
-		}
-	});
-	
-	var BookRow = React.createClass({
-		render: function(){
-			return (
-				<div className="bookRow">
-					<table>
-						<tr>
-							<th>{this.prop.data.author}</th>
-							<th>{this.prop.data.isbn}</th>
-							<th>{this.prop.data.note}</th>
-							<th>{this.prop.data.price}</th>
-							<th>{this.prpp.data.sellerID}</th>
-							<th>{this.prpp.data.title}</th>
-						</tr>
-					</table>		
-				</div>
-			);
-		}
-	});
-
-
-
-
-
-
-
-
 $( document ).ready(function() {
 	
 	//<script src="https://www.gstatic.com/firebasejs/3.4.0/firebase.js"></script>
@@ -128,7 +87,39 @@ $( document ).ready(function() {
 		});
 	};
 		
+	var BookTable = React.createClass({
+		render: function() {
+			var bookRows = this.props.data.map(function(bookRow){
+				return (
+					<BookRow data={bookRow} key={bookRow.id} />
+				)
+			});
+			return (
+				<div className="bookTable">
+					{bookRows}
+				</div>
+			); 
+		}
+	});
 	
+	var BookRow = React.createClass({
+		render: function(){
+			return (
+				<div className="bookRow">
+					<table>
+						<tr>
+							<th>{this.prop.data.author}</th>
+							<th>{this.prop.data.isbn}</th>
+							<th>{this.prop.data.note}</th>
+							<th>{this.prop.data.price}</th>
+							<th>{this.prpp.data.sellerID}</th>
+							<th>{this.prpp.data.title}</th>
+						</tr>
+					</table>		
+				</div>
+			);
+		}
+	});
 	/**Prints table of postings based on courseID and school */
 	function printPostingToTable(courseID, school) {
 		
