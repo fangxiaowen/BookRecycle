@@ -98,8 +98,8 @@ $( document ).ready(function() {
 							<th>{this.props.data.isbn}</th>
 							<th>{this.props.data.note}</th>
 							<th>{this.props.data.price}</th>
-							<th>{this.prpps.data.sellerID}</th>
-							<th>{this.prpps.data.title}</th>
+							<th>{this.props.data.sellerID}</th>
+							<th>{this.props.data.title}</th>
 						</tr>
 					</table>		
 				</div>
