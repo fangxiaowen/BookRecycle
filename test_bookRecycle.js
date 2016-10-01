@@ -90,14 +90,14 @@ $( document ).ready(function() {
 	//React component for the info of every textbook
 	var BookRow = React.createClass({
 		render: function(){
-			return (	<tr>
+			return (	<tbody>
 							<th>{this.props.data.author}</th>
 							<th>{this.props.data.isbn}</th>
 							<th>{this.props.data.note}</th>
 							<th>{this.props.data.price}</th>
 							<th>{this.props.data.sellerID}</th>
 							<th>{this.props.data.title}</th>
-					</tr>		
+					</tbody>		
 			);
 		}
 	});
