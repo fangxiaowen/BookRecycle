@@ -117,12 +117,12 @@ $( document ).ready(function() {
 		var ref = new Firebase("https://bookrecycle-5b8d1.firebaseio.com/school/" + school + "/" + courseID);
 		console.log("find data!");
 		ref.once("value", function(snapshot) {
-			snapshot.forEach(function(childSnapshot){
+			
 				console.log("course info " + childSnapshot.val().author); //test if get the data
 				//render the data
-				ReactDOM.render(<BookRow data={childSnapshot.val()} />,
+				ReactDOM.render(<BookTable data={snapshot.val()} />,
 				document.getElementById('searchResultTable'));
-			});
+			
 			
 			
 			$('#spinner').hide();	
