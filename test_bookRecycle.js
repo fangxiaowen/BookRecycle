@@ -126,11 +126,14 @@ $( document ).ready(function() {
 		var ref = new Firebase("https://bookrecycle-5b8d1.firebaseio.com/school/" + school + "/" + courseID);
 		console.log("find data!");
 		ref.once("value", function(snapshot) {
-			//console.log("course info" + snapshot.val());			
-			ReactDOM.render(
-				<BookTable data={snapshot.val()} />,
-				$('#searchResult')	
-			);			
+			snapshot.forEach(function(childSnapshot){
+				console.log("course info" + childSnapshot.val());
+				React.render(
+					<BookTable data={childSnapshot.val()} />,
+					$('#searchResult')
+				);
+			})
+			
 			$('#spinner').hide();	
 		});
 	}
