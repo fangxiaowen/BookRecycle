@@ -107,7 +107,7 @@ $( document ).ready(function() {
 			var bookNodes = this.props.data.map(function(book) {
 				return(<BookRow data={book} key={book.id}></BookRow>);
 			});
-			return (<div>{bookNodes}</div>);
+			return {bookNodes};
 		}
 	});
 
