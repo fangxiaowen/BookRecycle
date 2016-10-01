@@ -109,7 +109,7 @@ $( document ).ready(function() {
 	//React component for all book info under a courseID and school ID
 	var BookTable = React.createClass({
 		render: function() {
-			return <div> <BookRow data={this.prop.data} /></div>);
+			return (<BookRow data={this.prop.data}> </BookRow>);
 		}
 	});
 
