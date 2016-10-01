@@ -130,7 +130,7 @@ $( document ).ready(function() {
 				console.log("course info" + childSnapshot.val().author);
 				ReactDOM.render(
 					<BookRow data={childSnapshot.val()} />,
-					$('#searchResult')
+					document.getElementById('searchResult')
 				);
 			})
 			
