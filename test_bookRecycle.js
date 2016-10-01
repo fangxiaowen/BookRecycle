@@ -127,9 +127,9 @@ $( document ).ready(function() {
 		console.log("find data!");
 		ref.once("value", function(snapshot) {
 			snapshot.forEach(function(childSnapshot){
-				console.log("course info" + childSnapshot.val());
+				console.log("course info" + childSnapshot.val().author);
 				React.render(
-					<BookTable data={childSnapshot.val()} />,
+					<BookRow data={childSnapshot.val()} />,
 					$('#searchResult')
 				);
 			})
