@@ -129,7 +129,7 @@ $( document ).ready(function() {
 			snapshot.forEach(function(childSnapshot){
 				console.log("course info" + childSnapshot.val().author);
 				ReactDOM.render(
-					<BookRow data={childSnapshot.val()} />,
+					<BookTable data={childSnapshot.val()} />,
 					document.getElementById('searchResult')
 				);
 			})
