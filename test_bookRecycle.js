@@ -89,16 +89,11 @@ $( document ).ready(function() {
 		
 	var BookTable = React.createClass({
 		render: function() {
-			var bookRows = this.props.data.map(function(bookRow){
-				return (
-					<BookRow data={bookRow} key={bookRow.id} />
-				)
-			});
 			return (
-				<div className="bookTable">
-					{bookRows}
-				</div>
-			); 
+					<BookRow data={this.prop.data} />
+				)
+			);
+		
 		}
 	});
 	//React component for the info of every textbook
