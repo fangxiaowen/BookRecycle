@@ -91,7 +91,6 @@ $( document ).ready(function() {
 	var BookRow = React.createClass({
 		render: function(){
 			return (
-				<div class="bookRow">
 					<tr>
 							<th>{this.props.data.author}</th>
 							<th>{this.props.data.isbn}</th>
@@ -100,7 +99,6 @@ $( document ).ready(function() {
 							<th>{this.props.data.sellerID}</th>
 							<th>{this.props.data.title}</th>
 					</tr>		
-				</div>
 			);
 		}
 	});
