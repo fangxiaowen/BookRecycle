@@ -92,16 +92,14 @@ $( document ).ready(function() {
 		render: function(){
 			return (
 				<div class="bookRow">
-					<table>
-						<tr>
+					<tr>
 							<th>{this.props.data.author}</th>
 							<th>{this.props.data.isbn}</th>
 							<th>{this.props.data.note}</th>
 							<th>{this.props.data.price}</th>
 							<th>{this.props.data.sellerID}</th>
 							<th>{this.props.data.title}</th>
-						</tr>
-					</table>		
+					</tr>		
 				</div>
 			);
 		}
