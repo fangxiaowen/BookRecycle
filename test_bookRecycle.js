@@ -105,7 +105,10 @@ $( document ).ready(function() {
 	//React component for all book info under a courseID and school ID
 	var BookTable = React.createClass({
 		render: function() {
-			return (<BookRow data={this.props.data}> </BookRow>);
+			var bookNodes = this.props.data.map(function(book) {
+				return(<BookRow data={book} key={book.id}></BookRow>);
+			});
+			return (<div>{bookNodes}</div>);
 		}
 	});
 
@@ -115,12 +118,10 @@ $( document ).ready(function() {
 		var ref = new Firebase("https://bookrecycle-5b8d1.firebaseio.com/school/" + school + "/" + courseID);
 		console.log("find data!");
 		ref.once("value", function(snapshot) {
-			snapshot.forEach(function(childSnapshot){
-				console.log("course info " + childSnapshot.val().author); //test if get the data
-				//render the data
-				ReactDOM.render(<BookRow data={childSnapshot.val()} />,
-					document.getElementById('searchResult'));
-			})
+			console.log("course info " + snapshot.val().author); //test if get the data
+			//render the data
+			ReactDOM.render(<BookTable data={snapshot.val()} />,
+				document.getElementById('searchResult'));
 			$('#spinner').hide();	
 		});
 	}
