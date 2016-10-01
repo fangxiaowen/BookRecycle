@@ -91,7 +91,7 @@ $( document ).ready(function() {
 		render: function() {
 			return (
 					<BookRow data={this.prop.data} />
-				)
+		
 			);
 		
 		}
