@@ -91,7 +91,7 @@ $( document ).ready(function() {
 	var BookRow = React.createClass({
 		render: function(){
 			return (
-				<div className="bookRow">
+				<div class="bookRow">
 					<table>
 						<tr>
 							<th>{this.prop.data.author}</th>
@@ -109,29 +109,22 @@ $( document ).ready(function() {
 	//React component for all book info under a courseID and school ID
 	var BookTable = React.createClass({
 		render: function() {
-			return (
-					<BookRow data={this.prop.data} />
-		
-			);
-		
+			return <div> <BookRow data={this.prop.data} /></div>);
 		}
 	});
 
 	/**Prints table of postings based on courseID and school */
 	function printPostingToTable(courseID, school) {
-		
+		//all textbook info under this courseID and schoolID
 		var ref = new Firebase("https://bookrecycle-5b8d1.firebaseio.com/school/" + school + "/" + courseID);
 		console.log("find data!");
 		ref.once("value", function(snapshot) {
 			snapshot.forEach(function(childSnapshot){
-				console.log("course info" + childSnapshot.val().author); //test if get the data
+				console.log("course info " + childSnapshot.val().author); //test if get the data
 				//render the data
-				ReactDOM.render(
-					<BookTable data={childSnapshot.val()} />,
-					document.getElementById('searchResult')
-				);
+				ReactDOM.render(<BookTable data={childSnapshot.val()} />,
+					document.getElementById('searchResult'));
 			})
-			
 			$('#spinner').hide();	
 		});
 	}
