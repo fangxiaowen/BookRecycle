@@ -106,7 +106,7 @@ $( document ).ready(function() {
 			);
 		}
 	});
-	
+	//React component for all book info under a courseID and school ID
 	var BookTable = React.createClass({
 		render: function() {
 			return (
@@ -124,7 +124,8 @@ $( document ).ready(function() {
 		console.log("find data!");
 		ref.once("value", function(snapshot) {
 			snapshot.forEach(function(childSnapshot){
-				console.log("course info" + childSnapshot.val().author);
+				console.log("course info" + childSnapshot.val().author); //test if get the data
+				//render the data
 				ReactDOM.render(
 					<BookTable data={childSnapshot.val()} />,
 					document.getElementById('searchResult')
