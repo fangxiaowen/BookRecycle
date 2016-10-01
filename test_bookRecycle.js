@@ -90,8 +90,7 @@ $( document ).ready(function() {
 	//React component for the info of every textbook
 	var BookRow = React.createClass({
 		render: function(){
-			return (
-					<tr>
+			return (	<tr>
 							<th>{this.props.data.author}</th>
 							<th>{this.props.data.isbn}</th>
 							<th>{this.props.data.note}</th>
@@ -118,10 +117,14 @@ $( document ).ready(function() {
 		var ref = new Firebase("https://bookrecycle-5b8d1.firebaseio.com/school/" + school + "/" + courseID);
 		console.log("find data!");
 		ref.once("value", function(snapshot) {
-			console.log("course info " + snapshot.val().author); //test if get the data
-			//render the data
-			ReactDOM.render(<BookTable data={snapshot.val()} />,
+			snapshot.forEach(function(childSnapshot){
+				console.log("course info " + childSnapshot.val().author); //test if get the data
+				//render the data
+				ReactDOM.render(<BookRow data={childSnapshot.val()} />,
 				document.getElementById('searchResult'));
+			});
+			
+			
 			$('#spinner').hide();	
 		});
 	}
