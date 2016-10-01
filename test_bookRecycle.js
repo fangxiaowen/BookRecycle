@@ -94,12 +94,12 @@ $( document ).ready(function() {
 				<div class="bookRow">
 					<table>
 						<tr>
-							<th>{this.prop.data.author}</th>
-							<th>{this.prop.data.isbn}</th>
-							<th>{this.prop.data.note}</th>
-							<th>{this.prop.data.price}</th>
-							<th>{this.prpp.data.sellerID}</th>
-							<th>{this.prpp.data.title}</th>
+							<th>{this.props.data.author}</th>
+							<th>{this.props.data.isbn}</th>
+							<th>{this.props.data.note}</th>
+							<th>{this.props.data.price}</th>
+							<th>{this.prpps.data.sellerID}</th>
+							<th>{this.prpps.data.title}</th>
 						</tr>
 					</table>		
 				</div>
@@ -109,7 +109,7 @@ $( document ).ready(function() {
 	//React component for all book info under a courseID and school ID
 	var BookTable = React.createClass({
 		render: function() {
-			return (<BookRow data={this.prop.data}> </BookRow>);
+			return (<BookRow data={this.props.data}> </BookRow>);
 		}
 	});
 
