@@ -121,7 +121,7 @@ $( document ).ready(function() {
 				console.log("course info " + childSnapshot.val().author); //test if get the data
 				//render the data
 				ReactDOM.render(<BookRow data={childSnapshot.val()} />,
-				document.getElementById('searchResult'));
+				document.getElementById('searchResultTable'));
 			});
 			
 			
