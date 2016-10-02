@@ -117,12 +117,16 @@ $( document ).ready(function() {
 		var ref = new Firebase("https://bookrecycle-5b8d1.firebaseio.com/school/" + school + "/" + courseID);
 		console.log("find data!");
 		ref.once("value", function(snapshot) {
-				console.log("this is not json " + snapshot.val());
+			var jsonBook = [];
+			snapshot.forEach(function(child){
+				jsonBook.push(child);
+			});
+				console.log("this is not json " + jsonBook);
 				
-				console.log("course info " + snapshot.val().author); //test if get the data
+				console.log("course info " + jsonBook[0].author); //test if get the data
 				//render the data
 				ReactDOM.render(<BookTable data={snapshot.val()} />,
-				document.getElementById('searchResultTable'));
+				document.getElementById('searchResult'));
 			
 			
 			
