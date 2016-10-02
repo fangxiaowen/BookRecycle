@@ -119,7 +119,7 @@ $( document ).ready(function() {
 		ref.once("value", function(snapshot) {
 			var jsonBook = [];
 			snapshot.forEach(function(child){
-				jsonBook.push(child);
+				jsonBook.push(child.val());
 			});
 				console.log("this is not json " + jsonBook);
 				
