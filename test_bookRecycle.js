@@ -123,15 +123,18 @@ $( document ).ready(function() {
 		
 		var ref = new Firebase("https://bookrecycle-5b8d1.firebaseio.com/school/" + school + "/" + courseID);
 		ref.once("value", function(snapshot) {	
-			var jsonBook = [];
+			
+			var jsonBook = []; //js object for all textbook info under a courseID
 		  	//go through each postingID of this school and course search combination
 			snapshot.forEach(function(childSnapshot) {
+				//add textbook info 
 				jsonBook.push(childSnapshot);
 				
 				console.log('current postingID: '+ childSnapshot.key());
 				
 				console.log("this is jsonBook " + jsonBook);
 			});
+			//render all textbook info 
 			ReactDOM.render(<BookTable data={jsonBook} />,  
 				document.getElementById('searchResult'));
 		  	$('#spinner').hide();	
