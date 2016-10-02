@@ -106,7 +106,7 @@ $( document ).ready(function() {
 		render: function(){
 			var bookNodes = this.props.data.map(function(book){
 				console.log("this is book " + book)
-				return (<BookRow data={book} key={book.id}></BookRow>);
+				return (<BookRow data={book} key={book.isbn}></BookRow>);
 			});
 			
 			return (<div>{bookNodes}</div>);
