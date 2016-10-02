@@ -117,23 +117,6 @@ $( document ).ready(function() {
 	function printPostingToTable(courseID, school) {
 		//all textbook info under this courseID and schoolID
 		var ref = new Firebase("https://bookrecycle-5b8d1.firebaseio.com/school/" + school + "/" + courseID);
-		console.log("find data!");
-		ref.once("value", function(snapshot) {
-			var jsonBook = [];
-			snapshot.forEach(function(child){
-				jsonBook.push(child);
-			});
-			console.log("this is jsonBook " + jsonBook);
-				
-			console.log("course info " + jsonBook[0].author); //test if get the data
-				//render the data
-			ReactDOM.render(<BookTable data={jsonBook} />,
-				document.getElementById('searchResultTable'));
-			
-			
-			
-			$('#spinner').hide();	
-		});
 	}
 	
 	/**Updates course options list based on schoolID passed in*/
