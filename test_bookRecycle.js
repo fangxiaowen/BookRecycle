@@ -121,7 +121,7 @@ $( document ).ready(function() {
 				
 				console.log("course info " + snapshot.val().author); //test if get the data
 				//render the data
-				ReactDOM.render(<BookTable data={snapshot.exportVal()} />,
+				ReactDOM.render(<BookTable data={JSON.parse(snapshot.exportVal())} />,
 				document.getElementById('searchResultTable'));
 			
 			
