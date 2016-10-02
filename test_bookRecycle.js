@@ -89,9 +89,6 @@ $( document ).ready(function() {
 	
 	/**Prints table of postings based on courseID and school */
 	function printPostingToTable(courseID, school) {
-		var table = document.getElementById("searchResultTable");
-		$('#searchResultTable td').remove(); 	//reset table
-		$('#postingsAppear').html('<b>Sorry, there are currently no postings for ' + courseID + ' by ' + school + ' students.</b>');  //default message; will be changed below, if there is something in teh database
 		
 		console.log('in print posting');
 		var ref = new Firebase("https://bookrecycle-5b8d1.firebaseio.com/school/" + school + "/" + courseID);
