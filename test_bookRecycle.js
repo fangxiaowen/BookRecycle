@@ -105,9 +105,9 @@ $( document ).ready(function() {
 	var BookTable = React.createClass({
 		render: function() {
 			var bookNodes = this.props.data.map(function(book) {
-				return(<BookRow data={book} key={book.id}></BookRow>);
+				return(<BookRow data={book} key={book.id}> </BookRow>);
 			});
-			return {bookNodes};
+			return ({bookNodes});
 		}
 	});
 
