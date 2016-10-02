@@ -120,14 +120,16 @@ $( document ).ready(function() {
 		var ref = new Firebase("https://bookrecycle-5b8d1.firebaseio.com/school/" + school + "/" + courseID);
 		console.log("find data!");
 		ref.once("value", function(snapshot) {
+			//jsonBook is for storing all textbook info under a courseID and school
 			var jsonBook = [];
 			snapshot.forEach(function(child){
 				jsonBook.push(child.val());
 			});
-				console.log("this is not json " + jsonBook);
+				console.log("this is json " + jsonBook);
 				
-				console.log("course info " + jsonBook[0].author); //test if get the data
-				//render the data
+				console.log("course info " + jsonBook[0].author); //test whether get the data
+				
+				//render all textbook info in a BookTable component
 				ReactDOM.render(<BookTable data={jsonBook} />,
 				document.getElementById('searchResult'));
 			
