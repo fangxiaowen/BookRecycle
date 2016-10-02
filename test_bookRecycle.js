@@ -86,100 +86,47 @@ $( document ).ready(function() {
 			}
 		});
 	};
+		
 	//React component for the info of every textbook
 	var BookRow = React.createClass({
 		render: function(){
-			return (
-				<div className="bookRow">
-					<table>
-						<tbody>
+			return (	<tbody>
 							<th>{this.props.data.author}</th>
 							<th>{this.props.data.isbn}</th>
 							<th>{this.props.data.note}</th>
 							<th>{this.props.data.price}</th>
 							<th>{this.props.data.sellerID}</th>
 							<th>{this.props.data.title}</th>
-						</tbody>
-					</table>		
-				</div>
+					</tbody>		
 			);
 		}
 	});
-	
 	//React component for all book info under a courseID and school ID
 	var BookTable = React.createClass({
 		render: function() {
-			var bookNodes = this.props.data.map(function(){
-				return(<BookRow data={book} key={book.id}>);
+			var bookNodes = this.props.data.map(function(book) {
+				return(<BookRow data={book} key={book.id}></BookRow>);
 			});
-	
-			return ({bookNodes});
-		
+			return {bookNodes};
 		}
 	});
-	
+
 	/**Prints table of postings based on courseID and school */
 	function printPostingToTable(courseID, school) {
-		
-		console.log('in print posting');
+		//all textbook info under this courseID and schoolID
 		var ref = new Firebase("https://bookrecycle-5b8d1.firebaseio.com/school/" + school + "/" + courseID);
-		ref.once("value", function(snapshot) {			
-		  	//go through each postingID of this school and course search combination
-			snapshot.forEach(function(childSnapshot) {
+		console.log("find data!");
+		ref.once("value", function(snapshot) {
+				console.log("this is not json " + snapshot.val());
 				
-				
-				console.log('current postingID: '+ childSnapshot.key());
-				var postingID = childSnapshot.key();
-				//add row at the bottom and insert cells
- -				var row = table.insertRow(table.rows.length);	
- -				var course = row.insertCell(0);
- -				var textbookTitle = row.insertCell(1);
- -				var isbn = row.insertCell(2);
- -				var author = row.insertCell(3);
- -				var sellerCell = row.insertCell(4);
- -				var email = row.insertCell(5);
- -				var phone = row.insertCell(6);
- -				var notes = row.insertCell(7);
- -				var price = row.insertCell(8);
-  				
- -				//get textbook info
- -				course.innerHTML = courseID;
- -				firebase.database().ref("school/" + school + "/" + courseID + "/" + postingID + "/title").once('value').then(function(snapshot) {
- -					textbookTitle.innerHTML = snapshot.val();
- -				});
- -				firebase.database().ref("school/" + school + "/" + courseID + "/" + postingID + "/isbn").once('value').then(function(snapshot) {
- -					isbn.innerHTML = snapshot.val();
- -				});
- -				firebase.database().ref("school/" + school + "/" + courseID + "/" + postingID + "/author").once('value').then(function(snapshot) {
- -					author.innerHTML = snapshot.val();
- -				});
- -				//get seller info (full name, email, phone)
- -				firebase.database().ref("school/" + school + "/" + courseID + "/" + postingID + "/sellerID").once('value').then(function(snapshot) {
- -					var sellerID = snapshot.val();
- -					firebase.database().ref("users/" + sellerID +"/firstName").once('value').then(function(snapshot) {
- -						var firstname = snapshot.val();
- -						firebase.database().ref("users/" + sellerID +"/lastName").once('value').then(function(snapshot) {
- -							sellerCell.innerHTML = firstname + " " + snapshot.val();
- -						});
- -					});
- -					firebase.database().ref("users/" + sellerID +"/email").once('value').then(function(snapshot) {
- -						email.innerHTML = snapshot.val();
- -					});
- -					firebase.database().ref("users/" + sellerID +"/phone").once('value').then(function(snapshot) {
- -						phone.innerHTML = snapshot.val();
- -					});
- -					
- -				});
-  				
- -				firebase.database().ref("school/" + school + "/" + courseID + "/" + postingID + "/note").once('value').then(function(snapshot) {
- -					notes.innerHTML = snapshot.val();
- -				});
- -				firebase.database().ref("school/" + school + "/" + courseID + "/" + postingID + "/price").once('value').then(function(snapshot) {
- -					price.innerHTML = snapshot.val();
- -				});
-							
-			});
-		  $('#spinner').hide();	
+				console.log("course info " + snapshot.val().author); //test if get the data
+				//render the data
+				ReactDOM.render(<BookTable data=snapshot.val() />,
+				document.getElementById('searchResultTable'));
+			
+			
+			
+			$('#spinner').hide();	
 		});
 	}
 	
@@ -456,4 +403,3 @@ $( document ).ready(function() {
 		console.log("In POP This is e: "+e.state);
 	});
 });
-
