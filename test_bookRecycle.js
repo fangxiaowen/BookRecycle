@@ -90,33 +90,51 @@ $( document ).ready(function() {
 	//React component for the info of every textbook
 	var BookRow = React.createClass({
 		render: function(){
-			return (	<tbody>
+			return (
+				<div className="bookRow">
+					<table>
+						<tbody>
 							<th>{this.props.data.author}</th>
 							<th>{this.props.data.isbn}</th>
 							<th>{this.props.data.note}</th>
 							<th>{this.props.data.price}</th>
 							<th>{this.props.data.sellerID}</th>
 							<th>{this.props.data.title}</th>
-					</tbody>		
+						</tbody>
+					</table>		
+				</div>
 			);
 		}
 	});
 	//React component for all book info under a courseID and school ID
 	var BookTable = React.createClass({
-		render: function(){
-			var bookNodes = this.props.data.map(function(book){
+		render: function() {
+			var bookNodes = this.props.data.map(function(){
 				return(<BookRow data={book} key={book.id}>);
 			});
-			
+	
 			return ({bookNodes});
-			
+		
 		}
 	});
 
 	/**Prints table of postings based on courseID and school */
 	function printPostingToTable(courseID, school) {
-		//all textbook info under this courseID and schoolID
 		
+		var ref = new Firebase("https://bookrecycle-5b8d1.firebaseio.com/school/" + school + "/" + courseID);
+		console.log("find data!");
+		ref.once("value", function(snapshot) {
+			var jsonBook = [];
+			snapshot.forEach(function(childSnapshot){
+				console.log("course info" + childSnapshot.val().author); //test if get the data
+				jsonBook.push(childSnapshot);
+				//render the data
+				
+			});
+			ReactDOM.render(<BookTable data={jsonBook} />,
+				document.getElementById('searchResult'));
+			$('#spinner').hide();	
+		});
 	}
 	
 	/**Updates course options list based on schoolID passed in*/
