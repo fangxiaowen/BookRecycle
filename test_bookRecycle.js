@@ -120,8 +120,7 @@ $( document ).ready(function() {
 	
 	/**Prints table of postings based on courseID and school */
 	function printPostingToTable(courseID, school) {
-		var table = document.getElementById("searchResultTable");
-					
+		
 		var ref = new Firebase("https://bookrecycle-5b8d1.firebaseio.com/school/" + school + "/" + courseID);
 		ref.once("value", function(snapshot) {	
 			var jsonBook = [];
