@@ -122,7 +122,7 @@ $( document ).ready(function() {
 			var jsonBook = [];
 			snapshot.forEach(function(child){
 				jsonBook.push(child);
-			})
+			});
 				console.log("this is jsonBook " + jsonBook);
 				
 				console.log("course info " + jsonBook[0].author); //test if get the data
