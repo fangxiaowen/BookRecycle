@@ -104,11 +104,12 @@ $( document ).ready(function() {
 	//React component for all book info under a courseID and school ID
 	var BookTable = React.createClass({
 		render: function(){
+			//take every book info (in JSON format) and return a corresponding BookRow component 
 			var bookNodes = this.props.data.map(function(book){
 				console.log("this is book " + book)
 				return (<BookRow data={book} key={book.isbn}></BookRow>);
 			});
-			
+			//return all book info (all BookRows) 
 			return (<div>{bookNodes}</div>);
 		}
 	
