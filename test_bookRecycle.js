@@ -116,7 +116,7 @@ $( document ).ready(function() {
 	/**Prints table of postings based on courseID and school */
 	function printPostingToTable(courseID, school) {
 		//all textbook info under this courseID and schoolID
-		var ref = new Firebase("https://bookrecycle-5b8d1.firebaseio.com/school/" + school + "/" + courseID);
+		
 	}
 	
 	/**Updates course options list based on schoolID passed in*/
