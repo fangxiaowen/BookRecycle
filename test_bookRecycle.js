@@ -125,7 +125,7 @@ $( document ).ready(function() {
 				
 				console.log("course info " + jsonBook[0].author); //test if get the data
 				//render the data
-				ReactDOM.render(<BookTable data={snapshot.val()} />,
+				ReactDOM.render(<BookTable data={jsonBook} />,
 				document.getElementById('searchResult'));
 			
 			
