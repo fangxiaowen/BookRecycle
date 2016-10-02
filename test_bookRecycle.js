@@ -86,6 +86,37 @@ $( document ).ready(function() {
 			}
 		});
 	};
+	//React component for the info of every textbook
+	var BookRow = React.createClass({
+		render: function(){
+			return (
+				<div className="bookRow">
+					<table>
+						<tbody>
+							<th>{this.props.data.author}</th>
+							<th>{this.props.data.isbn}</th>
+							<th>{this.props.data.note}</th>
+							<th>{this.props.data.price}</th>
+							<th>{this.props.data.sellerID}</th>
+							<th>{this.props.data.title}</th>
+						</tbody>
+					</table>		
+				</div>
+			);
+		}
+	});
+	
+	//React component for all book info under a courseID and school ID
+	var BookTable = React.createClass({
+		render: function() {
+			var bookNodes = this.props.data.map(function(){
+				return(<BookRow data={book} key={book.id}>);
+			});
+	
+			return ({bookNodes});
+		
+		}
+	});
 	
 	/**Prints table of postings based on courseID and school */
 	function printPostingToTable(courseID, school) {
