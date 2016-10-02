@@ -123,11 +123,11 @@ $( document ).ready(function() {
 			snapshot.forEach(function(child){
 				jsonBook.push(child);
 			});
-				console.log("this is jsonBook " + jsonBook);
+			console.log("this is jsonBook " + jsonBook);
 				
-				console.log("course info " + jsonBook[0].author); //test if get the data
+			console.log("course info " + jsonBook[0].author); //test if get the data
 				//render the data
-				ReactDOM.render(<BookTable data={jsonBook} />,
+			ReactDOM.render(<BookTable data={jsonBook} />,
 				document.getElementById('searchResultTable'));
 			
 			
