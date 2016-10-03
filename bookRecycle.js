@@ -66,6 +66,8 @@ $( document ).ready(function() {
 				$("#createAccountForm").hide();
 				$("#createAccountButton").hide();
 				$("#createAccountSignedInMsg").show();
+				//show search user form
+				$("#searchUserForm").show();
 			 } else {
 				// No user is signed in here
 				$('#navBarUser').html('You are not logged in. Please sign in!');
@@ -83,6 +85,8 @@ $( document ).ready(function() {
 				$("#createAccountForm").show();
 				$("#createAccountButton").show();
 				$("#createAccountSignedInMsg").hide();
+				//hide search user form
+				$("#searchUserForm").hide();
 			}
 		});
 	};
@@ -427,4 +431,6 @@ $( document ).ready(function() {
 		printPostingToTable((e.state)[1], (e.state)[0]);
 		console.log("In POP This is e: "+e.state);
 	});
+	
+	
 });
