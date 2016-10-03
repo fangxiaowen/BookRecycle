@@ -93,14 +93,14 @@ $( document ).ready(function() {
 			return (
 				<div className="bookRow">
 					<table>
-						<tr>
-							<th>{this.prop.data.author}</th>
-							<th>{this.prop.data.isbn}</th>
-							<th>{this.prop.data.note}</th>
-							<th>{this.prop.data.price}</th>
-							<th>{this.prpp.data.sellerID}</th>
-							<th>{this.prpp.data.title}</th>
-						</tr>
+						<tbody>
+							<th>{this.props.data.author}</th>
+							<th>{this.props.data.isbn}</th>
+							<th>{this.props.data.note}</th>
+							<th>{this.props.data.price}</th>
+							<th>{this.props.data.sellerID}</th>
+							<th>{this.props.data.title}</th>
+						</tbody>
 					</table>		
 				</div>
 			);
@@ -109,10 +109,11 @@ $( document ).ready(function() {
 	//React component for all book info under a courseID and school ID
 	var BookTable = React.createClass({
 		render: function() {
-			return (
-					<BookRow data={this.prop.data} />
-		
-			);
+			var bookNodes = this.props.data.map(function(){
+				return(<BookRow data={book} key={book.id}>);
+			});
+	
+			return ({bookNodes});
 		
 		}
 	});
@@ -123,15 +124,15 @@ $( document ).ready(function() {
 		var ref = new Firebase("https://bookrecycle-5b8d1.firebaseio.com/school/" + school + "/" + courseID);
 		console.log("find data!");
 		ref.once("value", function(snapshot) {
+			var jsonBook = [];
 			snapshot.forEach(function(childSnapshot){
 				console.log("course info" + childSnapshot.val().author); //test if get the data
+				jsonBook.push(childSnapshot);
 				//render the data
-				ReactDOM.render(
-					<BookTable data={childSnapshot.val()} />,
-					document.getElementById('searchResult')
-				);
-			})
-			
+				
+			});
+			ReactDOM.render(<BookTable data={jsonBook} />,
+				document.getElementById('searchResult'));
 			$('#spinner').hide();	
 		});
 	}
