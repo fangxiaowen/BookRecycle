@@ -37,7 +37,8 @@ $( document ).ready(function() {
 	schoolCourseMap.set("UVA", uvaCourses);
 
 	/**On load of page*/
-		window.onload = function(){
+	window.onload = function(){
+		console.log("page loads");
 		firebase.auth().onAuthStateChanged(function(user) {
 			if (user) {
 				// User is signed in here
@@ -68,6 +69,7 @@ $( document ).ready(function() {
 				$("#createAccountSignedInMsg").show();
 				//show search user form
 				$("#searchUserForm").show();
+				$("#searchUserButton").show();
 			 } else {
 				// No user is signed in here
 				$('#navBarUser').html('You are not logged in. Please sign in!');
@@ -87,77 +89,103 @@ $( document ).ready(function() {
 				$("#createAccountSignedInMsg").hide();
 				//hide search user form
 				$("#searchUserForm").hide();
+				$("#searchUserButton").hide();
 			}
 		});
 	};
+		
+	//React component for the info of every textbook
+	var BookRow = React.createClass({
+		render: function(){
+			console.log("in BookRow " + this.props.data.author + " " + this.props.data.isbn + " " + this.props.data.note + " " + this.props.data.price + " " + this.props.data.sellerID + " " + this.props.data.title + " ");
+			return (	<tr>
+							<th>{this.props.data.title}</th>
+							<th>{this.props.data.author}</th>
+							<th>{this.props.data.isbn}</th>
+							<th>{this.props.data.sellerID}</th>
+							<th>{this.props.data.price}</th>
+							<th>{this.props.data.note}</th>
+
+					</tr>		
+			);
+		}
+	});
+	//React component for all book info under a courseID and school ID
+	var BookTable = React.createClass({
+		render: function(){
+			console.log("in BookClass");
+			//take every book info (in JSON format) and return a corresponding BookRow component 
+			var bookNodes = this.props.data.map(function(book){
+				console.log("this is book " + book.title);
+				return (<BookRow data={book}></BookRow>);
+			});
+			//return all book info (all BookRows) 
+			return (<div>
+						<tr>
+							<th>Textbook Title</th>
+							<th>Author</th>
+							<th>ISBN</th>
+							<th>Seller Username</th>
+							<th>Price ($)</th>
+							<th>Seller's Notes</th>
+						</tr>
+						{bookNodes}
+					</div>);
+		}
 	
+	});
+
 	/**Prints table of postings based on courseID and school */
 	function printPostingToTable(courseID, school) {
-		var table = document.getElementById("searchResultTable");
-		$('#searchResultTable td').remove(); 	//reset table
-		$('#postingsAppear').html('<b>Sorry, there are currently no postings for ' + courseID + ' by ' + school + ' students.</b>');  //default message; will be changed below, if there is something in teh database
-		
-		console.log('in print posting');
+		//all textbook info under this courseID and schoolID
 		var ref = new Firebase("https://bookrecycle-5b8d1.firebaseio.com/school/" + school + "/" + courseID);
-		ref.once("value", function(snapshot) {			
-		  	//go through each postingID of this school and course search combination
-			snapshot.forEach(function(childSnapshot) {
-				$('#postingsAppear').html('<b>Textbook postings for ' + courseID + ' at ' + school + ' are the following: ');
-				
-				console.log('current postingID: '+ childSnapshot.key());
-				var postingID = childSnapshot.key();
-				
-				//add row at the bottom and insert cells
-				var row = table.insertRow(table.rows.length);	
-				var course = row.insertCell(0);
-				var textbookTitle = row.insertCell(1);
-				var isbn = row.insertCell(2);
-				var author = row.insertCell(3);
-				var sellerCell = row.insertCell(4);
-				var email = row.insertCell(5);
-				var phone = row.insertCell(6);
-				var notes = row.insertCell(7);
-				var price = row.insertCell(8);
-				
-				//get textbook info
-				course.innerHTML = courseID;
-				firebase.database().ref("school/" + school + "/" + courseID + "/" + postingID + "/title").once('value').then(function(snapshot) {
-					textbookTitle.innerHTML = snapshot.val();
-				});
-				firebase.database().ref("school/" + school + "/" + courseID + "/" + postingID + "/isbn").once('value').then(function(snapshot) {
-					isbn.innerHTML = snapshot.val();
-				});
-				firebase.database().ref("school/" + school + "/" + courseID + "/" + postingID + "/author").once('value').then(function(snapshot) {
-					author.innerHTML = snapshot.val();
-				});
-				//get seller info (full name, email, phone)
-				firebase.database().ref("school/" + school + "/" + courseID + "/" + postingID + "/sellerID").once('value').then(function(snapshot) {
-					var sellerID = snapshot.val();
-					firebase.database().ref("users/" + sellerID +"/firstName").once('value').then(function(snapshot) {
-						var firstname = snapshot.val();
-						firebase.database().ref("users/" + sellerID +"/lastName").once('value').then(function(snapshot) {
-							sellerCell.innerHTML = firstname + " " + snapshot.val();
-						});
-					});
-					firebase.database().ref("users/" + sellerID +"/email").once('value').then(function(snapshot) {
-						email.innerHTML = snapshot.val();
-					});
-					firebase.database().ref("users/" + sellerID +"/phone").once('value').then(function(snapshot) {
-						phone.innerHTML = snapshot.val();
-					});
-					
-				});
-				
-				firebase.database().ref("school/" + school + "/" + courseID + "/" + postingID + "/note").once('value').then(function(snapshot) {
-					notes.innerHTML = snapshot.val();
-				});
-				firebase.database().ref("school/" + school + "/" + courseID + "/" + postingID + "/price").once('value').then(function(snapshot) {
-					price.innerHTML = snapshot.val();
-				});
+		console.log("find data given course school");
+		ref.once("value", function(snapshot) {
+			//jsonBook is for storing all textbook info under a courseID and school
+			var jsonBook = [];
+			snapshot.forEach(function(child){
+				console.log("in here child unique key is "+child.name());
+				jsonBook.push(child.val());
 			});
-		  $('#spinner').hide();	
+				console.log("this is json " + jsonBook);
+				//console.log("course info " + jsonBook[0].author); //test whether get the data
+				if (jsonBook == null){
+					document.getElementById('searchResult').html.("<b>No textbook for " + courseID + "in" + school"</b>");				
+				}	
+				//render all textbook info in a BookTable component
+				ReactDOM.render(<BookTable data={jsonBook} />,
+				document.getElementById('searchResult'));
+			$('#spinner').hide();	
 		});
 	}
+	
+	var UserResult = React.createClass({
+		render: function(){
+			console.log("in UserResult " + this.props.data.firstName + " " + this.props.data.lastName + " " + this.props.data.phone + " " + this.props.data.email);
+			return (
+				<div>
+					<p><b>First Name:</b> {this.props.data.firstName}</p>
+					<p><b>Last Name:</b> {this.props.data.lastName}</p>
+					<p><b>Phone:</b> {this.props.data.phone}</p>
+					<p><b>Email:</b> {this.props.data.email}</p>
+				</div>
+			);
+		}
+	});
+
+	$("#searchUserButton").click(function() {
+		console.log("in search user");
+		if ($('#usernameSearch').val()== '')
+			alert('Enter username');
+		firebase.database().ref("users/" + $('#usernameSearch').val()).once('value').then(function(snapshot) {
+			var exists = (snapshot.val() !== null);
+			console.log("in search user button: " + snapshot.val());
+			if (exists)
+				ReactDOM.render(<UserResult data={snapshot.val()} />, document.getElementById('searchUserResults'));
+			else
+				$('#searchUserResults').html('<b>No user found with username <u>'+ $('#usernameSearch').val()+ '</u></b>');
+		});		
+	});
 	
 	/**Updates course options list based on schoolID passed in*/
 	function updateCourseOptions(schoolID){
@@ -431,6 +459,4 @@ $( document ).ready(function() {
 		printPostingToTable((e.state)[1], (e.state)[0]);
 		console.log("In POP This is e: "+e.state);
 	});
-	
-	
 });
