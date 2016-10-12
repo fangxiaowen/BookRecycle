@@ -62,25 +62,25 @@ console.log("this is jsonSchool 0 " + jsonSchool["name"]);
 console.log("jsonSchool children " + jsonSchool["children"]);
 
 
-  //compute the hierarchy, please check API reference
+  //compute the hierarchy
   var root = d3.hierarchy(jsonSchool.name, jsonSchool["children"])
       .sum(function(d) { return d.size; })
       .sort(function(a, b) { return b.value - a.value; });
   
   console.log("this is root of hierarchy! " + root.value);
-  //feed the hierarchy data to circle pack. and then bind the circle pack data to "node"
+  
   var node = g.selectAll(".node")
     .data(pack(root).descendants())
     .enter().append("g")
       .attr("class", function(d) { return d.children ? "node" : "leaf node"; })
       .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
   
-  //buggy due to asychronis firebase function
+
   node.append("title")
       .text(function(d) { return d.data.name + "\n" + format(d.value); });
 
   node.append("circle")
-      .attr("r", function(d) { return d.r; });
+      .attr("r", function(d) { return 5; });
 
   node.filter(function(d) { return !d.children; }).append("text")
       .attr("dy", "0.3em")
