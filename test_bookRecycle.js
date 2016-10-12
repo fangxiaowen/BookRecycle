@@ -134,7 +134,6 @@ $( document ).ready(function() {
 		}
 	
 	});
-
 	/**Prints table of postings based on courseID and school */
 	function printPostingToTable(courseID, school) {
 		//all textbook info under this courseID and schoolID
@@ -149,9 +148,9 @@ $( document ).ready(function() {
 			});
 				console.log("this is json " + jsonBook);
 				//console.log("course info " + jsonBook[0].author); //test whether get the data
-				if (jsonBook == null){
-					document.getElementById('searchResult').html.("<b>No textbook for " + courseID + "in" + school"</b>");				
-				}	
+				//if (jsonBook == null){
+				//	document.getElementById('searchResult').html.("<b>No textbook for " + courseID + "in" + school"</b>");				
+				//}	
 				//render all textbook info in a BookTable component
 				ReactDOM.render(<BookTable data={jsonBook} />,
 				document.getElementById('searchResult'));
@@ -172,7 +171,6 @@ $( document ).ready(function() {
 			);
 		}
 	});
-
 	$("#searchUserButton").click(function() {
 		console.log("in search user");
 		if ($('#usernameSearch').val()== '')
