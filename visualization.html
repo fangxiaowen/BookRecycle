@@ -54,7 +54,7 @@ ref.on("value", function(snapshot){
 		jsonSchools.push(jsonChildSchool);	
 	});
 	jsonSchool["children"] = jsonSchools;
-	
+	wait(7000);
 });
 console.log(jsonSchool);
 //console.log("this is schools " + jsonSchools[0].name);
@@ -80,7 +80,7 @@ console.log("jsonSchool children " + jsonSchool["children"]);
       .text(function(d) { return d.data.name + "\n" + format(d.value); });
 
   node.append("circle")
-      .attr("r", function(d) { return d.r; });
+      .attr("r", function(d) { return 50; });
 
   node.filter(function(d) { return !d.children; }).append("text")
       .attr("dy", "0.3em")
