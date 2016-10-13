@@ -50,10 +50,12 @@ jQuery(window).load(function() {
 		snapshot.forEach(function(childSchool){
 			jsonChildSchool = {"name": childSchool.key()};
 			var jsonSchoolCourses = [];
-			console.log(childSchool.val())		
+			//console.log(childSchool.val())		
 			childSchool.forEach(function(childCourseId){
-				console.log(childCourseId.val());
-				var courseInfo = {"name": childCourseId.key(), "size": Object.keys(childCourseId).length};
+
+				//console.log("this is not val " + childCourseId);
+				//console.log(childCourseId.val());
+				var courseInfo = {"name": childCourseId.key(), "size": Object.keys(childCourseId.val()).length};
 				jsonSchoolCourses.push(courseInfo)
 			});
 			jsonChildSchool["children"] = jsonSchoolCourses;
@@ -61,13 +63,10 @@ jQuery(window).load(function() {
 		});
 		jsonSchool["children"] = jsonSchools;
 		
-		console.log(jsonSchool);
-		//console.log("this is schools " + jsonSchools[0].name);
-		console.log("this is jsonSchool 0 " + jsonSchool["name"]);
-		console.log("jsonSchool children " + jsonSchool["children"]);
-		  
-		  //compute the hierarchy, please check API reference
-		var root = d3.hierarchy(jsonSchool.name, jsonSchool["children"])
+		console.log("this is jsonSchool    " + jsonSchool);
+		console.log("This is the whole jsonSchool    " + JSON.stringify(jsonSchool));
+		//compute the hierarchy, please check API reference
+		var root = d3.hierarchy(jsonSchool)
 			.sum(function(d) { return d.size; })
 			.sort(function(a, b) { return b.value - a.value; });
 		  
@@ -88,7 +87,7 @@ jQuery(window).load(function() {
 
 		node.filter(function(d) { return !d.children; }).append("text")
 			.attr("dy", "0.3em")
-			.text(function(d) { return "what the what?"; });
+			.text(function(d) { return d.data.name.substring(0, d.r / 3); });
 		  
 	});
 
