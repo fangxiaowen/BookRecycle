@@ -17,4 +17,4 @@ Senarios implemented by HW5 submission:
 1. Registration
 2. Search Postings (by school name and course)
 3. Already using React: Search users. 
-4. D3 senario: Visualize the number of avaliable textbooks. Using circle packing schema. 
+4. D3 senario: Visualize the number of avaliable textbooks. Using circle packing schema. Reference: http://bl.ocks.org/mbostock/4063530
