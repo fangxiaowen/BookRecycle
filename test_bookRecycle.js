@@ -157,7 +157,7 @@ $( document ).ready(function() {
 			$('#spinner').hide();	
 		});
 	}
-	
+	/*
 	var UserResult = React.createClass({
 		render: function(){
 			console.log("in UserResult " + this.props.data.firstName + " " + this.props.data.lastName + " " + this.props.data.phone + " " + this.props.data.email);
@@ -183,7 +183,7 @@ $( document ).ready(function() {
 			else
 				$('#searchUserResults').html('<b>No user found with username <u>'+ $('#usernameSearch').val()+ '</u></b>');
 		});		
-	});
+	});*/
 	
 	/**Updates course options list based on schoolID passed in*/
 	function updateCourseOptions(schoolID){
@@ -457,4 +457,6 @@ $( document ).ready(function() {
 		printPostingToTable((e.state)[1], (e.state)[0]);
 		console.log("In POP This is e: "+e.state);
 	});
+	
+	 
 });
