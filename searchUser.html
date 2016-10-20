@@ -6,10 +6,15 @@
 		<script src="https://www.gstatic.com/firebasejs/3.4.0/firebase.js"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 		
-		<script src="https://fb.me/react-15.0.0.js"></script>
-    		<script src="https://fb.me/react-dom-15.0.0.js"></script>
-    		<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.34/browser.min.js"></script>
-		<script type="text/babel" src="test_bookRecycle.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.3.2/react-with-addons.js"></script>
+		<script src="https://fb.me/react-dom-15.0.0.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.34/browser.min.js"></script>
+		<!--<script type="text/babel" src="test_bookRecycle.js"></script>-->
+		<!--Jasmine -->
+    		<script type="text/javascript" src="jasmine-2.5.2/jasmine.js"></script>
+    		<script type="text/javascript" src="jasmine-2.5.2/jasmine-html.js"></script>
+    		<script type="text/javascript" src="jasmine-2.5.2/boot.js"></script>
+    		<link rel="stylesheet" type="text/css" href="jasmine-2.5.2/jasmine.css">
 		<title>BookRecycle: Login</title>
 	</head>
 	<body>
@@ -48,9 +53,64 @@
 		
 		<br/><br/>
 		<div id="searchUserResults"></div>
+		<div id="container"></div>
 		<br/><br/><br/><br/>
 		<div class="bottomDescr">
                 <p> <strong>Book Recycle &copy;</strong> is a textbook transaction platform that is being developed by <a href="mailto:mbauzon@gmu.edu">Michael Josh Bauzon</a> and <a href="mailto:xfang5@gmu.edu">Xiaowen Fang</a> over the course of SWE 432. </p>
         </div>
+		<script type="text/babel">
+		var config = {
+			apiKey: "AIzaSyBYNz3IGt8PS6kZBvN7gbkXMfLC2JekAMI",
+			authDomain: "bookrecycle-5b8d1.firebaseapp.com",
+			databaseURL: "https://bookrecycle-5b8d1.firebaseio.com",
+			storageBucket: "bookrecycle-5b8d1.appspot.com",
+			messagingSenderId: "12019208667"
+		};
+		firebase.initializeApp(config);
+		var UserResult = React.createClass({
+			render: function(){
+				console.log("in UserResult " + this.props.data.firstName + " " + this.props.data.lastName + " " + this.props.data.phone + " " + this.props.data.email);
+				return (
+					<div>
+						<p><b>First Name:</b> {this.props.data.firstName}</p>
+						<p><b>Last Name:</b> {this.props.data.lastName}</p>
+						<p><b>Phone:</b> {this.props.data.phone}</p>
+						<p><b>Email:</b> {this.props.data.email}</p>
+					</div>
+				);
+			}
+		});
+		$("#searchUserButton").click(function() {
+			console.log("in search user");
+			if ($('#usernameSearch').val()== '')
+				alert('Enter username');
+			firebase.database().ref("users/" + $('#usernameSearch').val()).once('value').then(function(snapshot) {
+				var exists = (snapshot.val() !== null);
+				console.log("in search user button: " + snapshot.val());
+				if (exists)
+					ReactDOM.render(<UserResult data={snapshot.val()} />, document.getElementById('searchUserResults'));
+				else
+					$('#searchUserResults').html('<b>No user found with username <u>'+ $('#usernameSearch').val()+ '</u></b>');
+			});		
+		});
+		
+		describe('UserResult', function () {
+			var TestUtils = React.addons.TestUtils;
+			var todoAppComponent, element, renderedDOM;
+			beforeEach(function (done) {
+				element = React.createElement(UserResult);
+				todoAppComponent = TestUtils.renderIntoDocument(element);
+				todoAppComponent.setState({items: [{text: "testItem"}]}, done);
+			});
+			it("Has a search button", function () {
+				let buttons = TestUtils.scryRenderedDOMComponentsWithTag(todoAppComponent, "button");
+				expect(buttons[1]).not.toBeUndefined();
+				expect(buttons[1].innerHTML).toBe("Search");
+			});
+
+		});
+		
+		</script>
+		
 	</body>
 </html>
