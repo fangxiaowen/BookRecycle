@@ -6,15 +6,15 @@ Textbook transaction platform. SWE-432 Project.
 2. Search Postings. Users will be able to search for postings given a school and a course.
 3. Search users. Users will be able to serch users' info by username. 
 /* 3. Search Postings (by title). Users will be able to search for postings given the title of a textbook. (replaced by Search Users) */
-4. Compare price. Users will be able to compare the price of textbooks provided by different sellers. 
-5. Visualize avaliable textbooks. Users will be able to visualize avaliable textbooks under each subject using bubble chart.
+4. Visualize the number of avaliable textbooks. Visualize the number of textbooks avaliable under courses in each school using circle packing.
 
 
-2 Scenarios implemented on HW3:
+
+
+
+
+Senarios implemented by HW5 submission:
 1. Registration
 2. Search Postings (by school name and course)
-
-
-1 senarios implemented on HW4:
-3. Search users. 
-
+3. Already using React: Search users. 
+4. D3 senario: Visualize the number of avaliable textbooks. Using circle packing schema. Reference: http://bl.ocks.org/mbostock/4063530

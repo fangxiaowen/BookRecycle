@@ -134,7 +134,6 @@ $( document ).ready(function() {
 		}
 	
 	});
-
 	/**Prints table of postings based on courseID and school */
 	function printPostingToTable(courseID, school) {
 		//all textbook info under this courseID and schoolID
@@ -149,16 +148,16 @@ $( document ).ready(function() {
 			});
 				console.log("this is json " + jsonBook);
 				//console.log("course info " + jsonBook[0].author); //test whether get the data
-				if (jsonBook == null){
-					document.getElementById('searchResult').html.("<b>No textbook for " + courseID + "in" + school"</b>");				
-				}	
+				//if (jsonBook == null){
+				//	document.getElementById('searchResult').html.("<b>No textbook for " + courseID + "in" + school"</b>");				
+				//}	
 				//render all textbook info in a BookTable component
 				ReactDOM.render(<BookTable data={jsonBook} />,
 				document.getElementById('searchResult'));
 			$('#spinner').hide();	
 		});
 	}
-	
+	/*
 	var UserResult = React.createClass({
 		render: function(){
 			console.log("in UserResult " + this.props.data.firstName + " " + this.props.data.lastName + " " + this.props.data.phone + " " + this.props.data.email);
@@ -172,7 +171,6 @@ $( document ).ready(function() {
 			);
 		}
 	});
-
 	$("#searchUserButton").click(function() {
 		console.log("in search user");
 		if ($('#usernameSearch').val()== '')
@@ -185,7 +183,7 @@ $( document ).ready(function() {
 			else
 				$('#searchUserResults').html('<b>No user found with username <u>'+ $('#usernameSearch').val()+ '</u></b>');
 		});		
-	});
+	});*/
 	
 	/**Updates course options list based on schoolID passed in*/
 	function updateCourseOptions(schoolID){
@@ -459,4 +457,6 @@ $( document ).ready(function() {
 		printPostingToTable((e.state)[1], (e.state)[0]);
 		console.log("In POP This is e: "+e.state);
 	});
+	
+	 
 });
