@@ -38,7 +38,7 @@ app.post('/postTextbook', function (req, res) {
 		
 });
 
-app.post('createUserInfo', function (req, res){
+app.post('/createUserInfo', function (req, res){
 	console.log("Create info of user "+ req.body.firstnamep + " " + req.body.lastnamep);
 	firebase.database().ref('users/' + req.body.userIDp).set({
 		firstName: req.body.firstnamep,
