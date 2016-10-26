@@ -27,11 +27,6 @@ app.listen(3000, function () {
 app.post('/postTextbook', function (req, res) {
     console.log("New req");
     console.log("Client wants to create posting: '" + req.body.todoText + "'");
-    fireRef.push({"text": req.body.todoText}, function () {
-        res.send("OK!");
-    }).catch(function(){
-        res.status(403);
-    });
 	firebase.database().ref('school/' + req.body.schoolp + '/' + req.nody.coursep).push({
 		sellerID: req.body.userIDp,
 		title: req.body.titlep,
@@ -39,8 +34,9 @@ app.post('/postTextbook', function (req, res) {
 		price: req.body.pricep,
 		isbn: req.body.isbnp,
 		note: req.body.notep
-		console.log("doing it right");
 		});
+	console.log("doing it right");
+		
 });
 
 /*
