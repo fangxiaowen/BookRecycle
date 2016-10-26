@@ -13,7 +13,7 @@ app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
     extended: true
 }));
 app.get('/', function(request, response) {
-  response.render('/index');
+  response.render('index');
 });
 /*
 firebase.initializeApp({
