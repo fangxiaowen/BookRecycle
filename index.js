@@ -9,9 +9,9 @@ app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
 }));
 
 //app.set('view engine', 'ejs');
-app.get('/', function(request, response) {
-  response.render('index');
-});
+//app.get('/', function(request, response) {
+  
+//});
 /*
 firebase.initializeApp({
     serviceAccount: "privkey.json",
