@@ -11,7 +11,7 @@ app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
 
 app.set('view engine', 'ejs');
 app.get('/', function(request, response) {
-  response.render('index');
+  response.render('index.html');
 });
 /*
 firebase.initializeApp({
