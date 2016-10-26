@@ -8,7 +8,7 @@ app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
     extended: true
 }));
 
-app.set('view engine', 'ejs');
+//app.set('view engine', 'ejs');
 app.get('/', function(request, response) {
   response.render('index');
 });
