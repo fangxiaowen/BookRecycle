@@ -27,7 +27,7 @@ console.log('running fine');
 app.post('/postTextbook', function (req, res) {
     console.log("New req");
     console.log("Client wants to create posting: '" + req.body.todoText + "'");
-	firebase.database().ref('school/' + req.body.schoolp + '/' + req.nody.coursep).push({
+	firebase.database().ref('school/' + req.body.schoolp + '/' + req.body.coursep).push({
 		sellerID: req.body.userIDp,
 		title: req.body.titlep,
 		author: req.body.authorp,
