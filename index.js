@@ -25,8 +25,7 @@ console.log('running fine');
 //  console.log('Example app listening on port 3000!');
 //});
 app.post('/postTextbook', function (req, res) {
-    console.log("New req");
-    console.log("Client wants to create posting: '" + req.body.todoText + "'");
+    console.log("User wants to create posting: '" + req.body.titlep + "'");
 	firebase.database().ref('school/' + req.body.schoolp + '/' + req.body.coursep).push({
 		sellerID: req.body.userIDp,
 		title: req.body.titlep,
@@ -35,10 +34,33 @@ app.post('/postTextbook', function (req, res) {
 		isbn: req.body.isbnp,
 		note: req.body.notep
 		});
-	console.log("doing it right");
+	console.log("done post textbook");
 		
 });
 
+app.post('createUserInfo', function (req, res){
+	console.log("Create info of user "+ req.body.firstnamep + " " + req.body.lastnamep);
+	firebase.database().ref('users/' + req.body.userIDp).set({
+		firstName: req.body.firstnamep,
+		lastName: req.body.lastnamep,
+		school: req.body.schoolp,
+		email: req.body.emailp,
+		phone: req.body.phonep
+	});
+	console.log("done create user");
+});
+app.post('/upload', function(req, res) {
+	var sampleFile;
+	sampleFile = req.files.sampleFile;
+	sampleFile.mv('/somewhere/on/your/server/filename.jpg', function(err) {
+		if (err) {
+			res.status(500).send(err);
+		}
+		else {
+			res.send('File uploaded!');
+		}
+	});
+});
 /*
 app.post('/newTodo', function (req, res) {
     console.log("New req");

@@ -231,13 +231,8 @@ $( document ).ready(function() {
 	/**Sets user information to database*/
 	function createUserProfile(userID, firstname, lastname, school, email, phone) {
 		console.log('in create user profile ' + userID +' '+ firstname +' '+ lastname +' '+ school +' '+ email +' '+ phone);
-		firebase.database().ref('users/' + userID).set({
-		firstName: firstname,
-		lastName: lastname,
-		school: school,
-		email: email,
-		phone: phone
-		});
+		
+		$.post("http://localhost:5000/createUserInfo",{userIDp:userID, firstnamep:firstname, lastnamep:lastname, schoolp:school, emailp:email, phonep:phone});
 	}
 	
 	/**Create Account page create account button*/
