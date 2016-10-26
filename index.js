@@ -7,6 +7,9 @@ app.use(bodyParser.json());       // to support JSON-encoded bodies
 app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
     extended: true
 }));
+app.get('/', function(request, response) {
+  response.render('index');
+});
 /*
 firebase.initializeApp({
     serviceAccount: "privkey.json",
