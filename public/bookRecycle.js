@@ -334,14 +334,15 @@ $( document ).ready(function() {
 	function createTextbookPosting(school, course, userID, title, author, price, isbn, note) {
 		console.log('in createTextbookPosting function ' + school + ' ' + course + ' ' + userID + ' ' + title + ' ' + author + ' ' + price + ' ' + isbn + ' ' + note)
 		//push data to database
-		var key = firebase.database().ref('school/' + school + '/' + course).push({
+		$.post("http://localhost:3000/postTextbook",{ schoolp:school, coursep:course, userIDp:userID,  titlep:title, authorp:author, pricep:price, isbnp:isbn, notep:note});
+		/*var key = firebase.database().ref('school/' + school + '/' + course).push({
 		sellerID: userID,
 		title: title,
 		author: author,
 		price: price,
 		isbn: isbn,
 		note: note
-		});
+		});*/
 	}
 	
 	/**Create Postings page create posting button*/
