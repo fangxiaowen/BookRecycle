@@ -24,6 +24,24 @@ console.log('running fine');
 app.listen(3000, function () {
   console.log('Example app listening on port 3000!');
 });
+app.post('/postTextbook', function (req, res) {
+    console.log("New req");
+    console.log("Client wants to create posting: '" + req.body.todoText + "'");
+    fireRef.push({"text": req.body.todoText}, function () {
+        res.send("OK!");
+    }).catch(function(){
+        res.status(403);
+    });
+	firebase.database().ref('school/' + req.body.schoolp + '/' + req.nody.coursep).push({
+		sellerID: req.body.userIDp,
+		title: req.body.titlep,
+		author: req.body.authorp,
+		price: req.body.pricep,
+		isbn: req.body.isbnp,
+		note: req.body.notep
+		console.log("doing it right");
+		});
+});
 
 /*
 app.post('/newTodo', function (req, res) {

@@ -158,7 +158,33 @@ $( document ).ready(function() {
 			$('#spinner').hide();	
 		});
 	}
-	
+	/*
+	var UserResult = React.createClass({
+		render: function(){
+			console.log("in UserResult " + this.props.data.firstName + " " + this.props.data.lastName + " " + this.props.data.phone + " " + this.props.data.email);
+			return (
+				<div>
+					<p><b>First Name:</b> {this.props.data.firstName}</p>
+					<p><b>Last Name:</b> {this.props.data.lastName}</p>
+					<p><b>Phone:</b> {this.props.data.phone}</p>
+					<p><b>Email:</b> {this.props.data.email}</p>
+				</div>
+			);
+		}
+	});
+	$("#searchUserButton").click(function() {
+		console.log("in search user");
+		if ($('#usernameSearch').val()== '')
+			alert('Enter username');
+		firebase.database().ref("users/" + $('#usernameSearch').val()).once('value').then(function(snapshot) {
+			var exists = (snapshot.val() !== null);
+			console.log("in search user button: " + snapshot.val());
+			if (exists)
+				ReactDOM.render(<UserResult data={snapshot.val()} />, document.getElementById('searchUserResults'));
+			else
+				$('#searchUserResults').html('<b>No user found with username <u>'+ $('#usernameSearch').val()+ '</u></b>');
+		});		
+	});*/
 	
 	/**Updates course options list based on schoolID passed in*/
 	function updateCourseOptions(schoolID){
@@ -335,14 +361,15 @@ $( document ).ready(function() {
 	function createTextbookPosting(school, course, userID, title, author, price, isbn, note) {
 		console.log('in createTextbookPosting function ' + school + ' ' + course + ' ' + userID + ' ' + title + ' ' + author + ' ' + price + ' ' + isbn + ' ' + note)
 		//push data to database
-		var key = firebase.database().ref('school/' + school + '/' + course).push({
+		$.post("http://localhost:3000/postTextbook",{ schoolp:school, coursep:course, userIDp:userID,  titlep:title, authorp:author, pricep:price, isbnp:isbn, notep:note});
+		/*var key = firebase.database().ref('school/' + school + '/' + course).push({
 		sellerID: userID,
 		title: title,
 		author: author,
 		price: price,
 		isbn: isbn,
 		note: note
-		});
+		});*/
 	}
 	
 	/**Create Postings page create posting button*/
