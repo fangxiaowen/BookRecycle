@@ -109,7 +109,7 @@ app.post('/upload', uploader.single("img"), sendUploadToGCS, function (req, res,
     if(req.file)
         //data.img = getPublicUrl(req.file.cloudStorageObject);
 		firebase.database().ref('users/' + req.body.userID).set({
-			img:getPublicUrl(req.file.cloudStorageObject);
+			img:getPublicUrl(req.file.cloudStorageObject)
 		});
     /*fireRef.push(data, function () {
         res.send("OK!");
