@@ -423,17 +423,24 @@ $( document ).ready(function() {
 		
 		firebase.auth().onAuthStateChanged(function(user) {
 			if (user) {
-				e.preventDefault();
-				var formData = new FormData($("#uploadPicForm")[0]);
 				console.log("displayname is "+user.displayName);
-				console.log(formData);
-				$.ajax({
-					type: "POST",
-					url: "/upload",
-					data: userID: user.displayName, formData, processData: false,
-					contentType: false
+				if ($('#userIn').val() != user.displayName){
+					alert("username entered is not correct");
+				}
+				else{
+					e.preventDefault();
+					var formData = new FormData($("#uploadPicForm")[0]);
+					console.log(formData);
+					$.post("http://localhost:5000/postTextbook",{ schoolp:school, coursep:course, userIDp:userID,  titlep:title, authorp:author, pricep:price, isbnp:isbn, notep:note});
+			
+					$.ajax({
+						type: "POST",
+						url: "/upload",
+						data: userID: formData, processData: false,
+						contentType: false
 
-				});
+					});
+				}
 			}
 			else{
 				alert("Sign in first to upload");

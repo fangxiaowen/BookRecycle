@@ -106,11 +106,11 @@ var fireRef = firebase.database().ref('uploads');
 //Make a new one
 app.post('/upload', uploader.single("img"), sendUploadToGCS, function (req, res, next) {
     //var data = {"text" : req.body.todoText};
-	console.log("User "+ req.body.userID + " uploading file on "+ getPublicUrl(req.file.cloudStorageObject));
+	console.log("User "+ req.body.userIn + " uploading file on "+ getPublicUrl(req.file.cloudStorageObject));
    // if(req.file)
         //data.img = getPublicUrl(req.file.cloudStorageObject);
-		firebase.database().ref('users/' + req.body.userID).set({
-			img:getPublicUrl(req.file.cloudStorageObject)
+		firebase.database().ref('users/' + req.body.userIn).set({
+			img: getPublicUrl(req.file.cloudStorageObject)
 		});
     /*fireRef.push(data, function () {
         res.send("OK!");
