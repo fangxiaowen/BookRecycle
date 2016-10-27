@@ -436,7 +436,7 @@ $( document ).ready(function() {
 					$.ajax({
 						type: "POST",
 						url: "/upload",
-						data: userID: formData, processData: false,
+						data: formData, processData: false,
 						contentType: false
 
 					});
