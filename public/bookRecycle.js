@@ -430,6 +430,9 @@ $( document ).ready(function() {
 				}
 				else{
 					if (document.getElementById("newFile").files.length == 0){ //check if there is a selected file
+						alert("Select a file to upload");
+					}
+					else{
 						console.log("entered username is correct");
 						e.preventDefault();
 						var formData = new FormData($("#uploadPicForm")[0]);
@@ -440,9 +443,6 @@ $( document ).ready(function() {
 							data: formData, processData: false,
 							contentType: false
 						});
-					}
-					else{
-						alert("Select a file to upload");
 					}
 				}
 			}
