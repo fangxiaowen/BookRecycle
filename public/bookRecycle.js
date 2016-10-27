@@ -420,25 +420,30 @@ $( document ).ready(function() {
 	
 	$('#uploadPicForm').submit(function(e)
     {
-		
+		//check if user is logged in
 		firebase.auth().onAuthStateChanged(function(user) {
 			if (user) {
 				console.log("displayname is "+user.displayName);
+				//prompting user to enter username allows us to store the file with under is username
 				if ($('#userPrompt').val() != user.displayName){
 					alert("username entered is not correct");
 				}
 				else{
-					console.log("entered username is correct");
-					e.preventDefault();
-					var formData = new FormData($("#uploadPicForm")[0]);
-					console.log(formData);
-					$.ajax({
-						type: "POST",
-						url: "/upload",
-						data: formData, processData: false,
-						contentType: false
-
-					});
+					if ($('#newFile').val() != null){
+						console.log("entered username is correct");
+						e.preventDefault();
+						var formData = new FormData($("#uploadPicForm")[0]);
+						console.log(formData);
+						$.ajax({
+							type: "POST",
+							url: "/upload",
+							data: formData, processData: false,
+							contentType: false
+						});
+					}
+					else{
+						alert("Select a file to upload");
+					}
 				}
 			}
 			else{

@@ -108,16 +108,9 @@ app.post('/upload', uploader.single("img"), sendUploadToGCS, function (req, res,
     //var data = {"text" : req.body.todoText};
 	console.log("User "+ req.body.userIn + " uploading file on "+ getPublicUrl(req.file.cloudStorageObject));
     if(req.file)
-        //data.img = getPublicUrl(req.file.cloudStorageObject);
-		firebase.database().ref('uploads/' + req.body.userIn).set({	//put link in uploads folder
+        firebase.database().ref('uploads/' + req.body.userIn).set({	//put link in uploads folder
 			img: getPublicUrl(req.file.cloudStorageObject)
 		});
-    /*fireRef.push(data, function () {
-        res.send("OK!");
-    }).catch(function(){
-        res.status(403);
-        res.send();
-    });*/
 });
 
 app.use(express.static('public'));
