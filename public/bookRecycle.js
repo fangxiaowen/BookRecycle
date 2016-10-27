@@ -420,16 +420,25 @@ $( document ).ready(function() {
 	
 	$('#uploadPicForm').submit(function(e)
     {
-        e.preventDefault();
-        var formData = new FormData($("#uploadPicForm")[0]);
-        console.log(formData);
-        $.ajax({
-            type: "POST",
-            url: "/upload",
-            data: formData,processData: false,
-            contentType: false
+		
+		firebase.auth().onAuthStateChanged(function(user) {
+			if (user) {
+				e.preventDefault();
+				var formData = new FormData($("#uploadPicForm")[0]);
+				console.log(formData);
+				$.ajax({
+					type: "POST",
+					url: "/upload",
+					data: formData,userID: user.displayName, processData: false,
+					contentType: false
 
-        });
+				});
+			}
+			else{
+				alert("Sign in first to upload");
+			}
+		}
+        
     });
 	
 	/**handle back and forward activities*/

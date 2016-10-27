@@ -105,57 +105,19 @@ app.post('/createUserInfo', function (req, res){
 var fireRef = firebase.database().ref('uploads');
 //Make a new one
 app.post('/upload', uploader.single("img"), sendUploadToGCS, function (req, res, next) {
-    var data = {"text" : req.body.todoText};
+    //var data = {"text" : req.body.todoText};
     if(req.file)
-        data.img = getPublicUrl(req.file.cloudStorageObject);
-    fireRef.push(data, function () {
+        //data.img = getPublicUrl(req.file.cloudStorageObject);
+		firebase.database().ref('users/' + req.body.userID).set({
+			img:getPublicUrl(req.file.cloudStorageObject);
+		});
+    /*fireRef.push(data, function () {
         res.send("OK!");
     }).catch(function(){
         res.status(403);
         res.send();
-    });
+    });*/
 });
-
-/*
-app.post('/newTodo', function (req, res) {
-    console.log("New req");
-    console.log("Client wants to create todo: '" + req.body.todoText + "'");
-    fireRef.push({"text": req.body.todoText}, function () {
-        res.send("OK!");
-    }).catch(function(){
-        res.status(403);
-    });
-});
-app.post('/editTodo', function (req, res) {
-    console.log("Client wants to update todo: '" +req.body.key+ " To " + req.body.todoText + "'");
-    if(req.body.todoText.toLowerCase().includes("lasagna"))
-        res.status(403);
-    else
-        fireRef.child(req.body.key).set({"text": req.body.todoText}, function () {
-            res.send("OK!");
-        }).catch(function(){
-            res.status(403);
-        });
-});
-app.post('/deleteTodo', function (req, res) {
-    console.log("Client wants to delete todo: '" +req.body.key);
-    fireRef.child(req.body.key).once("value", function(item){
-        if(item.val().text.toLowerCase().includes("lasagna"))
-            res.status(403);
-        else
-        {
-            fireRef.child(req.body.key).remove();
-            res.send("OK!");
-        }
-    }).catch(function(){
-        res.status(403);
-    });
-});
-app.get('/emptyHtml.html', function (req, res) {
-    console.log("Requested empty html");
-    res.send("OK!");
-});
-*/
 
 app.use(express.static('public'));
 
