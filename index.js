@@ -107,9 +107,9 @@ var fireRef = firebase.database().ref('uploads');
 app.post('/upload', uploader.single("img"), sendUploadToGCS, function (req, res, next) {
     //var data = {"text" : req.body.todoText};
 	console.log("User "+ req.body.userIn + " uploading file on "+ getPublicUrl(req.file.cloudStorageObject));
-   // if(req.file)
+    if(req.file)
         //data.img = getPublicUrl(req.file.cloudStorageObject);
-		firebase.database().ref('users/' + req.body.userIn).set({
+		firebase.database().ref('uploads/' + req.body.userIn).set({	//put link in uploads folder
 			img: getPublicUrl(req.file.cloudStorageObject)
 		});
     /*fireRef.push(data, function () {
