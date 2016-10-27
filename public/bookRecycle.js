@@ -424,7 +424,7 @@ $( document ).ready(function() {
 		firebase.auth().onAuthStateChanged(function(user) {
 			if (user) {
 				console.log("displayname is "+user.displayName);
-				if ($('#userIn').val() != user.displayName){
+				if ($('#userPrompt').val() != user.displayName){
 					alert("username entered is not correct");
 				}
 				else{
