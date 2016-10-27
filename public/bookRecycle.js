@@ -53,7 +53,7 @@ $( document ).ready(function() {
 					});
 				firebase.database().ref("uploads/" + user.displayName+"/img").once('value').then(function(snapshot) {
 						var imglink = snapshot.val();
-						$('#welcomeIndex').html('<img src="'+imglink+'">');
+						$('#profImage').html('<img src="'+imglink+'">');
 				});
 				
 				$('#welcomeIndex').show();
