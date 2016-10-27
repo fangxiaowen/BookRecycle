@@ -425,6 +425,7 @@ $( document ).ready(function() {
 			if (user) {
 				e.preventDefault();
 				var formData = new FormData($("#uploadPicForm")[0]);
+				console.log("displayname is "+user.displayName);
 				console.log(formData);
 				$.ajax({
 					type: "POST",
