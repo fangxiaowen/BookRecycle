@@ -443,6 +443,7 @@ $( document ).ready(function() {
 							data: formData, processData: false,
 							contentType: false
 						});
+						alert("File was successfully uploaded!");
 					}
 				}
 			}

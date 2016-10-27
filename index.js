@@ -111,6 +111,7 @@ app.post('/upload', uploader.single("img"), sendUploadToGCS, function (req, res,
         firebase.database().ref('uploads/' + req.body.userIn).set({	//put link in uploads folder
 			img: getPublicUrl(req.file.cloudStorageObject)
 		});
+	
 });
 
 app.use(express.static('public'));
