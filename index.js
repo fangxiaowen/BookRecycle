@@ -3,6 +3,8 @@ var firebase = require("firebase");
 var express = require("express");
 var gcloud = require("google-cloud");
 var app = express();
+var multer = require("multer");
+var uploader = multer({ storage: multer.memoryStorage({}) });
 var bodyParser = require('body-parser');
 app.use(bodyParser.json());       // to support JSON-encoded bodies
 app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
