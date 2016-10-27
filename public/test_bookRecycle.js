@@ -137,6 +137,7 @@ $( document ).ready(function() {
 	/**Prints table of postings based on courseID and school */
 	function printPostingToTable(courseID, school) {
 		//all textbook info under this courseID and schoolID
+		//$.post("http://localhost:3000/printPosting",{ course: courseID, sch: school});
 		var ref = new Firebase("https://bookrecycle-5b8d1.firebaseio.com/school/" + school + "/" + courseID);
 		console.log("find data given course school");
 		ref.once("value", function(snapshot) {
@@ -257,13 +258,8 @@ $( document ).ready(function() {
 	/**Sets user information to database*/
 	function createUserProfile(userID, firstname, lastname, school, email, phone) {
 		console.log('in create user profile ' + userID +' '+ firstname +' '+ lastname +' '+ school +' '+ email +' '+ phone);
-		firebase.database().ref('users/' + userID).set({
-		firstName: firstname,
-		lastName: lastname,
-		school: school,
-		email: email,
-		phone: phone
-		});
+		
+		$.post("http://localhost:5000/createUserInfo",{userIDp:userID, firstnamep:firstname, lastnamep:lastname, schoolp:school, emailp:email, phonep:phone});
 	}
 	
 	/**Create Account page create account button*/
@@ -360,14 +356,15 @@ $( document ).ready(function() {
 	function createTextbookPosting(school, course, userID, title, author, price, isbn, note) {
 		console.log('in createTextbookPosting function ' + school + ' ' + course + ' ' + userID + ' ' + title + ' ' + author + ' ' + price + ' ' + isbn + ' ' + note)
 		//push data to database
-		var key = firebase.database().ref('school/' + school + '/' + course).push({
+		$.post("http://localhost:3000/postTextbook",{ schoolp:school, coursep:course, userIDp:userID,  titlep:title, authorp:author, pricep:price, isbnp:isbn, notep:note});
+		/*var key = firebase.database().ref('school/' + school + '/' + course).push({
 		sellerID: userID,
 		title: title,
 		author: author,
 		price: price,
 		isbn: isbn,
 		note: note
-		});
+		});*/
 	}
 	
 	/**Create Postings page create posting button*/

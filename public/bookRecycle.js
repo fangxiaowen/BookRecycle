@@ -37,7 +37,7 @@ $( document ).ready(function() {
 	schoolCourseMap.set("UVA", uvaCourses);
 
 	/**On load of page*/
-		window.onload = function(){
+	window.onload = function(){
 		firebase.auth().onAuthStateChanged(function(user) {
 			if (user) {
 				// User is signed in here
@@ -51,6 +51,11 @@ $( document ).ready(function() {
 							$('#welcomeIndex').html('<b>Welcome '+ firstname + " " + snapshot.val() + '!</b>');
 						});
 					});
+				firebase.database().ref("uploads/" + user.displayName+"/img").once('value').then(function(snapshot) {
+						var imglink = snapshot.val();
+						$('#profImage').html('<img src="'+imglink+'" height="150" width="150">');
+				});
+				
 				$('#welcomeIndex').show();
 				//display logout tab
 				$("#logoutLink").show();
@@ -231,13 +236,8 @@ $( document ).ready(function() {
 	/**Sets user information to database*/
 	function createUserProfile(userID, firstname, lastname, school, email, phone) {
 		console.log('in create user profile ' + userID +' '+ firstname +' '+ lastname +' '+ school +' '+ email +' '+ phone);
-		firebase.database().ref('users/' + userID).set({
-		firstName: firstname,
-		lastName: lastname,
-		school: school,
-		email: email,
-		phone: phone
-		});
+		
+		$.post("http://localhost:5000/createUserInfo",{userIDp:userID, firstnamep:firstname, lastnamep:lastname, schoolp:school, emailp:email, phonep:phone});
 	}
 	
 	/**Create Account page create account button*/
@@ -334,14 +334,15 @@ $( document ).ready(function() {
 	function createTextbookPosting(school, course, userID, title, author, price, isbn, note) {
 		console.log('in createTextbookPosting function ' + school + ' ' + course + ' ' + userID + ' ' + title + ' ' + author + ' ' + price + ' ' + isbn + ' ' + note)
 		//push data to database
-		var key = firebase.database().ref('school/' + school + '/' + course).push({
+		$.post("http://localhost:5000/postTextbook",{ schoolp:school, coursep:course, userIDp:userID,  titlep:title, authorp:author, pricep:price, isbnp:isbn, notep:note});
+		/*var key = firebase.database().ref('school/' + school + '/' + course).push({
 		sellerID: userID,
 		title: title,
 		author: author,
 		price: price,
 		isbn: isbn,
 		note: note
-		});
+		});*/
 	}
 	
 	/**Create Postings page create posting button*/
@@ -421,6 +422,42 @@ $( document ).ready(function() {
 			console.log("PUSHED This is course: "+ [currentSchool, currentCourse]);
 		}
 	});
+	
+	$('#uploadPicForm').submit(function(e)
+    {
+		//check if user is logged in
+		firebase.auth().onAuthStateChanged(function(user) {
+			if (user) {
+				console.log("displayname is "+user.displayName);
+				//prompting user to enter username allows us to store the file with under is username
+				if ($('#userPrompt').val() != user.displayName){
+					alert("username entered is not correct");
+				}
+				else{
+					if (document.getElementById("newFile").files.length == 0){ //check if there is a selected file
+						alert("Select a file to upload");
+					}
+					else{
+						console.log("entered username is correct");
+						e.preventDefault();
+						var formData = new FormData($("#uploadPicForm")[0]);
+						console.log(formData);
+						$.ajax({
+							type: "POST",
+							url: "/upload",
+							data: formData, processData: false,
+							contentType: false
+						});
+						alert("File was successfully uploaded!");
+						location.reload();
+					}
+				}
+			}
+			else{
+				alert("Sign in first to upload");
+			}
+		});
+    });
 	
 	/**handle back and forward activities*/
 	window.addEventListener('popstate', function(e) {
