@@ -444,6 +444,7 @@ $( document ).ready(function() {
 							contentType: false
 						});
 						alert("File was successfully uploaded!");
+						location.reload();
 					}
 				}
 			}
