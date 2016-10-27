@@ -429,7 +429,7 @@ $( document ).ready(function() {
 					alert("username entered is not correct");
 				}
 				else{
-					if ($('#newFile').val() != null){
+					if (document.getElementById("newFile").files.length == 0){ //check if there is a selected file
 						console.log("entered username is correct");
 						e.preventDefault();
 						var formData = new FormData($("#uploadPicForm")[0]);
