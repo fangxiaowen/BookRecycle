@@ -418,6 +418,20 @@ $( document ).ready(function() {
 		}
 	});
 	
+	$('#uploadPicForm').submit(function(e)
+    {
+        e.preventDefault();
+        var formData = new FormData($("#uploadPicForm")[0]);
+        console.log(formData);
+        $.ajax({
+            type: "POST",
+            url: "/upload",
+            data: formData,processData: false,
+            contentType: false
+
+        });
+    });
+	
 	/**handle back and forward activities*/
 	window.addEventListener('popstate', function(e) {
 		//use history stack states
