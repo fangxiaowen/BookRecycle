@@ -437,8 +437,7 @@ $( document ).ready(function() {
 			else{
 				alert("Sign in first to upload");
 			}
-		}
-        
+		});
     });
 	
 	/**handle back and forward activities*/
