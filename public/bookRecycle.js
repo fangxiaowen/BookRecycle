@@ -37,7 +37,7 @@ $( document ).ready(function() {
 	schoolCourseMap.set("UVA", uvaCourses);
 
 	/**On load of page*/
-		window.onload = function(){
+	window.onload = function(){
 		firebase.auth().onAuthStateChanged(function(user) {
 			if (user) {
 				// User is signed in here
@@ -51,6 +51,11 @@ $( document ).ready(function() {
 							$('#welcomeIndex').html('<b>Welcome '+ firstname + " " + snapshot.val() + '!</b>');
 						});
 					});
+				firebase.database().ref("uploads/" + user.displayName+"/img").once('value').then(function(snapshot) {
+						var imglink = snapshot.val();
+						$('#welcomeIndex').html('<img src="'+imglink+'">');
+				});
+				
 				$('#welcomeIndex').show();
 				//display logout tab
 				$("#logoutLink").show();
