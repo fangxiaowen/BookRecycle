@@ -430,7 +430,7 @@ $( document ).ready(function() {
 				$.ajax({
 					type: "POST",
 					url: "/upload",
-					data: formData,userID: user.displayName, processData: false,
+					data: userID: user.displayName, formData, processData: false,
 					contentType: false
 
 				});
