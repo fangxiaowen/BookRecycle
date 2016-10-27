@@ -428,11 +428,10 @@ $( document ).ready(function() {
 					alert("username entered is not correct");
 				}
 				else{
+					console.log("entered username is correct");
 					e.preventDefault();
 					var formData = new FormData($("#uploadPicForm")[0]);
 					console.log(formData);
-					$.post("http://localhost:5000/postTextbook",{ schoolp:school, coursep:course, userIDp:userID,  titlep:title, authorp:author, pricep:price, isbnp:isbn, notep:note});
-			
 					$.ajax({
 						type: "POST",
 						url: "/upload",
