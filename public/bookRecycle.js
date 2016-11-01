@@ -190,8 +190,6 @@ $( document ).ready(function() {
 		  document.getElementById("username").value = ""; //reset field
         } else {	//userId is unique
 			firebase.auth().createUserWithEmailAndPassword($('#email').val(), $('#pass').val()).then(function(user){
-				//set up profile
-				createUserProfile($('#username').val(), $('#firstname').val(), $('#lastname').val(), $('#school').val(), $('#email').val(), $('#phone').val());
 				
 				//update displayName to the username
 				var user = firebase.auth().currentUser;
@@ -205,6 +203,8 @@ $( document ).ready(function() {
 				firebase.auth().onAuthStateChanged(function(user) {
 					if (user) {
 						// User is signed in.
+						//now logged in, set up profile
+						createUserProfile($('#username').val(), $('#firstname').val(), $('#lastname').val(), $('#school').val(), $('#email').val(), $('#phone').val());
 						alert('Account successfully created. Welcome to BookRecycle ' + $('#firstname').val() + ' ' + $('#lastname').val() + '! ');
 						window.location.href = "index.html";	//now logged in, go to homepage
 					} else {
@@ -219,6 +219,8 @@ $( document ).ready(function() {
 				console.log(errorMessage);
 				$('#welcomeMsg').html('<b>'+errorMessage+'</b>');
 			});
+			
+			
         }
     }
        
