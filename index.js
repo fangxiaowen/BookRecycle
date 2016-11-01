@@ -78,14 +78,24 @@ console.log('running fine');
 //});
 app.post('/postTextbook', function (req, res) {
     console.log("User wants to create posting: '" + req.body.titlep + "'");
-	firebase.database().ref('school/' + req.body.schoolp + '/' + req.body.coursep).push({
-		sellerID: req.body.userIDp,
-		title: req.body.titlep,
-		author: req.body.authorp,
-		price: req.body.pricep,
-		isbn: req.body.isbnp,
-		note: req.body.notep
+	
+	var idToken = req.body.token;
+    firebase.auth().verifyIdToken(idToken).then(function (decodedToken) {
+        var uid = decodedToken.uid;
+		
+		firebase.database().ref('school/' + req.body.schoolp + '/' + req.body.coursep).push({
+			sellerID: req.body.userIDp,
+			title: req.body.titlep,
+			author: req.body.authorp,
+			price: req.body.pricep,
+			isbn: req.body.isbnp,
+			note: req.body.notep
 		});
+    }).catch(function(error) {
+	  // Handle error
+	  console.log("error in verifying token");
+	});
+	
 	console.log("done post textbook");
 		
 });
