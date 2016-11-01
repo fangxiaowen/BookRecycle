@@ -102,9 +102,11 @@ app.post('/postTextbook', function (req, res) {
 
 app.post('/createUserInfo', function (req, res){
 	console.log("Create info of user "+ req.body.firstnamep + " " + req.body.lastnamep);
-	firebase.auth().verifyIdToken(idToken).then(function (decodedToken) {
+
+	var idToken = req.body.token;
+    firebase.auth().verifyIdToken(idToken).then(function (decodedToken) {
         var uid = decodedToken.uid;
-		
+		console.log("in create user info: uid is "+ uid);
 		firebase.database().ref('users/' + req.body.userIDp).set({
 			firstName: req.body.firstnamep,
 			lastName: req.body.lastnamep,
