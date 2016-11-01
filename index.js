@@ -93,7 +93,7 @@ app.post('/postTextbook', function (req, res) {
 		});
     }).catch(function(error) {
 	  // Handle error
-	  console.log("error in verifying token");
+	  console.log("error in verifying token in creating a post");
 	});
 	
 	console.log("done post textbook");
@@ -102,12 +102,19 @@ app.post('/postTextbook', function (req, res) {
 
 app.post('/createUserInfo', function (req, res){
 	console.log("Create info of user "+ req.body.firstnamep + " " + req.body.lastnamep);
-	firebase.database().ref('users/' + req.body.userIDp).set({
-		firstName: req.body.firstnamep,
-		lastName: req.body.lastnamep,
-		school: req.body.schoolp,
-		email: req.body.emailp,
-		phone: req.body.phonep
+	firebase.auth().verifyIdToken(idToken).then(function (decodedToken) {
+        var uid = decodedToken.uid;
+		
+		firebase.database().ref('users/' + req.body.userIDp).set({
+			firstName: req.body.firstnamep,
+			lastName: req.body.lastnamep,
+			school: req.body.schoolp,
+			email: req.body.emailp,
+			phone: req.body.phonep
+		});
+	}).catch(function(error) {
+	  // Handle error
+	  console.log("error in verifying token in creating user");
 	});
 	console.log("done create user");
 });

@@ -237,7 +237,10 @@ $( document ).ready(function() {
 	function createUserProfile(userID, firstname, lastname, school, email, phone) {
 		console.log('in create user profile ' + userID +' '+ firstname +' '+ lastname +' '+ school +' '+ email +' '+ phone);
 		
-		$.post("http://localhost:5000/createUserInfo",{userIDp:userID, firstnamep:firstname, lastnamep:lastname, schoolp:school, emailp:email, phonep:phone});
+		firebase.auth().currentUser.getToken().then(function(idToken) {
+            $.post("http://localhost:5000/createUserInfo",{userIDp:userID, firstnamep:firstname, lastnamep:lastname, schoolp:school, emailp:email, phonep:phone, token: idToken});
+        });
+		//$.post("http://localhost:5000/createUserInfo",{userIDp:userID, firstnamep:firstname, lastnamep:lastname, schoolp:school, emailp:email, phonep:phone});
 	}
 	
 	/**Create Account page create account button*/
