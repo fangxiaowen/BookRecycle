@@ -169,6 +169,11 @@ div#invalidSelection{
 	color:red;
 }
 
+div#profImage{
+    left: 100px;
+    top: 120px;	
+}
+
 img{
     position: absolute;
     left: 50px;
