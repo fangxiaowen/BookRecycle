@@ -97,7 +97,7 @@ $( document ).ready(function() {
 	//React component for the info of every textbook
 	var BookRow = React.createClass({
 		render: function(){
-			console.log("in BookRow " + this.props.data.author + " " + this.props.data.isbn + " " + this.props.data.note + " " + this.props.data.price + " " + this.props.data.sellerID + " " + this.props.data.title + " ");
+			console.log("in BookRow " + this.props.data.key + " " + this.props.data.isbn + " " + this.props.data.note + " " + this.props.data.price + " " + this.props.data.sellerID + " " + this.props.data.title + " ");
 			return (	<tr>
 							<th>{this.props.data.title}</th>
 							<th>{this.props.data.author}</th>

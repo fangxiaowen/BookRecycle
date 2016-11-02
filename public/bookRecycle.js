@@ -467,6 +467,107 @@ $( document ).ready(function() {
 		});
     });
 	
+	//still under construction, not part of our 3 scenarios
+	//very ineffecient way to search but hey it works
+	function myPostingsBySchool(userID, school){
+		var table = document.getElementById("myPostingsTable");
+		$('#myPostingsTable td').remove();
+		$('#myPostingsOptions').find('option').remove().end().append('<option disabled selected style="color:red">-select-</option>');//.val('whatever');
+		
+		
+		var counter =1;
+		var ref = new Firebase("https://bookrecycle-5b8d1.firebaseio.com/school/" + school);
+		ref.once("value", function(snapshot) {			
+		  	//go through each school course
+			snapshot.forEach(function(childSnapshot) {
+				console.log("here1 childsnapshot is " + childSnapshot.key());
+				var currCourse = childSnapshot.key();
+				//go through each course's listing
+				var refCourses = new Firebase("https://bookrecycle-5b8d1.firebaseio.com/school/" + school + "/" + currCourse);  // school/schoolname/course here
+				refCourses.once("value", function(snapshotCourse) {			
+					//go through each listing
+					snapshotCourse.forEach(function(snapshotCourseListing) {
+						console.log("here2 snapshotCourseListing is " + snapshotCourseListing.key());
+						var currListing = snapshotCourseListing.key();
+						firebase.database().ref("school/" + school + "/" + currCourse + "/" + currListing + "/sellerID").once('value').then(function(snapshotSeller) {
+							console.log("here3 snapshot.val = " + snapshotSeller.val() + " ::: userID = " + userID);
+						
+							// found a posting!
+							if (snapshotSeller.val()==userID){
+								//myPostingsTable
+								
+								var row = table.insertRow(table.rows.length);	
+								var index = row.insertCell(0);
+								var course = row.insertCell(1);
+								var textbookTitle = row.insertCell(2);
+								var author = row.insertCell(3);
+								var isbn = row.insertCell(4);
+								var seller = row.insertCell(5);
+								var price = row.insertCell(6);
+								var notes = row.insertCell(7);
+								
+								//get textbook info
+								index.innerHTML = counter;
+								course.innerHTML = currCourse;
+								firebase.database().ref("school/" + school + "/" + currCourse + "/" + currListing + "/title").once('value').then(function(snapshotL) {
+									textbookTitle.innerHTML = snapshotL.val();
+								});
+								firebase.database().ref("school/" + school + "/" + currCourse + "/" + currListing + "/author").once('value').then(function(snapshotL) {
+									author.innerHTML = snapshotL.val();
+								});
+								firebase.database().ref("school/" + school + "/" + currCourse + "/" + currListing + "/isbn").once('value').then(function(snapshotL) {
+									isbn.innerHTML = snapshotL.val();
+								});
+								firebase.database().ref("school/" + school + "/" + currCourse + "/" + currListing + "/sellerID").once('value').then(function(snapshotL) {
+									seller.innerHTML = snapshotL.val();
+								});			
+								firebase.database().ref("school/" + school + "/" + currCourse + "/" + currListing + "/note").once('value').then(function(snapshotL) {
+									notes.innerHTML = snapshotL.val();
+								});
+								firebase.database().ref("school/" + school + "/" + currCourse + "/" + currListing + "/price").once('value').then(function(snapshotL) {
+									price.innerHTML = snapshotL.val();
+								});
+								
+								console.log("adding option " + counter + " = " + currListing);
+								$('#myPostingsOptions').append($('<option>', {
+									value: currListing,
+									text: counter
+								}));
+								
+								counter++;
+							}
+								
+						});
+						
+					});
+				});
+				console.log('current postingID: '+ childSnapshot.key());
+				var postingID = childSnapshot.key();
+				
+			});
+		  //$('#spinner').hide();	
+		});
+		
+		
+		//ref.child('users').orderByChild('name').equalTo('Alex').on('child_added',  ...)
+	}
+	
+	//still under construction, not part of our 3 scenarios
+	$("#searchMyPosts").click(function() {
+		console.log("clicked search postings");
+		firebase.auth().onAuthStateChanged(function(user) {
+			if (user) {
+				console.log("start searching postings of user " + user.displayName + " for " + $('#schoolOptionsMyPostings').val());
+				myPostingsBySchool(user.displayName, $('#schoolOptionsMyPostings').val());
+			}
+		});
+	});
+	
+	//still under construction, not part of our 3 scenarios
+	$("#removePosting").click(function() {
+	
+	});
+	
 	/**handle back and forward activities*/
 	window.addEventListener('popstate', function(e) {
 		//use history stack states
