@@ -72,6 +72,7 @@ $( document ).ready(function() {
 				$("#searchUserButton").show();
 			 } else {
 				// No user is signed in here
+				console.log('No user is logged in');
 				$('#navBarUser').html('You are not logged in. Please sign in!');
 				//hide greeting in homepage
 				$('#welcomeIndex').hide();
@@ -157,6 +158,7 @@ $( document ).ready(function() {
 				document.getElementById('searchResult'));
 			$('#spinner').hide();	
 		});
+		$("#promptToSearchUser").show();
 	}
 	/*
 	var UserResult = React.createClass({

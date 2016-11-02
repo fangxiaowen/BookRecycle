@@ -75,6 +75,7 @@ $( document ).ready(function() {
 				$("#searchUserForm").show();
 			 } else {
 				// No user is signed in here
+				console.log('No user is logged in');
 				$('#navBarUser').html('You are not logged in. Please sign in!');
 				//hide greeting in homepage
 				$('#welcomeIndex').hide();
@@ -360,7 +361,6 @@ $( document ).ready(function() {
 			alert('You are not signed in. Please sign in first.');
 		}
 		else{
-			$('#spinner').show();
 			console.log(firebase.auth().currentUser);
 			var labels = ['schoolOptions', 'courseOptions', 'title', 'author', 'price']; //'isbn' and 'notes' are optional
 			var unfilled = false;
@@ -376,6 +376,8 @@ $( document ).ready(function() {
 			if (unfilled)
 				alert('Please enter required fields');
 			else{
+				$('#spinner').show();
+			
 				// modify optional fields if blank to "none"
 				var isbn = $('#isbn').val();
 				var note = $('#note').val();
