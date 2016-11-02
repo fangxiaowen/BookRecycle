@@ -6,10 +6,9 @@ HW8
 1. Registration/Login/Logout. Users will be able to create an account and login in to post textbooks.
 2. Create Postings. Users will be able to post textbooks. Only registered and logged in users can use this feature.
 3. Search Postings. Users will be able to search for postings given a school and a course. Any user (no need to be logged in) is allowed to search for textbooks. 
-4. Search users. Users will be able to search users' info by username.
+4. Search users. Users will be able to search users' info by username. Any user (no need to be logged in) is allowed to search for other users.
 5. Visualization. Visualize the number of avaliable textbooks. Visualize the number of textbooks avaliable under courses in each school using circle packing.
 6. Upload of profile picture. Users will be able to upload/change their profile pictures in the home page (index.html)
-
 
 
 
