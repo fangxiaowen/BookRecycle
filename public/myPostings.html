@@ -1,0 +1,71 @@
+<!doctype html>
+<!--This is homepage -->
+<html>
+	<head>
+		<title>Book Recycle</title>
+		<script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
+		<script src="https://www.gstatic.com/firebasejs/3.4.0/firebase.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+		<script src="bookRecycle.js"></script>
+	</head>
+	<body>
+		<link href="styles/main.css" rel="stylesheet" />
+		<div class="navBar">
+			<ul>
+				<li><a href="index.html">Home</a></li>
+				<li><a href="createPosting.html">Create Posting</a></li>
+				<li><a href="textbookPostings.html">Find Textbooks</a></li>
+				<li><a href="loginPage.html">Login</a></li>
+				<li><a href="createAccount.html">Create Account</a></li>
+				<li><a href="searchUser.html">Search User</a></li>				
+				<li><div id="selected">My Postings</div></li>				
+				<li><div id="navBarUser"></div></li>
+				<li id="logoutLink" style="display: none"><a>Logout</a></li>
+			</ul>
+		</div>
+		<br/><br/><br/><br/><br/><br/>
+		
+		<div class="bodyContainer">
+			<p><b>This feature is still under construction (specifically removing a post). This not part of our 3 scenarios.</b></p>
+			<div>
+					<label>School:</label>
+					<select id="schoolOptionsMyPostings">
+						<option disabled selected style="color:red">-select-</option>
+						<option value="GMU">George Mason University</option>
+						<option value="JMU">James Madison University</option>
+						<option value="UVA">University of Virginia</option>
+					</select>
+			
+				<button id="searchMyPosts">Search for my postings</button>
+			</div>
+			<br/>
+			<div id='myPostingsDiv'>
+				<table id='myPostingsTable'>
+					<tr>
+						<th>Index</th>
+						<th>Course</th>
+						<th>Textbook Title</th>
+						<th>Author</th>
+						<th>ISBN</th>
+						<th>Seller Username</th>
+						<th>Price ($)</th>
+						<th>Seller's Notes</th>
+					</tr>
+				</table>
+			</div>
+			<br/><br/><br/>
+		
+			<div>
+					<label>Delete Index:</label>
+					<select id="myPostingsOptions">
+						<option disabled selected style="color:red">-select-</option>
+					</select>
+					<button id="removePosting">Remove Posting</button>
+			</div>
+			<br/><br/><br/><br/><br/><br/>
+		</div>
+		<div class="bottomDescr">
+                <p><strong>Book Recycle &copy;</strong> is a textbook transaction platform that is being developed by <a href="mailto:mbauzon@gmu.edu">Michael Josh Bauzon</a> and <a href="mailto:xfang5@gmu.edu">Xiaowen Fang</a> over the course of SWE 432. </p>
+        </div>
+	</body>
+</html>	
