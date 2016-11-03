@@ -72,6 +72,7 @@ $( document ).ready(function() {
 				$("#searchUserButton").show();
 			 } else {
 				// No user is signed in here
+				console.log('No user is logged in');
 				$('#navBarUser').html('You are not logged in. Please sign in!');
 				//hide greeting in homepage
 				$('#welcomeIndex').hide();
@@ -97,7 +98,7 @@ $( document ).ready(function() {
 	//React component for the info of every textbook
 	var BookRow = React.createClass({
 		render: function(){
-			console.log("in BookRow " + this.props.data.author + " " + this.props.data.isbn + " " + this.props.data.note + " " + this.props.data.price + " " + this.props.data.sellerID + " " + this.props.data.title + " ");
+			console.log("in BookRow " + this.props.data.key + " " + this.props.data.isbn + " " + this.props.data.note + " " + this.props.data.price + " " + this.props.data.sellerID + " " + this.props.data.title + " ");
 			return (	<tr>
 							<th>{this.props.data.title}</th>
 							<th>{this.props.data.author}</th>
@@ -157,6 +158,7 @@ $( document ).ready(function() {
 				document.getElementById('searchResult'));
 			$('#spinner').hide();	
 		});
+		$("#promptToSearchUser").show();
 	}
 	/*
 	var UserResult = React.createClass({

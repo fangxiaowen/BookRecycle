@@ -75,6 +75,7 @@ $( document ).ready(function() {
 				$("#searchUserForm").show();
 			 } else {
 				// No user is signed in here
+				console.log('No user is logged in');
 				$('#navBarUser').html('You are not logged in. Please sign in!');
 				//hide greeting in homepage
 				$('#welcomeIndex').hide();
@@ -190,8 +191,6 @@ $( document ).ready(function() {
 		  document.getElementById("username").value = ""; //reset field
         } else {	//userId is unique
 			firebase.auth().createUserWithEmailAndPassword($('#email').val(), $('#pass').val()).then(function(user){
-				//set up profile
-				createUserProfile($('#username').val(), $('#firstname').val(), $('#lastname').val(), $('#school').val(), $('#email').val(), $('#phone').val());
 				
 				//update displayName to the username
 				var user = firebase.auth().currentUser;
@@ -205,6 +204,8 @@ $( document ).ready(function() {
 				firebase.auth().onAuthStateChanged(function(user) {
 					if (user) {
 						// User is signed in.
+						//now logged in, set up profile
+						createUserProfile($('#username').val(), $('#firstname').val(), $('#lastname').val(), $('#school').val(), $('#email').val(), $('#phone').val());
 						alert('Account successfully created. Welcome to BookRecycle ' + $('#firstname').val() + ' ' + $('#lastname').val() + '! ');
 						window.location.href = "index.html";	//now logged in, go to homepage
 					} else {
@@ -219,6 +220,8 @@ $( document ).ready(function() {
 				console.log(errorMessage);
 				$('#welcomeMsg').html('<b>'+errorMessage+'</b>');
 			});
+			
+			
         }
     }
        
@@ -237,7 +240,10 @@ $( document ).ready(function() {
 	function createUserProfile(userID, firstname, lastname, school, email, phone) {
 		console.log('in create user profile ' + userID +' '+ firstname +' '+ lastname +' '+ school +' '+ email +' '+ phone);
 		
-		$.post("http://localhost:5000/createUserInfo",{userIDp:userID, firstnamep:firstname, lastnamep:lastname, schoolp:school, emailp:email, phonep:phone});
+		firebase.auth().currentUser.getToken().then(function(idToken) {
+            $.post("http://localhost:5000/createUserInfo",{userIDp:userID, firstnamep:firstname, lastnamep:lastname, schoolp:school, emailp:email, phonep:phone, token: idToken});
+        });
+		//$.post("http://localhost:5000/createUserInfo",{userIDp:userID, firstnamep:firstname, lastnamep:lastname, schoolp:school, emailp:email, phonep:phone});
 	}
 	
 	/**Create Account page create account button*/
@@ -334,7 +340,10 @@ $( document ).ready(function() {
 	function createTextbookPosting(school, course, userID, title, author, price, isbn, note) {
 		console.log('in createTextbookPosting function ' + school + ' ' + course + ' ' + userID + ' ' + title + ' ' + author + ' ' + price + ' ' + isbn + ' ' + note)
 		//push data to database
-		$.post("http://localhost:5000/postTextbook",{ schoolp:school, coursep:course, userIDp:userID,  titlep:title, authorp:author, pricep:price, isbnp:isbn, notep:note});
+		firebase.auth().currentUser.getToken().then(function(idToken) {
+            $.post("http://localhost:5000/postTextbook",{ schoolp:school, coursep:course, userIDp:userID,  titlep:title, authorp:author, pricep:price, isbnp:isbn, notep:note, token: idToken});
+        });
+		//$.post("http://localhost:5000/postTextbook",{ schoolp:school, coursep:course, userIDp:userID,  titlep:title, authorp:author, pricep:price, isbnp:isbn, notep:note});
 		/*var key = firebase.database().ref('school/' + school + '/' + course).push({
 		sellerID: userID,
 		title: title,
@@ -352,7 +361,6 @@ $( document ).ready(function() {
 			alert('You are not signed in. Please sign in first.');
 		}
 		else{
-			$('#spinner').show();
 			console.log(firebase.auth().currentUser);
 			var labels = ['schoolOptions', 'courseOptions', 'title', 'author', 'price']; //'isbn' and 'notes' are optional
 			var unfilled = false;
@@ -368,6 +376,8 @@ $( document ).ready(function() {
 			if (unfilled)
 				alert('Please enter required fields');
 			else{
+				$('#spinner').show();
+			
 				// modify optional fields if blank to "none"
 				var isbn = $('#isbn').val();
 				var note = $('#note').val();
@@ -458,6 +468,107 @@ $( document ).ready(function() {
 			}
 		});
     });
+	
+	//still under construction, not part of our 3 scenarios
+	//very ineffecient way to search but hey it works
+	function myPostingsBySchool(userID, school){
+		var table = document.getElementById("myPostingsTable");
+		$('#myPostingsTable td').remove();
+		$('#myPostingsOptions').find('option').remove().end().append('<option disabled selected style="color:red">-select-</option>');//.val('whatever');
+		
+		
+		var counter =1;
+		var ref = new Firebase("https://bookrecycle-5b8d1.firebaseio.com/school/" + school);
+		ref.once("value", function(snapshot) {			
+		  	//go through each school course
+			snapshot.forEach(function(childSnapshot) {
+				console.log("here1 childsnapshot is " + childSnapshot.key());
+				var currCourse = childSnapshot.key();
+				//go through each course's listing
+				var refCourses = new Firebase("https://bookrecycle-5b8d1.firebaseio.com/school/" + school + "/" + currCourse);  // school/schoolname/course here
+				refCourses.once("value", function(snapshotCourse) {			
+					//go through each listing
+					snapshotCourse.forEach(function(snapshotCourseListing) {
+						console.log("here2 snapshotCourseListing is " + snapshotCourseListing.key());
+						var currListing = snapshotCourseListing.key();
+						firebase.database().ref("school/" + school + "/" + currCourse + "/" + currListing + "/sellerID").once('value').then(function(snapshotSeller) {
+							console.log("here3 snapshot.val = " + snapshotSeller.val() + " ::: userID = " + userID);
+						
+							// found a posting!
+							if (snapshotSeller.val()==userID){
+								//myPostingsTable
+								
+								var row = table.insertRow(table.rows.length);	
+								var index = row.insertCell(0);
+								var course = row.insertCell(1);
+								var textbookTitle = row.insertCell(2);
+								var author = row.insertCell(3);
+								var isbn = row.insertCell(4);
+								var seller = row.insertCell(5);
+								var price = row.insertCell(6);
+								var notes = row.insertCell(7);
+								
+								//get textbook info
+								index.innerHTML = counter;
+								course.innerHTML = currCourse;
+								firebase.database().ref("school/" + school + "/" + currCourse + "/" + currListing + "/title").once('value').then(function(snapshotL) {
+									textbookTitle.innerHTML = snapshotL.val();
+								});
+								firebase.database().ref("school/" + school + "/" + currCourse + "/" + currListing + "/author").once('value').then(function(snapshotL) {
+									author.innerHTML = snapshotL.val();
+								});
+								firebase.database().ref("school/" + school + "/" + currCourse + "/" + currListing + "/isbn").once('value').then(function(snapshotL) {
+									isbn.innerHTML = snapshotL.val();
+								});
+								firebase.database().ref("school/" + school + "/" + currCourse + "/" + currListing + "/sellerID").once('value').then(function(snapshotL) {
+									seller.innerHTML = snapshotL.val();
+								});			
+								firebase.database().ref("school/" + school + "/" + currCourse + "/" + currListing + "/note").once('value').then(function(snapshotL) {
+									notes.innerHTML = snapshotL.val();
+								});
+								firebase.database().ref("school/" + school + "/" + currCourse + "/" + currListing + "/price").once('value').then(function(snapshotL) {
+									price.innerHTML = snapshotL.val();
+								});
+								
+								console.log("adding option " + counter + " = " + currListing);
+								$('#myPostingsOptions').append($('<option>', {
+									value: currListing,
+									text: counter
+								}));
+								
+								counter++;
+							}
+								
+						});
+						
+					});
+				});
+				console.log('current postingID: '+ childSnapshot.key());
+				var postingID = childSnapshot.key();
+				
+			});
+		  //$('#spinner').hide();	
+		});
+		
+		
+		//ref.child('users').orderByChild('name').equalTo('Alex').on('child_added',  ...)
+	}
+	
+	//still under construction, not part of our 3 scenarios
+	$("#searchMyPosts").click(function() {
+		console.log("clicked search postings");
+		firebase.auth().onAuthStateChanged(function(user) {
+			if (user) {
+				console.log("start searching postings of user " + user.displayName + " for " + $('#schoolOptionsMyPostings').val());
+				myPostingsBySchool(user.displayName, $('#schoolOptionsMyPostings').val());
+			}
+		});
+	});
+	
+	//still under construction, not part of our 3 scenarios
+	$("#removePosting").click(function() {
+	
+	});
 	
 	/**handle back and forward activities*/
 	window.addEventListener('popstate', function(e) {

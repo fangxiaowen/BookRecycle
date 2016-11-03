@@ -16,7 +16,7 @@ body{
 .navBar li a {
 	text-decoration:none;
 	padding:5px 0;
-	width:150px;
+	width:125px;
 	height: 25px;
 	background:#003399;
 	color:#eee;
@@ -84,7 +84,7 @@ img.large {
 	height: 200px;
 }
 
-img:hover{
+img#ourLogo:hover{
 	transform: rotate(359deg);
 	-webkit-transition: all 2s ease;
 	-moz-transition: all 2s ease;
@@ -153,7 +153,7 @@ table, th, td {
 div#selected{
 	text-decoration:none;
 	padding:5px 0;
-	width:150px;
+	width:125px;
 	height: 25px;
 	background:#99bbff;
 	color:#00091a;
@@ -169,11 +169,16 @@ div#invalidSelection{
 	color:red;
 }
 
-img{
+img#ourLogo{
     position: absolute;
     left: 50px;
     top: 120px;
     z-index: -1;
+}
+div#profPic{
+	position: absolute;
+    left: 400px;
+    top: 120px;	
 }
 
 .bottomDescr{
