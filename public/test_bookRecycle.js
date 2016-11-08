@@ -94,6 +94,19 @@ $( document ).ready(function() {
 		});
 	};
 		
+	var UserResult = React.createClass({
+		render: function(){
+			return (
+				<div>
+					<p><b>First Name:</b> {this.props.data.firstName}</p>
+					<p><b>Last Name:</b> {this.props.data.lastName}</p>
+					<p><b>Phone:</b> {this.props.data.phone}</p>
+					<p><b>Email:</b> {this.props.data.email}</p>
+				</div>
+			);
+		}
+	});
+
 	//React component for the info of every textbook
 	class BookRow extends React.Component{
 		constructor(){
@@ -109,7 +122,7 @@ $( document ).ready(function() {
 		render() {
 			if (this.state.clicked == true){
 				firebase.database().ref("users/" + this.props.data.sellerID).once('value').then(function(snapshot) {
-				ReactDOM.render(<UserResult data={snapshot.val()} />, document.getElementById('searchResult'));	
+				return (<UserResult data={snapshot.val()} />);	
 			});
 			}
 				
@@ -153,7 +166,6 @@ $( document ).ready(function() {
 	/**Prints table of postings based on courseID and school */
 	function printPostingToTable(courseID, school) {
 		//all textbook info under this courseID and schoolID
-		//$.post("http://localhost:3000/printPosting",{ course: courseID, sch: school});
 		var ref = new Firebase("https://bookrecycle-5b8d1.firebaseio.com/school/" + school + "/" + courseID);
 		console.log("find data given course school");
 		ref.once("value", function(snapshot) {
@@ -164,10 +176,7 @@ $( document ).ready(function() {
 				jsonBook.push(child.val());
 			});
 				console.log("this is json " + jsonBook);
-				//console.log("course info " + jsonBook[0].author); //test whether get the data
-				//if (jsonBook == null){
-				//	document.getElementById('searchResult').html.("<b>No textbook for " + courseID + "in" + school"</b>");				
-				//}	
+
 				//render all textbook info in a BookTable component
 				ReactDOM.render(<BookTable data={jsonBook} />,
 				document.getElementById('searchResult'));
