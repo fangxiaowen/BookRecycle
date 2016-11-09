@@ -122,6 +122,7 @@ $( document ).ready(function() {
 			});
 			//return all book info (all BookRows) 
 			return (<div>
+					<table>
 						<tr>
 							<th>Textbook Title</th>
 							<th>Author</th>
@@ -131,6 +132,7 @@ $( document ).ready(function() {
 							<th>Seller's Notes</th>
 						</tr>
 						{bookNodes}
+					</table>
 					</div>);
 		}
 	
