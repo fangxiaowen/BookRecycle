@@ -121,6 +121,7 @@ $( document ).ready(function() {
 		
 		render() {
 			if (this.state.clicked == true){
+				console.log("here clicked")
 				firebase.database().ref("users/" + this.props.data.sellerID).once('value').then(function(snapshot) {
 				return (<UserResult data={snapshot.val()} />);	
 			});
