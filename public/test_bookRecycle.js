@@ -96,13 +96,13 @@ $( document ).ready(function() {
 		
 	var UserResult = React.createClass({
 		render: function(){
-			return (
-				<div>
-					<p><b>First Name:</b> {this.props.data.firstName}</p>
-					<p><b>Last Name:</b> {this.props.data.lastName}</p>
-					<p><b>Phone:</b> {this.props.data.phone}</p>
-					<p><b>Email:</b> {this.props.data.email}</p>
-				</div>
+			return (<tr>
+				
+					<td>First Name: {this.props.data.firstName}</td>
+					<td>Last Name: {this.props.data.lastName}</td>
+					<td>Phone: {this.props.data.phone}</td>
+					<td>Email: {this.props.data.email}</td>
+				</tr>
 			);
 		}
 	});
@@ -120,25 +120,28 @@ $( document ).ready(function() {
 		}
 		
 		render() {
+			var userInfo;
 			if (this.state.clicked == true){
-				console.log("here clicked")
 				firebase.database().ref("users/" + this.props.data.sellerID).once('value').then(function(snapshot) {
-				return (<UserResult data={snapshot.val()} />);	
-			});
+					userInfo = snapshot.val();
+					console.log("this is user info! " + snapshot.val().firstName);
+					return (<UserResult data={snapshot.val()} />);
+				});
 			}
-				
-			return (	<tr>
-							<th>{this.props.data.title}</th>
-							<th>{this.props.data.author}</th>
-							<th>{this.props.data.isbn}</th>
-							<th>{this.props.data.sellerID}</th>
-							<th>{this.props.data.price}</th>
-							<th>{this.props.data.note}</th>
+	
+			return (	<tr onClick={this.handleClick}>
+							<td>{this.props.data.title}</td>
+							<td>{this.props.data.author}</td>
+							<td>{this.props.data.isbn}</td>
+							<td>{this.props.data.sellerID}</td>
+							<td>{this.props.data.price}</td>
+							<td>{this.props.data.note}</td>
 
 					</tr>		
 			);
+			
 		}
-	};
+	}
 
 	//React component for all book info under a courseID and school ID
 	class BookTable extends React.Component{
@@ -150,8 +153,8 @@ $( document ).ready(function() {
 				return (<BookRow data={book}></BookRow>);
 			});
 			//return all book info (all BookRows) 
-			return (<div>
-					<table>
+			return (<table>
+					<thead>
 						<tr>
 							<th>Textbook Title</th>
 							<th>Author</th>
@@ -160,12 +163,15 @@ $( document ).ready(function() {
 							<th>Price ($)</th>
 							<th>Seller's Notes</th>
 						</tr>
+					</thead>
+					<tbody>
 						{bookNodes}
-					</table>
-					</div>);
+					</tbody>
+				</table>);
 		}
 	
-	};
+	}
+
 	/**Prints table of postings based on courseID and school */
 	function printPostingToTable(courseID, school) {
 		//all textbook info under this courseID and schoolID
