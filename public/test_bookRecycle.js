@@ -1,6 +1,5 @@
 $( document ).ready(function() {
 	
-	//<script src="https://www.gstatic.com/firebasejs/3.4.0/firebase.js"></script>
 	// Initialize Firebase
 	var config = {
 		apiKey: "AIzaSyBYNz3IGt8PS6kZBvN7gbkXMfLC2JekAMI",
@@ -95,10 +94,38 @@ $( document ).ready(function() {
 		});
 	};
 		
-	//React component for the info of every textbook
-	var BookRow = React.createClass({
+	var UserResult = React.createClass({
 		render: function(){
-			console.log("in BookRow " + this.props.data.key + " " + this.props.data.isbn + " " + this.props.data.note + " " + this.props.data.price + " " + this.props.data.sellerID + " " + this.props.data.title + " ");
+			return (
+				<div>
+					<p><b>First Name:</b> {this.props.data.firstName}</p>
+					<p><b>Last Name:</b> {this.props.data.lastName}</p>
+					<p><b>Phone:</b> {this.props.data.phone}</p>
+					<p><b>Email:</b> {this.props.data.email}</p>
+				</div>
+			);
+		}
+	});
+
+	//React component for the info of every textbook
+	class BookRow extends React.Component{
+		constructor(){
+			super();
+			this.state = {clicked: false};
+			this.handleClick = this.handleClick.bind(this);
+		}
+
+		handleClick() {
+			this.setState({clicked: !this.state.clicked})
+		}
+		
+		render() {
+			if (this.state.clicked == true){
+				firebase.database().ref("users/" + this.props.data.sellerID).once('value').then(function(snapshot) {
+				return (<UserResult data={snapshot.val()} />);	
+			});
+			}
+				
 			return (	<tr>
 							<th>{this.props.data.title}</th>
 							<th>{this.props.data.author}</th>
@@ -110,11 +137,12 @@ $( document ).ready(function() {
 					</tr>		
 			);
 		}
-	});
+	};
+
 	//React component for all book info under a courseID and school ID
-	var BookTable = React.createClass({
-		render: function(){
-			console.log("in BookClass");
+	class BookTable extends React.Component{
+		render() {
+			console.log("in BookTableClass");
 			//take every book info (in JSON format) and return a corresponding BookRow component 
 			var bookNodes = this.props.data.map(function(book){
 				console.log("this is book " + book.title);
@@ -136,11 +164,10 @@ $( document ).ready(function() {
 					</div>);
 		}
 	
-	});
+	};
 	/**Prints table of postings based on courseID and school */
 	function printPostingToTable(courseID, school) {
 		//all textbook info under this courseID and schoolID
-		//$.post("http://localhost:3000/printPosting",{ course: courseID, sch: school});
 		var ref = new Firebase("https://bookrecycle-5b8d1.firebaseio.com/school/" + school + "/" + courseID);
 		console.log("find data given course school");
 		ref.once("value", function(snapshot) {
@@ -151,10 +178,7 @@ $( document ).ready(function() {
 				jsonBook.push(child.val());
 			});
 				console.log("this is json " + jsonBook);
-				//console.log("course info " + jsonBook[0].author); //test whether get the data
-				//if (jsonBook == null){
-				//	document.getElementById('searchResult').html.("<b>No textbook for " + courseID + "in" + school"</b>");				
-				//}	
+
 				//render all textbook info in a BookTable component
 				ReactDOM.render(<BookTable data={jsonBook} />,
 				document.getElementById('searchResult'));
@@ -162,33 +186,6 @@ $( document ).ready(function() {
 		});
 		$("#promptToSearchUser").show();
 	}
-	/*
-	var UserResult = React.createClass({
-		render: function(){
-			console.log("in UserResult " + this.props.data.firstName + " " + this.props.data.lastName + " " + this.props.data.phone + " " + this.props.data.email);
-			return (
-				<div>
-					<p><b>First Name:</b> {this.props.data.firstName}</p>
-					<p><b>Last Name:</b> {this.props.data.lastName}</p>
-					<p><b>Phone:</b> {this.props.data.phone}</p>
-					<p><b>Email:</b> {this.props.data.email}</p>
-				</div>
-			);
-		}
-	});
-	$("#searchUserButton").click(function() {
-		console.log("in search user");
-		if ($('#usernameSearch').val()== '')
-			alert('Enter username');
-		firebase.database().ref("users/" + $('#usernameSearch').val()).once('value').then(function(snapshot) {
-			var exists = (snapshot.val() !== null);
-			console.log("in search user button: " + snapshot.val());
-			if (exists)
-				ReactDOM.render(<UserResult data={snapshot.val()} />, document.getElementById('searchUserResults'));
-			else
-				$('#searchUserResults').html('<b>No user found with username <u>'+ $('#usernameSearch').val()+ '</u></b>');
-		});		
-	});*/
 	
 	/**Updates course options list based on schoolID passed in*/
 	function updateCourseOptions(schoolID){
