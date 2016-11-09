@@ -96,13 +96,14 @@ $( document ).ready(function() {
 		
 	var UserResult = React.createClass({
 		render: function(){
-			return (<tr>
-				
+			return (<table>
+					<tr>
 					<td>First Name: {this.props.data.firstName}</td>
 					<td>Last Name: {this.props.data.lastName}</td>
 					<td>Phone: {this.props.data.phone}</td>
 					<td>Email: {this.props.data.email}</td>
-				</tr>
+					</tr>
+				</table>
 			);
 		}
 	});
@@ -116,28 +117,26 @@ $( document ).ready(function() {
 		}
 
 		handleClick() {
-			this.setState({clicked: !this.state.clicked})
+			this.setState({clicked: !this.state.clicked});
 		}
 		
 		render() {
-			var userInfo;
 			if (this.state.clicked == true){
-				firebase.database().ref("users/" + this.props.data.sellerID).once('value').then(function(snapshot) {
-					userInfo = snapshot.val();
-					console.log("this is user info! " + snapshot.val().firstName);
-					return (<UserResult data={snapshot.val()} />);
+				firebase.database().ref("users/" + this.props.data.sellerID).once('value').then(function(snapshot){
+					console.log("What do we get? " + snapshot.val().firstName);
+					ReactDOM.render(<UserResult data={snapshot.val()} />, document.getElementById('userInfo'));
 				});
 			}
-	
-			return (	<tr onClick={this.handleClick}>
-							<td>{this.props.data.title}</td>
-							<td>{this.props.data.author}</td>
-							<td>{this.props.data.isbn}</td>
-							<td>{this.props.data.sellerID}</td>
-							<td>{this.props.data.price}</td>
-							<td>{this.props.data.note}</td>
-
-					</tr>		
+					
+			
+			return (<tr onClick={this.handleClick}>
+					<td>{this.props.data.title}</td>
+					<td>{this.props.data.author}</td>
+					<td>{this.props.data.isbn}</td>
+					<td>{this.props.data.sellerID}</td>
+					<td>{this.props.data.price}</td>
+					<td>{this.props.data.note}</td>
+				</tr>		
 			);
 			
 		}
