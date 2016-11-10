@@ -96,14 +96,23 @@ $( document ).ready(function() {
 		
 	var UserResult = React.createClass({
 		render: function(){
-			return (<table>
+			return (<div>
+			<br/>
+				<p>Contact Information: </p>
+				<table>
 					<tr>
-					<td>First Name: {this.props.data.firstName}</td>
-					<td>Last Name: {this.props.data.lastName}</td>
-					<td>Phone: {this.props.data.phone}</td>
-					<td>Email: {this.props.data.email}</td>
+						<th>Seller's First Name</th>
+						<th>Seller's Last Name</th>
+						<th>Phone Number</th>
+						<th>Email</th>
 					</tr>
-				</table>
+					<tr>
+					<td>{this.props.data.firstName}</td>
+					<td>{this.props.data.lastName}</td>
+					<td>{this.props.data.phone}</td>
+					<td>{this.props.data.email}</td>
+					</tr>
+				</table></div>
 			);
 		}
 	});
@@ -189,6 +198,7 @@ $( document ).ready(function() {
 				ReactDOM.render(<BookTable data={jsonBook} />,
 				document.getElementById('searchResult'));
 			$('#spinner').hide();	
+			
 		});
 		$("#promptToSearchUser").show();
 	}
