@@ -41,7 +41,7 @@
 			<p>Check a <a href="visualization.html">visualization</a> of available textbooks by School and Course!</p>
 			<form>
 				<div>
-					<label>School:</label>
+					<label>Your School:</label>
 					<select id="schoolOptions">
 						<option disabled selected style="color:red">-select-</option>
 						<option value="GMU">George Mason University</option>
@@ -50,7 +50,7 @@
 					</select>
 				</div>
 				<div>
-					<label>Select Course:</label>
+					<label>Your Course:</label>
 					<select id="courseOptions">
 						<option disabled selected style="color:red">-select school first-</option>
 					</select>
@@ -59,9 +59,8 @@
 			<div>
 				<button id="searchPostings">Search for Postings</button>
 			</div>
-			<p>NOTE: The courses options change based on the selected school.</p>
 			<br/><br/>
-			<div id="postingsAppear">Your textbook search postings will appear below.</div>
+			
 			<div id="spinner" style="position: absolute; height: 100px; width: 100px; left: 20%; margin-left: -50px; margin-top: -50px; display: none">
 				<img src="spinner.gif" width="90" />
 			</div>
@@ -87,9 +86,11 @@
 					</tr>
 				</table>
 			</div>
+
+			<div id='userInfo'><div>
 		</div>
 		<br/>
-		<div id="promptToSearchUser" style="display: none">Interested in a book? Contact the seller by searching their username <a href="searchUser.html">here</a>!</div>
+		<div id="promptToSearchUser" style="display: none">Interested in a book? See seller's contact information by clicking on the row of the desired posting!</div>
 		<br/><br/>
 		<!--<div id="debugthis"></div>-->
 		<div class="bottomDescr">

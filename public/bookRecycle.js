@@ -445,7 +445,10 @@ $( document ).ready(function() {
 				}
 				else{
 					if (document.getElementById("newFile").files.length == 0){ //check if there is a selected file
-						alert("Select a file to upload");
+						alert("Select an image file to upload");
+					}
+					else if (!$('#newFile').val().match(/(?:gif|jpg|png|bmp)$/)) {	//check if file path is of type image
+						alert("Please select an image file (jpg, png, gif, bmp)");
 					}
 					else{
 						console.log("entered username is correct");
