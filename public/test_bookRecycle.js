@@ -121,21 +121,25 @@ $( document ).ready(function() {
 	class BookRow extends React.Component{
 		constructor(){
 			super();
-			this.state = {clicked: false};
+			//this.state = {clicked: false};
 			this.handleClick = this.handleClick.bind(this);
 		}
 
 		handleClick() {
-			this.setState({clicked: !this.state.clicked});
+			//this.setState({clicked: !this.state.clicked});
+			firebase.database().ref("users/" + this.props.data.sellerID).once('value').then(function(snapshot){
+					console.log("User clicked = " + snapshot.val().firstName);
+					ReactDOM.render(<UserResult data={snapshot.val()} />, document.getElementById('userInfo'));
+				});
 		}
 		
 		render() {
-			if (this.state.clicked == true){
+			/*if (this.state.clicked == true){
 				firebase.database().ref("users/" + this.props.data.sellerID).once('value').then(function(snapshot){
 					console.log("What do we get? " + snapshot.val().firstName);
 					ReactDOM.render(<UserResult data={snapshot.val()} />, document.getElementById('userInfo'));
 				});
-			}
+			}*/
 					
 			
 			return (<tr onClick={this.handleClick}>
@@ -192,15 +196,27 @@ $( document ).ready(function() {
 				console.log("in here child unique key is "+child.name());
 				jsonBook.push(child.val());
 			});
-				console.log("this is json " + jsonBook);
-
-				//render all textbook info in a BookTable component
-				ReactDOM.render(<BookTable data={jsonBook} />,
-				document.getElementById('searchResult'));
-			$('#spinner').hide();	
+			console.log("this is json " + jsonBook);
 			
+			if (jsonBook == ""){
+				console.log("nothing in jsonBook");
+				$('#searchResult').hide();
+				$('#noSellerFound').show();
+				$("#promptToSearchUser").hide();
+			}
+			else{
+				$('#searchResult').show();
+				$('#noSellerFound').hide();
+				$("#promptToSearchUser").show();
+			}			
+			//render all textbook info in a BookTable component
+			ReactDOM.render(<BookTable data={jsonBook} />,
+					document.getElementById('searchResult'));
+			
+			$('#spinner').hide();	
+			document.getElementById("userInfo").innerHTML = "";
 		});
-		$("#promptToSearchUser").show();
+		
 	}
 	
 	/**Updates course options list based on schoolID passed in*/
@@ -275,8 +291,8 @@ $( document ).ready(function() {
 	/**Sets user information to database*/
 	function createUserProfile(userID, firstname, lastname, school, email, phone) {
 		console.log('in create user profile ' + userID +' '+ firstname +' '+ lastname +' '+ school +' '+ email +' '+ phone);
-		
-		$.post("http://localhost:5000/createUserInfo",{userIDp:userID, firstnamep:firstname, lastnamep:lastname, schoolp:school, emailp:email, phonep:phone});
+		$.post("/createUserInfo",{userIDp:userID, firstnamep:firstname, lastnamep:lastname, schoolp:school, emailp:email, phonep:phone});
+		//$.post("http://localhost:5000/createUserInfo",{userIDp:userID, firstnamep:firstname, lastnamep:lastname, schoolp:school, emailp:email, phonep:phone});
 	}
 	
 	/**Create Account page create account button*/
@@ -373,7 +389,8 @@ $( document ).ready(function() {
 	function createTextbookPosting(school, course, userID, title, author, price, isbn, note) {
 		console.log('in createTextbookPosting function ' + school + ' ' + course + ' ' + userID + ' ' + title + ' ' + author + ' ' + price + ' ' + isbn + ' ' + note)
 		//push data to database
-		$.post("http://localhost:3000/postTextbook",{ schoolp:school, coursep:course, userIDp:userID,  titlep:title, authorp:author, pricep:price, isbnp:isbn, notep:note});
+		$.post("/postTextbook",{ schoolp:school, coursep:course, userIDp:userID,  titlep:title, authorp:author, pricep:price, isbnp:isbn, notep:note});
+		//$.post("http://localhost:3000/postTextbook",{ schoolp:school, coursep:course, userIDp:userID,  titlep:title, authorp:author, pricep:price, isbnp:isbn, notep:note});
 		/*var key = firebase.database().ref('school/' + school + '/' + course).push({
 		sellerID: userID,
 		title: title,

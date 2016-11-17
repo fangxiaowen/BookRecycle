@@ -147,8 +147,8 @@ button {
 
 table, th, td {
     border: 2px solid black;
-
 }
+table tbody tr:hover {background-color: #8ff78a}
 
 div#selected{
 	text-decoration:none;
@@ -179,6 +179,16 @@ div#profPic{
 	position: absolute;
     left: 400px;
     top: 120px;	
+}
+
+h1{
+	font-family: lucida sans;
+	font-weight: bold;
+	font-size: 28px;
+	color:#000066;
+	padding: 10px 15px;
+	margin: 0px 0px 0px 0px;
+	background: #f2f2f2;
 }
 
 .bottomDescr{
