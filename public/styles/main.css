@@ -4,7 +4,7 @@ body{
 	background-repeat: no-repeat;
     background-attachment: fixed;
     background-position: center;
-	background-size:cover;
+	background-size: cover;
 }
 
 .navBar ul{
@@ -199,6 +199,7 @@ h1{
 	background-repeat: no-repeat;
     background-attachment: fixed;
     background-position: center;
+	background-size: cover;
 }
 
 .bottomDescr{
