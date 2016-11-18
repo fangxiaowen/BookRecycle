@@ -1,5 +1,9 @@
 body{
 	background: #e6ffe6;
+	background-image: url("bookRecycleBG.jpg");
+	background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
 }
 
 .navBar ul{
@@ -188,7 +192,12 @@ h1{
 	color:#000066;
 	padding: 10px 15px;
 	margin: 0px 0px 0px 0px;
-	background: #f2f2f2;
+	/*background: #f2f2f2;*/
+	background: #e6ffe6;
+	background-image: url("bookRecycleBG.jpg");
+	background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
 }
 
 .bottomDescr{
