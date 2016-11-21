@@ -70,7 +70,7 @@
 			<div id='myPostsNotLoggedIn' style='display: none'><br/>You are currently not signed in. Please <a href='loginPage.html'>sign in</a> before viewing your posts.</div>
 			<div id='myPosts'>
 			<div>
-					<label>School:</label>
+					<label>Select School:</label>
 					<select id="schoolOptionsMyPostings">
 						<option disabled selected style="color:red">-select-</option>
 						<option value="GMU">George Mason University</option>
@@ -82,7 +82,7 @@
 			</div>
 			<br/>
 			<div id='myPostingsDiv'>
-				<table id='myPostingsTable'>
+				<table id='myPostingsTable' style="display:none">
 				<thead>
 					<tr>
 						<th>Index</th>
@@ -100,7 +100,7 @@
 			</div>
 			<br/><br/><br/>
 		
-			<div>
+			<div id="deletePostsForm" style="display:none">
 					<label>Delete Index:</label>
 					<select id="myPostingsOptions">
 						<option disabled selected style="color:red">-select-</option>

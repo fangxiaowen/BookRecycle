@@ -150,10 +150,18 @@ button {
 	height: 30px;
 }
 
-table, th, td {
+table, td {
     border: 2px solid black;
+	background: rgba(255,255,255,0.20);
+	color:dark-gray;
 }
-table tbody tr:hover {background-color: #8ff78a}
+th {
+    border: 2px solid black;
+	background: rgba(0,0,51,0.70);
+	color: white;
+}
+
+table tbody tr:hover {background-color: #b3b3ff}/*#8ff78a}*/
 
 div#selected{
 	text-decoration:none;

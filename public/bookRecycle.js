@@ -52,8 +52,14 @@ $( document ).ready(function() {
 						});
 					});
 				firebase.database().ref("uploads/" + user.displayName+"/img").once('value').then(function(snapshot) {
+					console.log("it is '"+snapshot.val()+"'");
+					if (snapshot.val()!=null){
 						var imglink = snapshot.val();
 						$('#profImage').html('<img src="'+imglink+'" height="200" width="200">');
+					}
+					else{
+						$('#profImage').html("<br/>You currently don't have a profile picture. Upload one now!");
+					}
 				});
 				
 				$('#welcomeIndex').show();
@@ -96,6 +102,8 @@ $( document ).ready(function() {
 				$("#createAccountSignedInMsg").hide();
 				//hide search user form
 				$("#searchUserForm").hide();
+				//hide upload prof pic form
+				$("#uploadPicForm").hide();
 				//hide my postings form
 				$("#myPosts").hide();
 				$("#myPostsNotLoggedIn").show();
@@ -568,6 +576,8 @@ $( document ).ready(function() {
 	//still under construction, not part of our 3 scenarios
 	$("#searchMyPosts").click(function() {
 		console.log("clicked search postings");
+		$('#myPostingsTable').show();
+		$('#deletePostsForm').show();
 		firebase.auth().onAuthStateChanged(function(user) {
 			if (user) {
 				console.log("start searching postings of user " + user.displayName + " for " + $('#schoolOptionsMyPostings').val());
