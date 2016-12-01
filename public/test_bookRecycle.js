@@ -110,7 +110,7 @@ $( document ).ready(function() {
 					<td>{this.props.data.firstName}</td>
 					<td>{this.props.data.lastName}</td>
 					<td>{this.props.data.phone}</td>
-					<td>{this.props.data.email}</td>
+					<td><a href="mailto:">{this.props.data.email}</a></td>
 					</tr>
 				</table></div>
 			);
