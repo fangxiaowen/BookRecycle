@@ -1,7 +1,6 @@
 # BookRecycle
 Textbook transaction platform. SWE-432 Project. 
 
-HW8
 6 scenarios:
 1. Registration/Login/Logout. Users will be able to create an account and login in to post textbooks.
 2. Create Postings. Users will be able to post textbooks. Only registered and logged in users can use this feature.
@@ -12,16 +11,11 @@ HW8
 
 
 
-Senarios implemented by HW5 submission:
-1. Registration
+Senarios implemented:
+1. Registration/Login
 2. Search Postings (by school name and course)
-3. Already using React: Search users. 
+3. Contact Users / Search Users. 
 4. D3 senario: Visualize the number of avaliable textbooks. Using circle packing schema. Reference: http://bl.ocks.org/mbostock/4063530
 
 
-HW7:
 Heroku app: https://evening-woodland-17308.herokuapp.com/
-
-
-
-New scenario for scratching:  Sort textbook postings by price.  When user displays all textbook postings under a certain course and a certain school, the user can sort these postings by their price in ascending order or discending order or in a certain price interval . And the sorted postings will be displayed on the same area in place of the original outcome.  
