@@ -21,3 +21,7 @@ Senarios implemented by HW5 submission:
 
 HW7:
 Heroku app: https://evening-woodland-17308.herokuapp.com/
+
+
+
+New scenario for scratching:  Sort textbook postings by price.  When user displays all textbook postings under a certain course and a certain school, the user can sort these postings by their price in ascending order or discending order or in a certain price interval . And the sorted postings will be displayed on the same area in place of the original outcome.  
