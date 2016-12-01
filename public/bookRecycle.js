@@ -52,13 +52,21 @@ $( document ).ready(function() {
 						});
 					});
 				firebase.database().ref("uploads/" + user.displayName+"/img").once('value').then(function(snapshot) {
+					console.log("it is '"+snapshot.val()+"'");
+					if (snapshot.val()!=null){
 						var imglink = snapshot.val();
-						$('#profImage').html('<img src="'+imglink+'" height="150" width="150">');
+						$('#profImage').html('<img src="'+imglink+'" height="200" width="200">');
+					}
+					else{
+						$('#profImage').html("<br/>You currently don't have a profile picture. Upload one now!");
+					}
 				});
 				
 				$('#welcomeIndex').show();
 				//display logout tab
 				$("#logoutLink").show();
+				$("#loginLink").hide();
+				$("#createAcctLink").hide();
 				//display createPosting form
 				$("#createPostingForm").show();
 				$("#createPostingButton").show();
@@ -73,6 +81,7 @@ $( document ).ready(function() {
 				$("#createAccountSignedInMsg").show();
 				//show search user form
 				$("#searchUserForm").show();
+				
 			 } else {
 				// No user is signed in here
 				console.log('No user is logged in');
@@ -93,6 +102,11 @@ $( document ).ready(function() {
 				$("#createAccountSignedInMsg").hide();
 				//hide search user form
 				$("#searchUserForm").hide();
+				//hide upload prof pic form
+				$("#uploadPicForm").hide();
+				//hide my postings form
+				$("#myPosts").hide();
+				$("#myPostsNotLoggedIn").show();
 			}
 		});
 	};
@@ -241,7 +255,8 @@ $( document ).ready(function() {
 		console.log('in create user profile ' + userID +' '+ firstname +' '+ lastname +' '+ school +' '+ email +' '+ phone);
 		
 		firebase.auth().currentUser.getToken().then(function(idToken) {
-            $.post("http://localhost:5000/createUserInfo",{userIDp:userID, firstnamep:firstname, lastnamep:lastname, schoolp:school, emailp:email, phonep:phone, token: idToken});
+			$.post("/createUserInfo",{userIDp:userID, firstnamep:firstname, lastnamep:lastname, schoolp:school, emailp:email, phonep:phone, token: idToken});
+            //$.post("http://localhost:5000/createUserInfo",{userIDp:userID, firstnamep:firstname, lastnamep:lastname, schoolp:school, emailp:email, phonep:phone, token: idToken});
         });
 		//$.post("http://localhost:5000/createUserInfo",{userIDp:userID, firstnamep:firstname, lastnamep:lastname, schoolp:school, emailp:email, phonep:phone});
 	}
@@ -341,7 +356,8 @@ $( document ).ready(function() {
 		console.log('in createTextbookPosting function ' + school + ' ' + course + ' ' + userID + ' ' + title + ' ' + author + ' ' + price + ' ' + isbn + ' ' + note)
 		//push data to database
 		firebase.auth().currentUser.getToken().then(function(idToken) {
-            $.post("http://localhost:5000/postTextbook",{ schoolp:school, coursep:course, userIDp:userID,  titlep:title, authorp:author, pricep:price, isbnp:isbn, notep:note, token: idToken});
+			$.post("/postTextbook",{ schoolp:school, coursep:course, userIDp:userID,  titlep:title, authorp:author, pricep:price, isbnp:isbn, notep:note, token: idToken});
+            //$.post("http://localhost:5000/postTextbook",{ schoolp:school, coursep:course, userIDp:userID,  titlep:title, authorp:author, pricep:price, isbnp:isbn, notep:note, token: idToken});
         });
 		//$.post("http://localhost:5000/postTextbook",{ schoolp:school, coursep:course, userIDp:userID,  titlep:title, authorp:author, pricep:price, isbnp:isbn, notep:note});
 		/*var key = firebase.database().ref('school/' + school + '/' + course).push({
@@ -475,7 +491,7 @@ $( document ).ready(function() {
 	//still under construction, not part of our 3 scenarios
 	//very ineffecient way to search but hey it works
 	function myPostingsBySchool(userID, school){
-		var table = document.getElementById("myPostingsTable");
+		var table = document.getElementById("myPostingsTable").getElementsByTagName('tbody')[0];
 		$('#myPostingsTable td').remove();
 		$('#myPostingsOptions').find('option').remove().end().append('<option disabled selected style="color:red">-select-</option>');//.val('whatever');
 		
@@ -560,6 +576,8 @@ $( document ).ready(function() {
 	//still under construction, not part of our 3 scenarios
 	$("#searchMyPosts").click(function() {
 		console.log("clicked search postings");
+		$('#myPostingsTable').show();
+		$('#deletePostsForm').show();
 		firebase.auth().onAuthStateChanged(function(user) {
 			if (user) {
 				console.log("start searching postings of user " + user.displayName + " for " + $('#schoolOptionsMyPostings').val());

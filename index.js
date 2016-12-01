@@ -118,7 +118,7 @@ app.post('/createUserInfo', function (req, res){
 	  // Handle error
 	  console.log("error in verifying token in creating user");
 	});
-	console.log("done create user");
+	console.log("done create user in index js");
 });
 
 var fireRef = firebase.database().ref('uploads');
