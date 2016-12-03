@@ -98,7 +98,7 @@ $( document ).ready(function() {
 		render: function(){
 			return (<div>
 			<br/>
-				<p>Contact Information: </p>
+				<p><b><u>Seller Contact Information: </u></b></p>
 				<table>
 					<tr>
 						<th>Seller's First Name</th>
