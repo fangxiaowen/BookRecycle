@@ -232,7 +232,8 @@ $( document ).ready(function() {
 				var errorMessage = error.message;
 				console.log(errorCode);
 				console.log(errorMessage);
-				$('#welcomeMsg').html('<b>'+errorMessage+'</b>');
+				//alert(errorMessage+". Please sign");
+				$('#welcomeMsg').html('<b><div style="color:red">'+errorMessage+' Please use a different email address or <a href="loginPage.html">sign in</a>.</div></b>');
 			});
 			
 			
@@ -264,6 +265,7 @@ $( document ).ready(function() {
 	/**Create Account page create account button*/
 	$("#createAccountButton").click(function() {
 		var labels = ['firstname', 'lastname', 'school', 'email', 'phone', 'username', 'pass', 'passreenter'];
+		$('#welcomeMsg').html('');
 		var unfilled = false;
 		//recolor unfilled inputs
 		for(var ind=0; ind<labels.length; ind++){
